@@ -31,7 +31,7 @@ import Logowhite from './image/goodmorningwhite.png';
 import ScoreComponent from './score/scoreComponent';
 import AttendComponent from './attend/attendComponent';
 import ReserveComponent from './reserve/reserveComponent';
-//import Router from './router.js'
+import IndexComponent from './index/appComponent';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const theme = createMuiTheme({
@@ -214,14 +214,14 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
+        <NavLink activeClassName="active" to="/">
           <ListItem button>
-          
               <ListItemIcon>
                   <GlobeIcon />
               </ListItemIcon>
-          
             <ListItemText primary="Index"/>
           </ListItem>
+        </NavLink>
 
         <ListItem button>
           <ListItemIcon  >
@@ -290,7 +290,8 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
-          <Route exact path="/attend" component={AttendComponent} />
+          <Route exact path="/" component={IndexComponent}/>
+          <Route path="/attend" component={AttendComponent} />
           <Route path="/score" component={ScoreComponent} />
           <Route path="/reserve" component={ReserveComponent}/>
         </div>

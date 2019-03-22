@@ -1,34 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Button from '@material-ui/core/Button';
 import ErrorIcon from '@material-ui/icons/Error';
 import CloseIcon from '@material-ui/icons/Close';
+import red from '@material-ui/core/colors/red';
+import deeppurple from '@material-ui/core/colors/deepPurple';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { withStyles } from '@material-ui/core/styles';
+import Divder from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider';
 
 const variantIcon = {
-  error: ErrorIcon,
+    gradealert: ErrorIcon,
+    classalert: ErrorIcon,
 };
 
 const styles1 = theme => ({
-  error: {
-    backgroundColor:'#FF7C7C',
-    minWidth: '50vw',
-    maxWidth: '100vw',
-  },
-  icon: {
-    fontSize: 20,
-  },
-  iconVariant: {
-    opacity: 0.9,
-    marginRight: theme.spacing.unit,
-  },
-  message: {
-    display: 'flex',
-    alignItems: 'center',
-  }
+    gradealert: {
+        backgroundColor: red[500],
+      },  
+    classalert: {
+        backgroundColor: deeppurple[500],
+    },
+    icon: {
+        fontSize: 20,
+    },
+    iconVariant: {
+        opacity: 0.9,
+        marginRight: theme.spacing.unit,
+    },
+    message: {
+        display: 'flex',
+        alignItems: 'center',
+    },
 });
 
 function MySnackbarContent(props) {
@@ -66,7 +73,7 @@ MySnackbarContent.propTypes = {
   className: PropTypes.string,
   message: PropTypes.node,
   onClose: PropTypes.func,
-  variant: PropTypes.oneOf(['error']).isRequired,
+  variant: PropTypes.oneOf(['gradealert', 'classalert']).isRequired,
 };
 
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
@@ -74,8 +81,13 @@ const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 const styles2 = theme => ({
   margin: {
     margin: theme.spacing.unit,
-    alignItems: 'center',
+    fontFamily: 'Microsoft JhengHei',
+    fontSize: 16,
   },
+  divider:{
+      marginTop:80,
+      marginBottom: 0,
+  }
 });
 
 class CustomizedSnackbars extends React.Component {
@@ -100,6 +112,7 @@ class CustomizedSnackbars extends React.Component {
 
     return (
       <div>
+        <div>
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -109,13 +122,27 @@ class CustomizedSnackbars extends React.Component {
           autoHideDuration={6000}
           onClose={this.handleClose}
         >
+          {/* <MySnackbarContentWrapper
+            onClose={this.handleClose}
+            variant="success"
+            message="This is a success message!"
+          /> */}
         </Snackbar>
         <MySnackbarContentWrapper
-          variant="error"
+          variant="gradealert"
           className={classes.margin}
-          message="成績預警 : 10/7 物理H班"
+          message=" 成 績 預 警 : 物 理 A 班"
         />
-    
+        <MySnackbarContentWrapper
+          variant="classalert"
+          className={classes.margin}
+          message=" 缺 課 預 警 : 物 理 A 班"
+        />
+        </div>
+        <Divider className={classes.divider}/>
+        <div>
+            
+        </div>
       </div>
     );
   }

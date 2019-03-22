@@ -11,7 +11,6 @@ import Select from '@material-ui/core/Select';
 //import Divider from '@material-ui/core/Divider';
 import { Typography } from 'antd';
 import Divider from '@material-ui/core/Divider';
-import { DateRange } from 'react-date-range';
 
 const styles = theme => ({
   root: {
@@ -71,11 +70,7 @@ class NativeSelects extends React.Component {
     this.setState({ [name]: event.target.value });
   };
 
-  handleSelect(range){
-    console.log(range);
-    // An object with two keys,
-    // 'startDate' and 'endDate' which are Momentjs objects.
-}
+  
 
   render() {
     const { classes } = this.props;
@@ -122,12 +117,6 @@ class NativeSelects extends React.Component {
           </Select>
         </FormControl>
         </div>
-        <div>
-                <DateRange
-                    onInit={this.handleSelect}
-                    onChange={this.handleSelect}
-                />
-            </div>
       </div>
     );
   }
