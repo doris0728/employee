@@ -36,26 +36,30 @@ const styles = theme => ({
    // marginTop: theme.spacing.unit * 2,
   },
   text:{
-    //marginLeft:35,
-    width:'100%',
+    marginLeft:35,
+    width:'50%',
     marginBottom:15,
     fontSize:20,
     fontWeight: "bold",
-    color:'#969696',
+    color:'#adadad',
     fontFamily: "Microsoft JhengHei",
     letterSpacing:4,
-    
   },
-  textRight:{
-    fontSize:13,
-    paddingLeft:'71%'
-  }
+  text2:{
+    marginLeft:35,
+    width:'50%',
+    marginBottom:15,
+    fontSize:14,
+    fontWeight: "bold",
+    color:'#FFBF5F',
+    fontFamily: "Microsoft JhengHei",
+  },
 });
 
 class NativeSelects extends React.Component {
   state = {
     age: '',
-    name: '王映心',
+    name: 'hai',
     labelWidth: 0,
   };
 
@@ -77,12 +81,8 @@ class NativeSelects extends React.Component {
       <div className={classes.root}>
       
         <div className={classes.table}>
-            <Typography class={classes.text} nowrap={true}>
-              <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.name}</a><a>的出勤紀錄</a>
-              <a className={classes.textRight}>107學年</a>
-            </Typography>
-       
-        
+        <Typography class={classes.text}>預約補課</Typography>
+        <Typography class={classes.text2}>107學年</Typography>
         <Divider variant="middle"/>
         <FormControl variant="outlined" className={classes.formControl}>
         
@@ -91,9 +91,8 @@ class NativeSelects extends React.Component {
               this.InputLabelRef = ref;
             }}
             htmlFor="outlined-age-native-simple"
-            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
           >
-            選擇月份
+            選擇校區
           </InputLabel>
           <Select
             native
@@ -108,9 +107,9 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
+            <option value="">一月</option>
+            <option value="">二月</option>
+            <option value="">三月</option>
           </Select>
         </FormControl>
         </div>

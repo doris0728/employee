@@ -31,7 +31,8 @@ import Logowhite from './image/goodmorningwhite.png';
 import ScoreComponent from './score/scoreComponent';
 import AttendComponent from './attend/attendComponent';
 import ReserveComponent from './reserve/reserveComponent';
-
+//import Router from './router.js'
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const theme = createMuiTheme({
   typography: {
@@ -115,9 +116,10 @@ const styles = theme => ({
   
 });
 
+
 class MiniDrawer extends React.Component {
   state = {
-    open: false,
+    open: false, 
   };
 
   handleDrawerOpen = () => {
@@ -132,20 +134,12 @@ class MiniDrawer extends React.Component {
     this.indexbutton = this.indexbutton.bind(this);
   }
 
-  indexbutton() {
-    // 方案1 传统的window.location.href
-    //window.location.href = "#/xxx"
-    
-    // 方案2 使用react-router中的router对象
-    this.props.router.push({
-      pathname: './score/score-app.jsx',
-    })
-  }
 
   render() {
     const { classes, theme } = this.props;
-
+  
     return (
+      <Router>
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
         <CssBaseline />
@@ -219,15 +213,18 @@ class MiniDrawer extends React.Component {
           </List> */}
 
         <br></br>
-        <ListItem button onclick={this.indexbutton}>
-            <ListItemIcon>
-                <GlobeIcon />
-            </ListItemIcon>
+        
+          <ListItem button>
+          
+              <ListItemIcon>
+                  <GlobeIcon />
+              </ListItemIcon>
+          
             <ListItemText primary="Index"/>
-        </ListItem>
+          </ListItem>
 
         <ListItem button>
-          <ListItemIcon>
+          <ListItemIcon  >
             <LatestnewsIcon />
           </ListItemIcon>
           {/* <Typography>
@@ -236,27 +233,32 @@ class MiniDrawer extends React.Component {
           <ListItemText inset primary="Latest News" />
         </ListItem>
 
+        <NavLink activeClassName='active' to='/score'>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
           </ListItemIcon>
           <ListItemText inset primary="My Score" />
         </ListItem>
+        </NavLink>
 
+        <NavLink activeClassName='active' to='/attend'>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
           </ListItemIcon>
           <ListItemText inset primary="My Attendance" />
         </ListItem>
+        </NavLink>
 
+        <NavLink activeClassName="active" to="/reserve">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
           <ListItemText inset primary="Make-up Class" />
         </ListItem>
-
+        </NavLink>
         
         <ListItem button>
           <ListItemIcon>
@@ -288,14 +290,18 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
-          <ScoreComponent/>
+          <Route exact path="/attend" component={AttendComponent} />
+          <Route path="/score" component={ScoreComponent} />
+          <Route path="/reserve" component={ReserveComponent}/>
         </div>
         </MuiThemeProvider>
       </div>
+
+        
+      </Router>
     );
   }
 }
-
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,

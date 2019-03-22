@@ -48,7 +48,7 @@ const styles = theme => ({
   },
   textRight:{
     fontSize:13,
-    paddingLeft:'70%'
+    paddingLeft:'75%'
   }
 });
 
@@ -91,6 +91,7 @@ class NativeSelects extends React.Component {
               this.InputLabelRef = ref;
             }}
             htmlFor="outlined-age-native-simple"
+            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
           >
             選擇班級/科目
           </InputLabel>
@@ -107,9 +108,9 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
-            <option value="">國文A班</option>
-            <option value="">數學B班</option>
-            <option value="">理化A班</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>國文A班</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學B班</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化A班</option>
           </Select>
         </FormControl>
         </div>

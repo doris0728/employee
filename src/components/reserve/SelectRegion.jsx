@@ -11,6 +11,8 @@ import Select from '@material-ui/core/Select';
 //import Divider from '@material-ui/core/Divider';
 import { Typography } from 'antd';
 import Divider from '@material-ui/core/Divider';
+import { DateRange } from 'react-date-range';
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -36,30 +38,26 @@ const styles = theme => ({
    // marginTop: theme.spacing.unit * 2,
   },
   text:{
-    marginLeft:35,
-    width:'50%',
+    //marginLeft:35,
+    width:'100%',
     marginBottom:15,
     fontSize:20,
     fontWeight: "bold",
-    color:'#adadad',
+    color:'#969696',
     fontFamily: "Microsoft JhengHei",
     letterSpacing:4,
+    
   },
-  text2:{
-    marginLeft:35,
-    width:'50%',
-    marginBottom:15,
-    fontSize:14,
-    fontWeight: "bold",
-    color:'#FFBF5F',
-    fontFamily: "Microsoft JhengHei",
-  },
+  textRight:{
+    fontSize:13,
+    paddingLeft:'79%'
+  }
 });
 
 class NativeSelects extends React.Component {
   state = {
     age: '',
-    name: 'hai',
+    //name: '王映心',
     labelWidth: 0,
   };
 
@@ -73,6 +71,12 @@ class NativeSelects extends React.Component {
     this.setState({ [name]: event.target.value });
   };
 
+  handleSelect(range){
+    console.log(range);
+    // An object with two keys,
+    // 'startDate' and 'endDate' which are Momentjs objects.
+}
+
   render() {
     const { classes } = this.props;
 
@@ -81,8 +85,12 @@ class NativeSelects extends React.Component {
       <div className={classes.root}>
       
         <div className={classes.table}>
-        <Typography class={classes.text}>預約補課</Typography>
-        <Typography class={classes.text2}>107學年</Typography>
+            <Typography class={classes.text} nowrap={true}>
+              <a style={{marginLeft:35}}>預約補課</a>
+              <a class={classes.textRight}>107學年</a>
+            </Typography>
+       
+        
         <Divider variant="middle"/>
         <FormControl variant="outlined" className={classes.formControl}>
         
@@ -91,8 +99,9 @@ class NativeSelects extends React.Component {
               this.InputLabelRef = ref;
             }}
             htmlFor="outlined-age-native-simple"
+            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
           >
-            選擇校區
+            選擇地區
           </InputLabel>
           <Select
             native
@@ -107,12 +116,18 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
-            <option value="">一月</option>
-            <option value="">二月</option>
-            <option value="">三月</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>台北校區</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>古亭校區</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>板橋校區</option>
           </Select>
         </FormControl>
         </div>
+        <div>
+                <DateRange
+                    onInit={this.handleSelect}
+                    onChange={this.handleSelect}
+                />
+            </div>
       </div>
     );
   }

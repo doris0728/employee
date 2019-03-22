@@ -22,9 +22,9 @@ import RightIcon from '@material-ui/icons/DoneRounded';
 import FailIcon from '@material-ui/icons/CloseRounded';
 
 let counter = 0;
-function createData(date, classclass, time, homework) {
+function createData(date, classclass, attend, homework) {
   counter += 1;
-  return { id: counter, date, classclass, time, homework};
+  return { id: counter, date,classclass, attend,homework};
 }
 
 function desc(a, b, orderBy) {
@@ -52,9 +52,9 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'date', numeric: false, disablePadding: true, label: '日期' },
+  { id: 'date', numeric: false, disablePadding: true, label:'日期' },
   { id: 'classclass', numeric: true, disablePadding: false, label: '班級' },
-  { id: 'time', numeric: true, disablePadding: false, label: '出勤紀錄' },
+  { id: 'attend', numeric: true, disablePadding: false, label: '出勤紀錄' },
   { id: 'homework', numeric: true, disablePadding: false, label: '作業紀錄' },
 ];
 
@@ -76,6 +76,8 @@ class EnhancedTableHead extends React.Component {
                 align={row.numeric ? 'center' : 'center'}
                 padding={row.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === row.id ? order : false}
+                style={{fontWeight: "bold",color:'#969696',fontFamily: "Microsoft JhengHei",
+                letterSpacing:4,fontSize:15}}
               >
                 <Tooltip
                   title="Sort"
@@ -99,15 +101,6 @@ class EnhancedTableHead extends React.Component {
     );
   }
 }
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 const toolbarStyles = theme => ({
   root: {
@@ -134,53 +127,6 @@ const toolbarStyles = theme => ({
   },
 });
 
-let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
-
-  return (
-    <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subtitle1">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="h6" id="tableTitle">
-            Nutrition
-          </Typography>
-        )}
-      </div>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-      </div>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-};
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
-
 const styles = theme => ({
   root: {
     width:'80vw',
@@ -202,15 +148,15 @@ const styles = theme => ({
 class EnhancedTable extends React.Component {
   state = {
     order: 'asc',
-    orderBy: 'score',
+    orderBy: 'date',
     selected: [],
     data: [
-      createData('10月7日', '數學B班', '21:40', <RightIcon color="primary"/>),
-      createData('10月7日', '數學B班', '17:10', <RightIcon color="primary"/>),
-      createData('10月7日', '數學B班', '18:33', <FailIcon color="error"/>),
-      createData('10月7日', '數學B班', '16:54', <FailIcon color="error"/>),
-      createData('10月7日', '數學B班', '20:23', <RightIcon color="primary"/>),
-      createData('10月7日', '數學B班', '19:34', <FailIcon color="error"/>),
+      createData('10月7日','數學B班', 3.7,<FailIcon style={{color:'red'}}/>),
+      createData('10月7日', '數學B班',25.0,<RightIcon style={{color:'green'}}/>),
+      createData( '10月7日','數學B班', 16.0, <FailIcon style={{color:'red'}}/>),
+      createData('10月7日','數學B班', 6.0, <FailIcon style={{color:'red'}}/>),
+      createData('10月7日','數學B班', 16.0, <RightIcon style={{color:'green'}}/>),
+      createData('10月7日','數學B班',3.2, <RightIcon style={{color:'green'}}/>),
       
     ],
     // page: 0,
@@ -250,12 +196,25 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   return (
                     <TableRow>
-                      <TableCell component="th" scope="row" padding="none" align="center">
+
+                      <TableCell component="th" scope="row" padding="none" align="center"
+                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                      letterSpacing:4,fontSize:15}}>
                         {n.date}
                       </TableCell>
-                      <TableCell align="center">{n.classclass}</TableCell>
-                      <TableCell align="center">{n.time}</TableCell>
-                      <TableCell align="center">{n.homework}</TableCell>
+
+                      <TableCell align="center"
+                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                      letterSpacing:4,fontSize:15}}>{n.classclass}</TableCell>
+
+                      <TableCell align="center"
+                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                      letterSpacing:4,fontSize:15}}>{n.attend}</TableCell>
+
+                      <TableCell align="center"
+                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                      letterSpacing:4,fontSize:15}}>{n.homework}</TableCell>
+
                     </TableRow>
                   );
                 })}

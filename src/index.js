@@ -5,6 +5,7 @@ import ReactApp from './components/react-app.jsx';
 import * as serviceWorker from './serviceWorker';
 import Bar from './components/Bar.jsx'
 import Try from './components/tabletry.jsx'
+import Reserve from './components/reserve/reserveComponent.jsx'
 
 ReactDOM.render(<Bar />, document.getElementById('root'));
 

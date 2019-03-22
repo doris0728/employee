@@ -18,7 +18,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-
 let counter = 0;
 function createData(classclass, date, score, rank) {
   counter += 1;
@@ -50,7 +49,7 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'classclass', numeric: false, disablePadding: true, label: '班級' },
+  { id: 'classclass', numeric: false, disablePadding: true, label:'班級' },
   { id: 'date', numeric: true, disablePadding: false, label: '日期' },
   { id: 'score', numeric: true, disablePadding: false, label: '分數' },
   { id: 'rank', numeric: true, disablePadding: false, label: '排名' },
@@ -74,6 +73,8 @@ class EnhancedTableHead extends React.Component {
                 align={row.numeric ? 'center' : 'center'}
                 padding={row.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === row.id ? order : false}
+                style={{fontWeight: "bold",color:'#969696',fontFamily: "Microsoft JhengHei",
+                letterSpacing:4,fontSize:15}}
               >
                 <Tooltip
                   title="Sort"
@@ -97,15 +98,6 @@ class EnhancedTableHead extends React.Component {
     );
   }
 }
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 const toolbarStyles = theme => ({
   root: {
@@ -131,53 +123,6 @@ const toolbarStyles = theme => ({
     flex: '0 0 auto',
   },
 });
-
-let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
-
-  return (
-    <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subtitle1">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="h6" id="tableTitle">
-            Nutrition
-          </Typography>
-        )}
-      </div>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-      </div>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-};
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
@@ -248,12 +193,25 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   return (
                     <TableRow>
-                      <TableCell component="th" scope="row" padding="none" align="center">
+
+                      <TableCell component="th" scope="row" padding="none" align="center"
+                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                      letterSpacing:4,fontSize:15}}>
                         {n.classclass}
                       </TableCell>
-                      <TableCell align="center">{n.date}</TableCell>
-                      <TableCell align="center">{n.score}</TableCell>
-                      <TableCell align="center">{n.rank}</TableCell>
+
+                      <TableCell align="center"
+                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                      letterSpacing:4,fontSize:15}}>{n.date}</TableCell>
+
+                      <TableCell align="center"
+                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                      letterSpacing:4,fontSize:15}}>{n.score}</TableCell>
+
+                      <TableCell align="center"
+                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                      letterSpacing:4,fontSize:15}}>{n.rank}</TableCell>
+
                     </TableRow>
                   );
                 })}

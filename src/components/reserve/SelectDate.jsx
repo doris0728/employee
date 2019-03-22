@@ -91,6 +91,7 @@ class NativeSelects extends React.Component {
               this.InputLabelRef = ref;
             }}
             htmlFor="outlined-age-native-simple"
+            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
           >
             選擇日期
           </InputLabel>
@@ -107,9 +108,9 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
-            <option value="">一月</option>
-            <option value="">二月</option>
-            <option value="">三月</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
+            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
           </Select>
         </FormControl>
         </div>
