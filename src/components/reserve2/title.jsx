@@ -29,16 +29,6 @@ const styles = theme => ({
     align:'center',
     width:'100%',
   },
-  formControl: {
-    margin: 5,
-    minWidth: 200,
-    maxHeight:50,
-    marginTop:20,
-    marginLeft:35,
-  },
-  selectEmpty: {
-   // marginTop: theme.spacing.unit * 2,
-  },
   text:{
     //marginLeft:35,
     width:'100%',
@@ -61,14 +51,8 @@ class NativeSelects extends React.Component {
   state = {
     age: '',
     //name: '王映心',
-    labelWidth: 0,
   };
 
-  componentDidMount() {
-    this.setState({
-      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-    });
-  }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -92,38 +76,6 @@ class NativeSelects extends React.Component {
        
         
         <Divider variant="middle"/>
-        <FormControl variant="outlined" className={classes.formControl}>
-        
-          <InputLabel 
-            ref={ref => {
-              this.InputLabelRef = ref;
-            }}
-            htmlFor="outlined-age-native-simple"
-            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
-          >
-            選擇地區
-          </InputLabel>
-          <Select
-            native
-            value={this.state.age}
-            onChange={this.handleChange('age')}
-            input={
-              <OutlinedInput
-                name="Age"
-                labelWidth={this.state.labelWidth}
-                id="outlined-age-native-simple"
-              />
-            }
-          >
-            <option value="" />
-            <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>台北校區</option>
-            <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>古亭校區</option>
-            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>板橋校區</option>
-          </Select>
-        </FormControl>
-        </div>
-        <div>
-          <RangePicker/>
         </div>
       </div>
     );

@@ -48,7 +48,8 @@ const styles = theme => ({
   },
   textRight:{
     fontSize:13,
-    paddingLeft:'71%'
+    paddingLeft:'71%',
+    color:'#FFBF5F',
   }
 });
 
@@ -108,9 +109,9 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
+            <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
+            <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
+            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
           </Select>
         </FormControl>
         </div>

@@ -44,11 +44,11 @@ const styles = theme => ({
     color:'#969696',
     fontFamily: "Microsoft JhengHei",
     letterSpacing:4,
-    
   },
   textRight:{
     fontSize:13,
-    paddingLeft:'75%'
+    paddingLeft:'75%',
+    color:'#FFBF5F',
   }
 });
 
@@ -108,9 +108,9 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>國文A班</option>
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學B班</option>
-            <option value="" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化A班</option>
+            <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>國文A班</option>
+            <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學B班</option>
+            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化A班</option>
           </Select>
         </FormControl>
         </div>

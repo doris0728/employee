@@ -14,8 +14,10 @@
     "react-dom": "^16.8.4",
     "react-multiple-datepicker": "^0.1.0",
     "react-native-divide": "^1.0.1",
+    "react-range-picker": "^0.6.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.5",
+    "semantic-ui-react": "^0.86.0",
     "typeface-roboto": "0.0.54"
   },
   "scripts": {
