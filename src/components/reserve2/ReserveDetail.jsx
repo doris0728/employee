@@ -13,7 +13,14 @@ import { Typography } from 'antd';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
+import Reserve3 from '../reserveList/reserveListComponent'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 const styles = theme => ({
   root: {
@@ -108,6 +115,14 @@ class NativeSelects extends React.Component {
     this.setState({ [name]: event.target.value });
   };
 
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  // handleClose = () => {
+  //   this.setState({ open: false });
+  // };
+
   render() {
     const { classes } = this.props;
 
@@ -148,32 +163,47 @@ class NativeSelects extends React.Component {
               />
             }
           >
-            {/* <option value="" /> */}
-            <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
-            <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
-            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
+            <option value="" />
+            <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>國文B班 10/30</option>
+            <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學A班 02/14</option>
+            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化C班 03/03</option>
           </Select>
         </FormControl> 
           </Typography></td></tr>
 
-          <tr align="center"><td colspan="2"> <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/reserve2'>
-            <Button variant="contained"
+          <tr align="center"><td colspan="2"> 
+          {/* <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/reserve3'> */}
+            <Button onClick={this.handleClickOpen}
+            variant="contained"
             style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
             backgroundColor:'#FFBF5F',color:'white'}}>
              預約</Button>
-            </NavLink></td></tr>
+            {/* </NavLink> */}
+            </td></tr>
       </table>
-      {/* <Divider light className={classes.divider1}/>
-      <Typography class={classes.text1}>補課資料</Typography>
-      <Divider light className={classes.divider2}/>
-      <Typography class={classes.name}>
-      <a className={classes.texttitle}>姓名</a>
-      <a className={classes.detail}>{this.state.name}</a>
-      <a className={classes.texttitle}>校區</a>
-      <a>{this.state.region}</a>
-      </Typography> */}
       </Card>
-
+      <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <a style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",
+              marginLeft:50,marginRight:50}}>預約成功</a>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            {/* <Button onClick={this.handleClose} color="primary" onClick={this.handleClose}>
+            <a style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>取消</a>
+            </Button> */}
+            <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/reserve3'>
+            <Button onClick={this.handleClose} color="primary" autoFocus>
+              <a style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>確定</a>
+            </Button></NavLink>
+          </DialogActions>
+        </Dialog>
 
       </div>
     );

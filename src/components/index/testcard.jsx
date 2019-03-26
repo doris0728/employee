@@ -18,6 +18,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import { FormControl, FormHelperText, Divider } from '@material-ui/core';
 import { isNullOrUndefined } from 'util';
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const styles = {
   card: {
@@ -131,9 +132,11 @@ function ImgMediaCard(props) {
      
       <CardHeader
           action={
+            <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/score'>
             <IconButton>
               <Arrowright/>
             </IconButton>
+            </NavLink>
           }
           className={classes.typetestcss}
           title="Test Score"

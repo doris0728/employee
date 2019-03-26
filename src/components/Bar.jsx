@@ -33,6 +33,7 @@ import AttendComponent from './attend/attendComponent';
 import ReserveComponent from './reserve/reserveComponent';
 import IndexComponent from './index/appComponent';
 import Reserve2 from './reserve2/reserveComponent2';
+import Reserve3 from './reserveList/reserveListComponent'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const theme = createMuiTheme({
@@ -297,6 +298,7 @@ class MiniDrawer extends React.Component {
           <Route path="/score" component={ScoreComponent} />
           <Route path="/reserve" component={ReserveComponent}/>
           <Route path="/reserve2" component={Reserve2}/>
+          <Route path="/reserve3" component={Reserve3}/>
         </div>
         </MuiThemeProvider>
       </div>
