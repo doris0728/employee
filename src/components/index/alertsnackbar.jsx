@@ -12,6 +12,12 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { withStyles } from '@material-ui/core/styles';
 import Divder from '@material-ui/core/Divider';
 import Divider from '@material-ui/core/Divider';
+import Airtable from 'airtable';
+
+const TABLE_NAME = 'TestScore';
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
+
 
 const variantIcon = {
     gradealert: ErrorIcon,
@@ -90,10 +96,44 @@ const styles2 = theme => ({
   }
 });
 
+function createData(class_id) {
+  // class_id = class_id.split("");
+  // console.log(class_id.length);
+  // for(var i = 0 ; i < class_id.length; i ++){
+  //   class_id += (class_id[i] + " ");
+  // }
+  // console.log(class_id);
+  class_id = "成 績 預 警: " + class_id; 
+  return { class_id };
+}
+
 class CustomizedSnackbars extends React.Component {
   state = {
     open: false,
+    userData:[],
   };
+  componentDidMount(){
+    table.select({
+      filterByFormula: 'AND(student_id = 405401369)',
+      view: "Grid view",
+      maxRecords: 3,
+      }).eachPage((records, fetchNextPage) => {  
+        const class_id = records.map((record, index) => record.fields['class_id']);
+        const test_score = records.map((record, index) => record.fields['test_score']);
+
+        var temp=[];
+        for(var index = 0; index < test_score.length; index++) {
+          if(test_score[index] < 60){
+            temp.push(createData(class_id[index]));
+          }
+          
+        }
+        console.log(temp);
+        this.setState({ userData : temp });
+        fetchNextPage(); 
+      }
+      );
+  }
 
   handleClick = () => {
     this.setState({ open: true });
@@ -109,7 +149,14 @@ class CustomizedSnackbars extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const ClassCard =({class_id}) => (
+     <MySnackbarContentWrapper
+      variant="gradealert"
+      className={classes.margin}
+      message={class_id}
+      /> 
+    );
+    
     return (
       <div>
         <div>
@@ -128,11 +175,12 @@ class CustomizedSnackbars extends React.Component {
             message="This is a success message!"
           /> */}
         </Snackbar>
-        <MySnackbarContentWrapper
+        {this.state.userData.map(score => <ClassCard {...score} /> )}
+        {/* <MySnackbarContentWrapper
           variant="gradealert"
           className={classes.margin}
           message=" 成 績 預 警 : 物 理 A 班"
-        />
+        /> */}
         <MySnackbarContentWrapper
           variant="classalert"
           className={classes.margin}

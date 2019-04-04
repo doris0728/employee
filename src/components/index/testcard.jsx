@@ -19,6 +19,11 @@ import IconButton from '@material-ui/core/IconButton';
 import { FormControl, FormHelperText, Divider } from '@material-ui/core';
 import { isNullOrUndefined } from 'util';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import Airtable from 'airtable';
+
+const TABLE_NAME = 'TestScore';
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
 
 const styles = {
   card: {
@@ -122,77 +127,123 @@ const styles = {
     marginTop: 10,
   },
 };
-
-function ImgMediaCard(props) {
-  const { classes } = props;
-  return (
-    <div>
-    <Card className={classes.card} >
-    {/* big card */}
-     
-      <CardHeader
-          action={
-            <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/score'>
-            <IconButton>
-              <Arrowright/>
-            </IconButton>
-            </NavLink>
-          }
-          className={classes.typetestcss}
-          title="Test Score"
-        />
-   
-    <div className={classes.div1}>
-    <div >
-    <Card className={classes.smallcard1}>
-    {/* small card1 */}
-        <CardContent>
-         <Typography align="center" className={classes.datetypecss}>10 / 9</Typography>
-         <Typography align="center" className={classes.scoretypecss}>87分</Typography>
-        </CardContent>
-        <Divider variant="middle"/>
-        <CardContent>
-          <Typography align="center" className={classes.classtypecss}>數 學 B 班</Typography>
-        </CardContent>
-      {/* <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
-    </Card>
-    </div>
-    <div>
-      <Card className={classes.smallcard2}>
-    {/* small card2 */}
-
-      <CardContent>
-        <Typography align="center" className={classes.datetypecss}>10 / 9</Typography>
-        <Typography align="center" className={classes.scoretypecss}>87分</Typography>
-      </CardContent>
-        <Divider variant="middle"/>
-      <CardContent>
-        <Typography align="center" className={classes.classtypecss}>數 學 B 班</Typography>
-      </CardContent>
-    </Card>
-    </div>
-
-    <div>
-      <Card className={classes.smallcard3}>
-    {/* small card3 */}
-      <CardContent>
-        <Typography align="center" className={classes.datetypecss}>10 / 9</Typography>
-        <Typography align="center" className={classes.scoretypecss}>87分</Typography>
-      </CardContent>
-        <Divider variant="middle"/>
-      <CardContent>
-        <Typography align="center" className={classes.classtypecss}>數 學 B 班</Typography>
-      </CardContent>
-    </Card>
-    </div>
-    </div>
-    </Card>
-    </div>
-    
-  );
+function createData(class_id, test_score, test_date) {
+  return { class_id, test_score, test_date};
 }
+
+class ImgMediaCard extends React.Component {
+  state = {
+    //studentData: [],
+    userData:[],
+  };
+  componentDidMount() {
+    table.select({
+    filterByFormula: 'AND(student_id = 405401369)',
+    view: "Grid view",
+    maxRecords: 3,
+    }).eachPage((records, fetchNextPage) => {
+      //temp.push(records.fields);
+      //this.setState({records});
+      //console.log(records);
+
+      const class_id = records.map((record, index) => record.fields['class_id']);
+      const test_score = records.map((record, index) => record.fields['test_score']);
+      const test_date = records.map((record, index) => record.fields['test_date']);
+      // // This function (`page`) will get called for each page of records.
+
+      var temp=[];
+      for(var index = 0; index < 3; index++) {
+        temp.push(createData(class_id[index], test_score[index], test_date[index]));
+      }
+      console.log(temp);
+      this.setState({ userData : temp });
+      fetchNextPage(); 
+    }
+    );
+    // fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/TestScore?api_key=keyA7EKdngjou4Dgy')
+    // .then((resp) => resp.json())
+    // .then(data => {
+    //    this.setState({ studentData: data.records });
+    // }).catch(err => {
+    //   // Error 🙁
+    // });
+  }
+  render(props){
+    const { classes } = this.props;
+
+    const ClassCard =({test_date,test_score,class_id}) => (
+      <div >
+      <Card className={classes.smallcard1}>
+      {/* small card1 */}
+          <CardContent>
+           <Typography align="center" className={classes.datetypecss}>{test_date}</Typography>
+           <Typography align="center" className={classes.scoretypecss}>{test_score}</Typography>
+          </CardContent>
+          <Divider variant="middle"/>
+          <CardContent>
+            <Typography align="center" className={classes.classtypecss}>{class_id}</Typography>
+          </CardContent>
+        {/* <CardActions>
+          <Button size="small">Learn More</Button>
+        </CardActions> */}
+      </Card>
+      </div>
+    );
+    
+    
+    return (
+      <div>
+      <Card className={classes.card} >
+      {/* big card */}
+       
+        <CardHeader
+            action={
+              <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/score'>
+              <IconButton>
+                <Arrowright/>
+              </IconButton>
+              </NavLink>
+            }
+            className={classes.typetestcss}
+            title="Test Score"
+          />
+     
+      <div className={classes.div1}>
+        {this.state.userData.map(score => <ClassCard {...score} /> )}
+      </div>
+      </Card>
+      </div>
+      
+    );
+  }
+}
+// function ImgMediaCard(props) {
+//   var temp = [];
+//   table.select({
+//     filterByFormula: 'AND(student_id = 405401369)',
+//     view: "Grid view",
+//     maxRecords: 3,
+//     }).eachPage((records, fetchNextPage) => {
+//       //temp.push(records.fields);
+//       //this.setState({records});
+//       //console.log(records);
+
+//       const class_id = records.map((record, index) => record.fields['class_id']);
+//       const test_score = records.map((record, index) => record.fields['test_score']);
+//       const test_date = records.map((record, index) => record.fields['test_date']);
+//       // // This function (`page`) will get called for each page of records.
+
+//       // var temp=[];
+//       for(var index = 0; index < 3; index++) {
+//         temp.push(class_id[index], test_score[index], test_date[index]);
+//       }
+//       console.log(temp[0]);
+//       //this.setState({ userData : temp });
+//       fetchNextPage(); 
+//     }
+//     );
+
+// }
 
 ImgMediaCard.propTypes = {
   classes: PropTypes.object.isRequired,

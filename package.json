@@ -5,9 +5,11 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "airtable": "^0.5.10",
     "antd": "^3.15.0",
     "axios": "^0.18.0",
     "material-ui-icons": "^1.0.0-beta.36",
+    "query-string": "^6.4.2",
     "react": "^16.8.4",
     "react-date-range": "^0.9.4",
     "react-daterange-picker": "^2.0.1",

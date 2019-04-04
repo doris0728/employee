@@ -11,6 +11,28 @@ import Select from '@material-ui/core/Select';
 //import Divider from '@material-ui/core/Divider';
 import { Typography } from 'antd';
 import Divider from '@material-ui/core/Divider';
+
+import Airtable from 'airtable';
+
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+
+let temp = [];
+function caculateMounth(rawDate) {
+  //2019-03-07
+  temp = rawDate.split("-");
+  //console.log("TEMP is");
+  //console.log(temp);
+  // if(temp[1] == "02"){
+  //   rawDate = "二月"
+  // }else{
+  //   rawDate = temp[1] + "月";
+  // }
+  rawDate = temp[1] + "月";
+  
+  return {rawDate};
+}
+
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -58,12 +80,46 @@ class NativeSelects extends React.Component {
     age: '',
     name: '王映心',
     labelWidth: 0,
+    mounth: [],
   };
 
   componentDidMount() {
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     });
+
+    base('Attend').select({view: 'Grid view'})
+    .eachPage(
+      (records, fetchNextPage) => {
+        this.setState({records});
+        console.log(records);
+        const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
+        console.log(attend_date);
+
+        var count = attend_date.length;
+        var temp=[];
+        for(var index = 0; index < count; index++) {
+          // for(var j = 1; j < index; j++) {
+          //   if(caculateMounth(attend_date[j]) != caculateMounth(attend_date[index])){
+          //     console.log(caculateMounth(attend_date[j]));
+          //     console.log(caculateMounth(attend_date[index]));
+          //     temp.push(caculateMounth(attend_date[index]));
+          //   }
+          // }
+          temp.push(caculateMounth(attend_date[index]));
+          
+        }
+        //createData(record.fields['attend_date'], record.fields['attend_time']),record.fields['attend_time'],record.fields['attend_time']);
+        console.log(attend_date);
+        console.log(attend_date[1]);
+        console.log("selectMounth Hello1");
+        console.log(temp);
+        this.setState({ mounth : temp });
+        console.log("selectMounth Hello2");
+        console.log(this.state.mounth);
+        fetchNextPage();
+      }
+    );
   }
 
   handleChange = name => event => {
@@ -109,9 +165,15 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
-            <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
+            {(this.state.mounth)
+                .map((n,index) => {
+                  return (
+                    <option value={index} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n.rawDate}</option>
+                  );
+                })}
+            {/* <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
             <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
-            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
+            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option> */}
           </Select>
         </FormControl>
         </div>

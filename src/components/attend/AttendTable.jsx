@@ -20,11 +20,21 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import RightIcon from '@material-ui/icons/DoneRounded';
 import FailIcon from '@material-ui/icons/CloseRounded';
+import Airtable from 'airtable';
+
+//import { fetchGetCharacterList } from '../../api';
+
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 
 let counter = 0;
 function createData(date, classclass, attend, homework) {
   counter += 1;
-  return { id: counter, date,classclass, attend,homework};
+  if (homework == true){
+    homework = <RightIcon color="primary"/>
+  }else{
+    homework = <FailIcon color="error"/>
+  }
+  return { id: counter, date, classclass, attend, homework};
 }
 
 function desc(a, b, orderBy) {
@@ -63,6 +73,7 @@ class EnhancedTableHead extends React.Component {
     this.props.onRequestSort(event, property);
   };
 
+ 
   render() {
     const { order, orderBy} = this.props;
 
@@ -151,17 +162,51 @@ class EnhancedTable extends React.Component {
     orderBy: 'date',
     selected: [],
     data: [
-      createData('10月7日','數學B班', 3.7,<FailIcon style={{color:'red'}}/>),
-      createData('10月7日', '數學B班',25.0,<RightIcon style={{color:'green'}}/>),
-      createData( '10月7日','數學B班', 16.0, <FailIcon style={{color:'red'}}/>),
-      createData('10月7日','數學B班', 6.0, <FailIcon style={{color:'red'}}/>),
-      createData('10月7日','數學B班', 16.0, <RightIcon style={{color:'green'}}/>),
-      createData('10月7日','數學B班',3.2, <RightIcon style={{color:'green'}}/>),
+      // createData('10月7日','數學B班', 3.7,<FailIcon style={{color:'red'}}/>),
+      // createData('10月7日', '數學B班',25.0,<RightIcon style={{color:'green'}}/>),
+      // createData( '10月7日','數學B班', 16.0, <FailIcon style={{color:'red'}}/>),
+      // createData('10月7日','數學B班', 6.0, <FailIcon style={{color:'red'}}/>),
+      // createData('10月7日','數學B班', 16.0, <RightIcon style={{color:'green'}}/>),
+      // createData('10月7日','數學B班',3.2, <RightIcon style={{color:'green'}}/>),
       
     ],
     // page: 0,
     // rowsPerPage: 5,
   };
+
+  componentDidMount() {
+    // let records = [];
+
+    // fetchGetCharacterList(records);
+    // //console.log((records.fields['attend_date']));
+    // console.log(records);
+    // console.log("it's attend")
+
+    base('Attend').select({view: 'Grid view'})
+    .eachPage(
+      (records, fetchNextPage) => {
+        this.setState({records});
+        console.log(records);
+        const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
+        const attend_time = this.state.records.map((record, index) => record.fields['attend_time']);
+        const attend_hw = this.state.records.map((record, index) => record.fields['attend_hw']);
+        const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+        
+        var count = class_id.length;
+        var temp=[];
+        for(var index = 0; index < count; index++) {
+          temp.push(createData(attend_date[index],class_id[index],attend_time[index],attend_hw[index]));
+        }
+        //createData(record.fields['attend_date'], record.fields['attend_time']),record.fields['attend_time'],record.fields['attend_time']);
+        console.log(attend_date);
+        console.log("attendTable Hello1");
+        console.log(temp);
+        this.setState({ data : temp });
+        fetchNextPage();
+      }
+    );
+      
+  }
 
   handleRequestSort = (event, property) => {
     const orderBy = property;

@@ -15,14 +15,24 @@ import { Typography } from 'antd';
 import Table from './TableTry.jsx'
 
 export default class ScoreComponent extends React.Component{
- 
- 
+    constructor(props) {
+        super(props);
+        this.state = {
+            listDataFromChild: null,
+        };    
+    }
+    myCallback = (dataFromChild) => {
+        this.setState({ listDataFromChild: dataFromChild });
+        console.log('socreComponent');
+        console.log(this.state.listDataFromChild);
+      }
+  
     render() {
         return (
                 <div style={{marginTop:100 , width:100}}>
                 
-                    <SelectClass/>
-                    <Table/>
+                    <SelectClass callbackFromParent={this.myCallback}/>
+                    <Table listNameFromParent={this.state.listDataFromChild}/>
                 </div>
             )
     }

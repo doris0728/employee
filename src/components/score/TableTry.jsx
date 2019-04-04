@@ -18,6 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import SelectClass from './SelectClass.jsx'
 let counter = 0;
 function createData(classclass, date, score, rank) {
   counter += 1;
@@ -48,6 +49,7 @@ function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
+
 const rows = [
   { id: 'classclass', numeric: false, disablePadding: true, label:'班級' },
   { id: 'date', numeric: true, disablePadding: false, label: '日期' },
@@ -59,6 +61,12 @@ class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
     this.props.onRequestSort(event, property);
   };
+  createSelectHandler = event => {
+    this.props.onRequestSelect(event);
+  };
+
+
+
 
   render() {
     const { order, orderBy} = this.props;
@@ -148,17 +156,42 @@ class EnhancedTable extends React.Component {
     orderBy: 'score',
     selected: [],
     data: [
-      createData('數學B班', 305, 3.7, 67),
-      createData('數學A班', 452, 25.0, 51),
-      createData('理化A班', 262, 16.0, 24),
-      createData('國文A班', 159, 6.0, 24),
-      createData('數學A班', 356, 16.0, 49),
-      createData('數學B班', 408, 3.2, 87),
+      // createData('數學B班', 305, 3.7, 67),
+      // createData('數學A班', 452, 25.0, 51),
+      // createData('理化A班', 262, 16.0, 24),
+      // createData('國文A班', 159, 6.0, 24),
+      // createData('數學A班', 356, 16.0, 49),
+      // createData('數學B班', 408, 3.2, 87),
       
     ],
     // page: 0,
     // rowsPerPage: 5,
   };
+
+  componentDidMount() {
+    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/TestScore?api_key=keyA7EKdngjou4Dgy')
+    .then((resp) => resp.json())
+    .then(data => {
+       this.setState({ testScore: data.records });
+
+    //https://cythilya.github.io/2018/06/17/array-and-object-handling/
+    const class_id = this.state.testScore.map(item => Object.values(item)[1].class_id);
+    const test_date = this.state.testScore.map(item => Object.values(item)[1].test_date);
+    const test_score = this.state.testScore.map(item => Object.values(item)[1].test_score);
+    const test_rank = this.state.testScore.map(item => Object.values(item)[1].test_rank);
+    console.log(class_id);
+    var count = class_id.length;
+    var temp=[];
+
+    for(var index = 0; index < count; index++) {
+      temp.push(createData(class_id[index],test_date[index],test_score[index],test_rank[index]));
+    }
+    this.setState({ data : temp });
+    }).catch(err => {
+      // Error 🙁
+    });
+
+  }
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
@@ -171,11 +204,32 @@ class EnhancedTable extends React.Component {
     this.setState({ order, orderBy });
   };
 
+  handleRequestSelect= (event) => {
+    console.log("in tableTry if for if loop");
+    let temp = [];
+    var count = this.state.data.length;
+    if(this.props.listNameFromParent != null){
+      for(var index = 0; index < count; index++) {
+        if(this.state.data[index].classclass == this.props.listNameFromParent){
+          temp.push(this.state.data[index]);
+          console.log(temp);
+        }
+      } 
+      this.setState({ data : temp });
+    }
+  };
+
+  
   render() {
     const { classes } = this.props;
     const { data, order, orderBy } = this.state;
 
+    console.log("get data from Parent");
+    console.log(this.props.listNameFromParent);
+    //data={this.handleRequestSelect}
+
     return (
+      
       <Paper className={classes.root}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <div className={classes.tableWrapper}>
@@ -187,7 +241,7 @@ class EnhancedTable extends React.Component {
               onRequestSort={this.handleRequestSort}
               //rowCount={data.length}
             />
-            <TableBody>
+            <TableBody >
               {stableSort(data, getSorting(order, orderBy))
                 
                 .map(n => {
