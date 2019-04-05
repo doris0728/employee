@@ -13,7 +13,10 @@ import { Typography } from 'antd';
 import Divider from '@material-ui/core/Divider';
 import RangePicker from "react-range-picker"
 //import DateRangePicker from 'react-daterange-picker';
-
+import MultipleDatePicker from 'react-multiple-datepicker'
+import { Input } from 'semantic-ui-react';
+//import DateRangePicker from 'react-daterange-picker';
+//import moment from 'moment-range';
 
 const styles = theme => ({
   root: {
@@ -54,7 +57,13 @@ const styles = theme => ({
     fontSize:13,
     paddingLeft:'79%',
     color:'#FFBF5F',
+  },
+
+  date:{
+    marginLeft:35,
+    marginTop:20,
   }
+
 });
 
 class NativeSelects extends React.Component {
@@ -122,8 +131,9 @@ class NativeSelects extends React.Component {
           </Select>
         </FormControl>
         </div>
-        <div>
-          <RangePicker/>
+        <div className={classes.date}>
+        <MultipleDatePicker onSubmit={dates => console.log('selected date', dates)} className={classes.datepicker}>
+        </MultipleDatePicker>
         </div>
       </div>
     );
