@@ -28,7 +28,8 @@ import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Head from './head.jsx';
 import Logowhite from './image/goodmorningwhite.png';
 
-import ScoreComponent from './score/scoreComponent';
+import ScoreComponent from './score/score-app';
+//import ScoreComponent from './score/scoreComponent';
 import AttendComponent from './attend/attendComponent';
 import ReserveComponent from './reserve/reserveComponent';
 import IndexComponent from './index/appComponent';
