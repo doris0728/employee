@@ -25,11 +25,13 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import ReactDOM from 'react-dom';
 
+
 import Airtable from 'airtable';
 
 const TABLE_NAME = 'TestScore';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
+
 
 
 let counter = 0;
@@ -205,6 +207,7 @@ class EnhancedTable extends React.Component {
     orderBy: 'score',
     selected: [],
     data: [
+
     //   createData('數學B班', 305, 3.7, 67),
     //   createData('數學A班', 452, 25.0, 51),
     //   createData('理化A班', 262, 16.0, 24),
@@ -224,6 +227,8 @@ class EnhancedTable extends React.Component {
     studentData: [],
     classData: [],
     classId:'',
+
+
   };
 
   handleRequestSort = (event, property) => {
@@ -242,6 +247,7 @@ class EnhancedTable extends React.Component {
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     });
+
 
     //for select
     table.select({
@@ -301,10 +307,12 @@ class EnhancedTable extends React.Component {
     }).catch(err => {
       // Error 🙁
     });
+
   }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+
     //for select
     console.log("In handleChange")
 
@@ -323,6 +331,7 @@ class EnhancedTable extends React.Component {
       this.setState({ data : this.state.dataInit });
     }
     
+
 
   };
   //select end
@@ -369,6 +378,7 @@ class EnhancedTable extends React.Component {
           }
         >
           <option value="" />
+
           <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>全部科目</option>
           {/* <option value="" /> */}
           {/* <option value="" /> */}
@@ -381,6 +391,7 @@ class EnhancedTable extends React.Component {
           {/* <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>國文A班</option>
           <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學B班</option>
           <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化A班</option> */}
+
         </Select>
       </FormControl>
       </div>
@@ -441,4 +452,6 @@ EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+
 export default withStyles(styles)(EnhancedTable);
+

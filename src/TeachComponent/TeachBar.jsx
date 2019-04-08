@@ -25,18 +25,10 @@ import AssignIcon from '@material-ui/icons/AssignmentRounded';
 import EventIcon from '@material-ui/icons/EventRounded';
 import FaceIcon from '@material-ui/icons/FaceRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
-import Head from './head.jsx';
+import Head from './TeachHead.jsx';
 import Logowhite from './image/goodmorningwhite.png';
-
-import ScoreComponent from './score/score-app';
-//import ScoreComponent from './score/scoreComponent';
-import AttendComponent from './attend/attendComponent';
-import ReserveComponent from './reserve/reserveComponent';
-import IndexComponent from './index/appComponent';
-import Reserve2 from './reserve2/reserveComponent2';
-import Reserve3 from './reserveList/reserveListComponent';
-import MyPage from './studentpage/studentpage';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import myclassComponent from './myclass/myclassComponent'
 
 const theme = createMuiTheme({
   typography: {
@@ -53,7 +45,7 @@ const styles = theme => ({
     //fontfamily:"Microsoft JhengHei",
   },
   appBar: {
-    background:'#FFBF5F',
+    background:'#5b00ae',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -123,7 +115,7 @@ const styles = theme => ({
 
 class MiniDrawer extends React.Component {
   state = {
-    open: false, 
+    open: true, 
   };
 
   handleDrawerOpen = () => {
@@ -149,7 +141,7 @@ class MiniDrawer extends React.Component {
         <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <AppBar
-          position="fixed"
+          //position="fixed"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: this.state.open,
           })}
@@ -219,12 +211,13 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/">
+        <NavLink activeClassName="active" to="/" style={{textDecoration:'none'}}>
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
               </ListItemIcon>
-            <ListItemText primary="Index"/>
+            <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>我的班級</a></ListItemText>
           </ListItem>
         </NavLink>
 
@@ -265,14 +258,12 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
         
-        <NavLink activeClassName="active" to="/mypage">
         <ListItem button>
           <ListItemIcon>
             <FaceIcon />
           </ListItemIcon>
           <ListItemText inset primary="My Page" />
         </ListItem>
-        </NavLink>
 
         <br></br>
 
@@ -297,13 +288,13 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
-          <Route exact path="/" component={IndexComponent}/>
+          <Route exact path="/" component={myclassComponent}/>
+          {/* <Route exact path="/" component={IndexComponent}/>
           <Route path="/attend" component={AttendComponent} />
           <Route path="/score" component={ScoreComponent} />
           <Route path="/reserve" component={ReserveComponent}/>
           <Route path="/reserve2" component={Reserve2}/>
-          <Route path="/reserve3" component={Reserve3}/>
-          <Route path="/mypage" component={MyPage}/>
+          <Route path="/reserve3" component={Reserve3}/> */}
         </div>
         </MuiThemeProvider>
       </div>

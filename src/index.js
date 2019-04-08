@@ -6,8 +6,20 @@ import * as serviceWorker from './serviceWorker';
 import Bar from './components/Bar.jsx'
 import Try from './components/tabletry.jsx'
 import Reserve from './components/reserve/reserveComponent.jsx'
+import Login from './components/Loginpage/logincomponent'
+import TeachBar from './TeachComponent/TeachBar'
 
-ReactDOM.render(<Bar />, document.getElementById('root'));
+// const user = 'student';
+// const viewpage =(user)=> {
+//     switch (user){
+//         case 'teacher' : return <TeachBar/>
+
+//         case 'student': return <Bar/>
+//     }
+// }
+
+ReactDOM.render(<Bar/>, document.getElementById('root'));
+//ReactDOM.render({viewpage}, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

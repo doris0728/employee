@@ -24,16 +24,16 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(Class, Date, Score, Ranking) {
+function createData(Class, Homework, Date) {
   id += 1;
-  return { id, Class, Date, Score, Ranking };
+  return { id, Class, Homework, Date };
 }
 
 const rows = [
-  createData('Math B', '10/2', 87, 24),
-  createData('Chinese A', '10/2', 87, 37),
-  createData('English C', '10/2', 87, 24),
-  createData('Math B', '10/2', 87, 87),
+  createData('Math B', '繳交數學本 p.66~p.70' , '10/2'),
+  createData('Chinese A', '繳交數學本 p.66~p.70', '10/2'),
+  createData('English C', '繳交數學本 p.66~p.70', '10/2'),
+  createData('Math B', '繳交數學本 p.66~p.70', '10/2'),
 ];
 
 function SimpleTable(props) {
@@ -45,20 +45,16 @@ function SimpleTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Class</TableCell>
-            <TableCell align="right">Date</TableCell>
-            <TableCell align="right">Score</TableCell>
-            <TableCell align="right">Ranking</TableCell>
+            <TableCell >Homework</TableCell>
+            <TableCell>Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.Class}
-              </TableCell>
-              <TableCell align="right">{row.Date}</TableCell>
-              <TableCell align="right">{row.Score}</TableCell>
-              <TableCell align="right">{row.Ranking}</TableCell>
+              <TableCell component="th" scope="row">{row.Class}</TableCell>
+              <TableCell>{row.Homework}</TableCell>
+              <TableCell>{row.Date}</TableCell>
             </TableRow>
           ))}
         </TableBody>

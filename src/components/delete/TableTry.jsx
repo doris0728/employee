@@ -18,20 +18,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import Divider from '@material-ui/core/Divider';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import ReactDOM from 'react-dom';
-import RightIcon from '@material-ui/icons/DoneRounded';
-import FailIcon from '@material-ui/icons/CloseRounded';
-
-
+import SelectClass from './SelectClass.jsx'
 let counter = 0;
-function createData(date, classclass, attend, homework) {
+function createData(classclass, date, score, rank) {
   counter += 1;
-  return { id: counter, date, classclass, attend, homework};
+  return { id: counter, classclass, date, score, rank};
 }
 
 function desc(a, b, orderBy) {
@@ -58,21 +49,27 @@ function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
+
 const rows = [
-  { id: 'date', numeric: false, disablePadding: true, label:'日期' },
-  { id: 'classclass', numeric: true, disablePadding: false, label: '班級' },
-  { id: 'attend', numeric: true, disablePadding: false, label: '出勤紀錄' },
-  { id: 'homework', numeric: true, disablePadding: false, label: '作業紀錄' },
+  { id: 'classclass', numeric: false, disablePadding: true, label:'班級' },
+  { id: 'date', numeric: true, disablePadding: false, label: '日期' },
+  { id: 'score', numeric: true, disablePadding: false, label: '分數' },
+  { id: 'rank', numeric: true, disablePadding: false, label: '排名' },
 ];
 
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
     this.props.onRequestSort(event, property);
   };
+  createSelectHandler = event => {
+    this.props.onRequestSelect(event);
+  };
+
+
+
 
   render() {
     const { order, orderBy} = this.props;
-    
 
     return (
       <TableHead>
@@ -110,30 +107,30 @@ class EnhancedTableHead extends React.Component {
   }
 }
 
-// const toolbarStyles = theme => ({
-//   root: {
-//     paddingRight: theme.spacing.unit,
-//   },
-//   highlight:
-//     theme.palette.type === 'light'
-//       ? {
-//           color: theme.palette.secondary.main,
-//           backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-//         }
-//       : {
-//           color: theme.palette.text.primary,
-//           backgroundColor: theme.palette.secondary.dark,
-//         },
-//   spacer: {
-//     flex: '1 1 100%',
-//   },
-//   actions: {
-//     color: theme.palette.text.secondary,
-//   },
-//   title: {
-//     flex: '0 0 auto',
-//   },
-// });
+const toolbarStyles = theme => ({
+  root: {
+    paddingRight: theme.spacing.unit,
+  },
+  highlight:
+    theme.palette.type === 'light'
+      ? {
+          color: theme.palette.secondary.main,
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+        }
+      : {
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.secondary.dark,
+        },
+  spacer: {
+    flex: '1 1 100%',
+  },
+  actions: {
+    color: theme.palette.text.secondary,
+  },
+  title: {
+    flex: '0 0 auto',
+  },
+});
 
 const styles = theme => ({
   root: {
@@ -151,69 +148,50 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
-  //以下都是Select的
-  SelectRoot: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    //marginLeft:'42px',
-    //marginTop:20,
-    //height:'50px',
-    width:'92vw'
-  },
-  SelectTable:{
-    //marginTop:'3vh',
-    align:'center',
-    width:'100%',
-  },
-  formControl: {
-    margin: 5,
-    minWidth: 200,
-    maxHeight:50,
-    marginTop:20,
-    marginLeft:35,
-  },
-  selectEmpty: {
-   // marginTop: theme.spacing.unit * 2,
-  },
-  text:{
-    //marginLeft:35,
-    width:'100%',
-    marginBottom:15,
-    fontSize:20,
-    fontWeight: "bold",
-    color:'#969696',
-    fontFamily: "Microsoft JhengHei",
-    letterSpacing:4,
-  },
-  textRight:{
-    fontSize:13,
-    paddingLeft:'71%',
-    color:'#FFBF5F',
-  }
 });
 
-
-//const { classes } = this.props; //這是setlect的
 class EnhancedTable extends React.Component {
   state = {
-    //table的 
     order: 'asc',
     orderBy: 'score',
     selected: [],
     data: [
-        createData('10月7日','數學B班', 3.7,<FailIcon style={{color:'red'}}/>),
-        createData('10月7日', '數學B班',25.0,<RightIcon style={{color:'green'}}/>),
-        createData( '10月7日','數學B班', 16.0, <FailIcon style={{color:'red'}}/>),
-        createData('10月7日','數學B班', 6.0, <FailIcon style={{color:'red'}}/>),
-        createData('10月7日','數學B班', 16.0, <RightIcon style={{color:'green'}}/>),
-        createData('10月7日','數學B班',3.2, <RightIcon style={{color:'green'}}/>),
+      // createData('數學B班', 305, 3.7, 67),
+      // createData('數學A班', 452, 25.0, 51),
+      // createData('理化A班', 262, 16.0, 24),
+      // createData('國文A班', 159, 6.0, 24),
+      // createData('數學A班', 356, 16.0, 49),
+      // createData('數學B班', 408, 3.2, 87),
       
     ],
-    //下面是select跟title的
-    age: '',
-    name: '王映心',
-    labelWidth: 0,
+    // page: 0,
+    // rowsPerPage: 5,
   };
+
+  componentDidMount() {
+    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/TestScore?api_key=keyA7EKdngjou4Dgy')
+    .then((resp) => resp.json())
+    .then(data => {
+       this.setState({ testScore: data.records });
+
+    //https://cythilya.github.io/2018/06/17/array-and-object-handling/
+    const class_id = this.state.testScore.map(item => Object.values(item)[1].class_id);
+    const test_date = this.state.testScore.map(item => Object.values(item)[1].test_date);
+    const test_score = this.state.testScore.map(item => Object.values(item)[1].test_score);
+    const test_rank = this.state.testScore.map(item => Object.values(item)[1].test_rank);
+    console.log(class_id);
+    var count = class_id.length;
+    var temp=[];
+
+    for(var index = 0; index < count; index++) {
+      temp.push(createData(class_id[index],test_date[index],test_score[index],test_rank[index]));
+    }
+    this.setState({ data : temp });
+    }).catch(err => {
+      // Error 🙁
+    });
+
+  }
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
@@ -226,70 +204,32 @@ class EnhancedTable extends React.Component {
     this.setState({ order, orderBy });
   };
 
-  //select start
-  componentDidMount() {
-    this.setState({
-      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-    });
-  }
-
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
+  handleRequestSelect= (event) => {
+    console.log("in tableTry if for if loop");
+    let temp = [];
+    var count = this.state.data.length;
+    if(this.props.listNameFromParent != null){
+      for(var index = 0; index < count; index++) {
+        if(this.state.data[index].classclass == this.props.listNameFromParent){
+          temp.push(this.state.data[index]);
+          console.log(temp);
+        }
+      } 
+      this.setState({ data : temp });
+    }
   };
-  //select end
 
+  
   render() {
     const { classes } = this.props;
     const { data, order, orderBy } = this.state;
 
+    console.log("get data from Parent");
+    console.log(this.props.listNameFromParent);
+    //data={this.handleRequestSelect}
+
     return (
-    <div style={{marginTop:100}}>
-
-    {/* 下面是select跟title */}
-    <div className={classes.SelectRoot}>
       
-      <div className={classes.SelectTable}>
-          <Typography class={classes.text} nowrap={true}>
-            <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.name}</a><a>的出勤紀錄</a>
-            <a class={classes.textRight}>107學年</a>
-          </Typography>
-     
-      
-      <Divider variant="middle"/>
-      <FormControl variant="outlined" className={classes.formControl}>
-      
-        <InputLabel 
-          ref={ref => {
-            this.InputLabelRef = ref;
-          }}
-          htmlFor="outlined-age-native-simple"
-          style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
-        >
-          選擇月份
-        </InputLabel>
-        <Select
-          native
-          value={this.state.age}
-          onChange={this.handleChange('age')}
-          input={
-            <OutlinedInput
-              name="Age"
-              labelWidth={this.state.labelWidth}
-              id="outlined-age-native-simple"
-            />
-          }
-        >
-          <option value="" />
-          <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
-          <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
-          <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
-        </Select>
-      </FormControl>
-      </div>
-    </div>
-    {/* select跟title結束 */}
-
-    {/* 下面是table */}
       <Paper className={classes.root}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <div className={classes.tableWrapper}>
@@ -301,7 +241,7 @@ class EnhancedTable extends React.Component {
               onRequestSort={this.handleRequestSort}
               //rowCount={data.length}
             />
-            <TableBody>
+            <TableBody >
               {stableSort(data, getSorting(order, orderBy))
                 
                 .map(n => {
@@ -311,20 +251,20 @@ class EnhancedTable extends React.Component {
                       <TableCell component="th" scope="row" padding="none" align="center"
                       style={{color:'#969696',fontFamily: "Microsoft JhengHei",
                       letterSpacing:4,fontSize:15}}>
-                        {n.date}
+                        {n.classclass}
                       </TableCell>
 
                       <TableCell align="center"
                       style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15}}>{n.classclass}</TableCell>
+                      letterSpacing:4,fontSize:15}}>{n.date}</TableCell>
 
                       <TableCell align="center"
                       style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15}}>{n.attend}</TableCell>
+                      letterSpacing:4,fontSize:15}}>{n.score}</TableCell>
 
                       <TableCell align="center"
                       style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15}}>{n.homework}</TableCell>
+                      letterSpacing:4,fontSize:15}}>{n.rank}</TableCell>
 
                     </TableRow>
                   );
@@ -333,8 +273,6 @@ class EnhancedTable extends React.Component {
           </Table>
         </div>
       </Paper>
-      {/* table結束 */}
-    </div>
     );
   }
 }

@@ -13,7 +13,10 @@ import { Typography } from 'antd';
 import Divider from '@material-ui/core/Divider';
 import RangePicker from "react-range-picker"
 //import DateRangePicker from 'react-daterange-picker';
-
+import MultipleDatePicker from 'react-multiple-datepicker'
+import { Input } from 'semantic-ui-react';
+//import DateRangePicker from 'react-daterange-picker';
+//import moment from 'moment-range';
 
 const styles = theme => ({
   root: {
@@ -34,7 +37,7 @@ const styles = theme => ({
     minWidth: 200,
     maxHeight:50,
     marginTop:20,
-    marginLeft:35,
+    marginLeft:65,
   },
   selectEmpty: {
    // marginTop: theme.spacing.unit * 2,
@@ -54,7 +57,13 @@ const styles = theme => ({
     fontSize:13,
     paddingLeft:'79%',
     color:'#FFBF5F',
+  },
+
+  date:{
+    marginLeft:35,
+    marginTop:20,
   }
+
 });
 
 class NativeSelects extends React.Component {
@@ -99,7 +108,7 @@ class NativeSelects extends React.Component {
               this.InputLabelRef = ref;
             }}
             htmlFor="outlined-age-native-simple"
-            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
+            style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
           >
             選擇地區
           </InputLabel>
@@ -116,14 +125,15 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
-            <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>台北校區</option>
-            <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>古亭校區</option>
-            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>板橋校區</option>
+            <option value="1" style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>台北校區</option>
+            <option value="2" style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>古亭校區</option>
+            <option value="3" style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>板橋校區</option>
           </Select>
         </FormControl>
         </div>
-        <div>
-          <RangePicker/>
+        <div className={classes.date}>
+        <MultipleDatePicker onSubmit={dates => console.log('selected date', dates)} className={classes.datepicker}>
+        </MultipleDatePicker>
         </div>
       </div>
     );
