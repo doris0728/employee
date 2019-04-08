@@ -30,7 +30,7 @@ let counter = 0;
 function createData(date, classclass, attend, homework) {
   counter += 1;
   if (homework == true){
-    homework = <RightIcon color="primary"/>
+    homework = <RightIcon style={{color:'#00a600'}}/>
   }else{
     homework = <FailIcon color="error"/>
   }
