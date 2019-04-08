@@ -25,17 +25,10 @@ import AssignIcon from '@material-ui/icons/AssignmentRounded';
 import EventIcon from '@material-ui/icons/EventRounded';
 import FaceIcon from '@material-ui/icons/FaceRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
-import Head from './head.jsx';
-import Logowhite from './image/goodmorningwhite.png';
+import StudentComponent from './studentcomponent.jsx';
+import Head from'./head.jsx';
+import Logowhite from './images/goodmorningwhite.png';
 
-import ScoreComponent from './score/scoreComponent';
-import AttendComponent from './attend/attendComponent';
-import ReserveComponent from './reserve/reserveComponent';
-import IndexComponent from './index/appComponent';
-import Reserve2 from './reserve2/reserveComponent2';
-import Reserve3 from './reserveList/reserveListComponent';
-import MyPage from './studentpage/studentpage';
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const theme = createMuiTheme({
   typography: {
@@ -50,6 +43,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     //fontfamily:"Microsoft JhengHei",
+    
   },
   appBar: {
     background:'#FFBF5F',
@@ -112,17 +106,13 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
   },
 
-  component:{
-    marginLeft:'1px',
-    marginRight:'1px',
-  }
+
   
 });
 
-
 class MiniDrawer extends React.Component {
   state = {
-    open: false, 
+    open: false,
   };
 
   handleDrawerOpen = () => {
@@ -133,17 +123,13 @@ class MiniDrawer extends React.Component {
     this.setState({ open: false });
   };
 
-  constuctor() {
-    this.indexbutton = this.indexbutton.bind(this);
-  }
 
-
+  
 
   render() {
     const { classes, theme } = this.props;
-  
+
     return (
-      <Router>
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
         <CssBaseline />
@@ -217,18 +203,15 @@ class MiniDrawer extends React.Component {
           </List> */}
 
         <br></br>
-        
-        <NavLink activeClassName="active" to="/">
-          <ListItem button>
-              <ListItemIcon>
-                  <GlobeIcon />
-              </ListItemIcon>
+        <ListItem button>
+            <ListItemIcon>
+                <GlobeIcon />
+            </ListItemIcon>
             <ListItemText primary="Index"/>
-          </ListItem>
-        </NavLink>
+        </ListItem>
 
         <ListItem button>
-          <ListItemIcon  >
+          <ListItemIcon>
             <LatestnewsIcon />
           </ListItemIcon>
           {/* <Typography>
@@ -237,41 +220,34 @@ class MiniDrawer extends React.Component {
           <ListItemText inset primary="Latest News" />
         </ListItem>
 
-        <NavLink activeClassName='active' to='/score'>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
           </ListItemIcon>
           <ListItemText inset primary="My Score" />
         </ListItem>
-        </NavLink>
 
-        <NavLink activeClassName='active' to='/attend'>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
           </ListItemIcon>
           <ListItemText inset primary="My Attendance" />
         </ListItem>
-        </NavLink>
 
-        <NavLink activeClassName="active" to="/reserve">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
           <ListItemText inset primary="Make-up Class" />
         </ListItem>
-        </NavLink>
+
         
-        <NavLink activeClassName="active" to="/mypage">
         <ListItem button>
           <ListItemIcon>
             <FaceIcon />
           </ListItemIcon>
           <ListItemText inset primary="My Page" />
         </ListItem>
-        </NavLink>
 
         <br></br>
 
@@ -293,25 +269,14 @@ class MiniDrawer extends React.Component {
           <ListItemText inset primary="Log Out" />
         </ListItem>
         </Drawer>
-
-        {/* 插入components */}
-        <div>
-          <Route exact path="/" component={IndexComponent}/>
-          <Route path="/attend" component={AttendComponent} />
-          <Route path="/score" component={ScoreComponent} />
-          <Route path="/reserve" component={ReserveComponent}/>
-          <Route path="/reserve2" component={Reserve2}/>
-          <Route path="/reserve3" component={Reserve3}/>
-          <Route path="/mypage" component={MyPage}/>
-        </div>
+        <StudentComponent/>
+          HOME
         </MuiThemeProvider>
       </div>
-
-        
-      </Router>
     );
   }
 }
+
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,

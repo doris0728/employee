@@ -40,7 +40,7 @@ const styles = theme => ({
     minWidth: 200,
     maxHeight:50,
     marginTop:20,
-    marginLeft:35,
+    marginLeft:65,
   },
   selectEmpty: {
    // marginTop: theme.spacing.unit * 2,
@@ -207,7 +207,7 @@ class NativeSelects extends React.Component {
               this.InputLabelRef = ref;
             }}
             htmlFor="outlined-age-native-simple"
-            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
+            style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}
           >
             選擇班級/科目
           </InputLabel>
@@ -227,7 +227,7 @@ class NativeSelects extends React.Component {
             {(this.state.classData)
                 .map((n,index) => {
                   return (
-                    <option value={n} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n}</option>
+                    <option value={n} style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n}</option>
                   );
                 })}
             {/* {Classes} */}
