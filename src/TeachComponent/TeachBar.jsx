@@ -29,6 +29,7 @@ import Head from './TeachHead.jsx';
 import Logowhite from './image/goodmorningwhite.png';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import myclassComponent from './myclass/myclassComponent'
+import ClassDetail from './classDetail/classDetailComponent'
 
 const theme = createMuiTheme({
   typography: {
@@ -45,7 +46,7 @@ const styles = theme => ({
     //fontfamily:"Microsoft JhengHei",
   },
   appBar: {
-    background:'#5b00ae',
+    background:'#5A3DAA',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -289,6 +290,7 @@ class MiniDrawer extends React.Component {
         {/* 插入components */}
         <div>
           <Route exact path="/" component={myclassComponent}/>
+          <Route path="/Tclass" component={ClassDetail}/>
           {/* <Route exact path="/" component={IndexComponent}/>
           <Route path="/attend" component={AttendComponent} />
           <Route path="/score" component={ScoreComponent} />
