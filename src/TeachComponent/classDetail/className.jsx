@@ -10,12 +10,14 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { BrowserRouter as NavLink } from "react-router-dom";
+import TeachButton from '@material-ui/icons/ListOutlined'
+import HomeworkButton from '@material-ui/icons/EditOutlined'
 
 const styles = {
   card: {
     //maxWidth: 345,
     height: 75,
-    width:'80%',
+    //width:'80%',
     marginTop:30,
   },
 
@@ -54,16 +56,25 @@ const styles = {
   divclass:{
     //backgroundColor:'red',
     //width:420
-    width:200
+    width:180
+  },
+  textrecord:{
+    color: "#818181",
+    fontFamily: "Microsoft Jhenghei",
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop:26,
+    //marginLeft:25
+  },
+  button:{
+      marginTop:10,
   }
 };
 
 function classCard(props) {
   const { classes } = props;
   return (
-
     <div align="center">
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/Tclass'>
     <Card className={classes.card}>
     <div>
     
@@ -94,71 +105,16 @@ function classCard(props) {
             </div>
         </CardContent>
         </div>
-        
-        </div>
-      </CardActionArea>
-      
-      </div>
-    </Card></NavLink>
 
-    <Card className={classes.card}>
-    <div>
-      <CardActionArea>
-        <div className={classes.div1}> 
-        <div className={classes.divclass}>
-        <CardContent>
-            <Typography className={classes.text}>數學B班</Typography>
-        </CardContent>
-        </div>
         <div>
         <CardContent>
-            <div>
-            <Typography className={classes.textdetail}>
-                每周四 21:30 ~ 23:00
+            <Typography className={classes.textrecord}>
+                <HomeworkButton style={{marginLeft:60}}/>
+                <a style={{marginLeft:5}}>考試紀錄</a>
+                <TeachButton style={{marginLeft:20}}/>
+                <a style={{marginLeft:5}}>教學紀錄</a>
             </Typography>
-            </div>
-        </CardContent>
-        </div>
-        <div>
-        <CardContent>
-            <div>
-            <Typography className={classes.textdetail}>
-                古亭校區 3樓
-            </Typography>
-            </div>
-        </CardContent>
-        </div>
-        
-        </div>
-      </CardActionArea>
-      </div>
-    </Card>
-
-    <Card className={classes.card}>
-    <div>
-      <CardActionArea>
-        <div className={classes.div1}> 
-        <div className={classes.divclass}>
-        <CardContent>
-            <Typography className={classes.text}>數學複習班</Typography>
-        </CardContent>
-        </div>
-        <div>
-        <CardContent>
-            <div>
-            <Typography className={classes.textdetail}>
-                每周六 21:30 ~ 23:00
-            </Typography>
-            </div>
-        </CardContent>
-        </div>
-        <div>
-        <CardContent>
-            <div>
-            <Typography className={classes.textdetail}>
-                板橋校區 11樓
-            </Typography>
-            </div>
+            
         </CardContent>
         </div>
         
