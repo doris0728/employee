@@ -18,14 +18,30 @@ const styles = {
   },
 };
 
-function ImageAvatars(props) {
-  const { classes } = props;
-  return (
-    <Grid container justify="center" alignItems="center">
+// function ImageAvatars(props) {
+//   const { classes } = props;
+//   console.log( this.props.listNameFromParent );
+//   return (
+//     <Grid container justify="center" alignItems="center">
+//       {/* <Avatar src={image} className={classes.avatar} /> */}
+//       <Avatar src={image} className={classes.bigAvatar} />
+//     </Grid>
+//   );
+// }
+
+class ImageAvatars extends React.Component {
+  render(props){
+
+    //console.log( this.props.ImgFromParent );
+    const { classes } = this.props;
+    
+    return ( 
+      <Grid container justify="center" alignItems="center">
       {/* <Avatar src={image} className={classes.avatar} /> */}
-      <Avatar src={image} className={classes.bigAvatar} />
-    </Grid>
-  );
+      <Avatar src={this.props.ImgFromParent} className={classes.bigAvatar} />
+      </Grid>
+   );
+  }
 }
 
 ImageAvatars.propTypes = {

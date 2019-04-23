@@ -25,13 +25,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import ReactDOM from 'react-dom';
 
-
 import Airtable from 'airtable';
 
 const TABLE_NAME = 'TestScore';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
-
 
 
 let counter = 0;
@@ -198,260 +196,257 @@ const styles = theme => ({
   }
 });
 
-
 //const { classes } = this.props; //這是setlect的
 class EnhancedTable extends React.Component {
-  state = {
-    //table的 
-    order: 'asc',
-    orderBy: 'score',
-    selected: [],
-    data: [
-
-    //   createData('數學B班', 305, 3.7, 67),
-    //   createData('數學A班', 452, 25.0, 51),
-    //   createData('理化A班', 262, 16.0, 24),
-    //   createData('國文A班', 159, 6.0, 24),
-    //   createData('數學A班', 356, 16.0, 49),
-    //   createData('數學B班', 408, 3.2, 87),
-      
-    ],
-    dataInit:[],
-    //下面是select跟title的
-    // age: '',
-    // name: '王映心',
-    // labelWidth: 0,
-    age: '',
-    name: '',
-    labelWidth: 0,
-    studentData: [],
-    classData: [],
-    classId:'',
-
-
-  };
-
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = 'desc';
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
-    }
-
-    this.setState({ order, orderBy });
-  };
-
-  //select start
-  componentDidMount() {
-    this.setState({
-      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-    });
-
-
-    //for select
-    table.select({
-        filterByFormula: 'AND(student_id = 405401369)',
-        view: "Grid view"
-        }).eachPage((records, fetchNextPage) => {
-          this.setState({records});
-          console.log(records);
-          const class_id = this.state.records.map((record, index) => record.fields['class_id']);
-          // This function (`page`) will get called for each page of records.
-          var count = class_id.length;
-          var temp=[];
-          for(var index = 0; index < count; index++) {
-            temp.push(class_id[index]);
-          
-          }
-          this.setState({ classData : temp });
-          fetchNextPage(); 
-        }
-        );
-
-    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
-    .then((resp) => resp.json())
-    .then(data => {
-       this.setState({ studentData: data.records });
-
-       const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
-       var temp = student_name[1];
-       console.log("SelectClass Hello");
-       console.log(student_name);
-      
-       this.setState({ name : temp });
-    }).catch(err => {
-      // Error 🙁
-    });
-
-    //for table
-    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/TestScore?api_key=keyA7EKdngjou4Dgy')
-    .then((resp) => resp.json())
-    .then(data => {
-       this.setState({ testScore: data.records });
-
-    //https://cythilya.github.io/2018/06/17/array-and-object-handling/
-    const class_id = this.state.testScore.map(item => Object.values(item)[1].class_id);
-    const test_date = this.state.testScore.map(item => Object.values(item)[1].test_date);
-    const test_score = this.state.testScore.map(item => Object.values(item)[1].test_score);
-    const test_rank = this.state.testScore.map(item => Object.values(item)[1].test_rank);
-    console.log(class_id);
-    var count = class_id.length;
-    var temp=[];
-
-    for(var index = 0; index < count; index++) {
-      temp.push(createData(class_id[index],test_date[index],test_score[index],test_rank[index]));
-    }
-    this.setState({ data : temp });
-    this.setState({ dataInit : temp })
-    }).catch(err => {
-      // Error 🙁
-    });
-
-  }
-
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-
-    //for select
-    console.log("In handleChange")
-
-    let temp = [];
-    var count = this.state.dataInit.length;
-    console.log(event.target.value);
-
-    for(var index = 0; index < count; index++) {
-      if(this.state.dataInit[index].classclass == event.target.value){
-        temp.push(this.state.dataInit[index]);
-        //console.log(temp);
+    state = {
+      //table的 
+      order: 'asc',
+      orderBy: 'score',
+      selected: [],
+      data: [
+      //   createData('數學B班', 305, 3.7, 67),
+      //   createData('數學A班', 452, 25.0, 51),
+      //   createData('理化A班', 262, 16.0, 24),
+      //   createData('國文A班', 159, 6.0, 24),
+      //   createData('數學A班', 356, 16.0, 49),
+      //   createData('數學B班', 408, 3.2, 87),
+        
+      ],
+      dataInit:[],
+      //下面是select跟title的
+      // age: '',
+      // name: '王映心',
+      // labelWidth: 0,
+      age: '',
+      name: '',
+      labelWidth: 0,
+      studentData: [],
+      classData: [],
+      classId:'',
+    };
+  
+    handleRequestSort = (event, property) => {
+      const orderBy = property;
+      let order = 'desc';
+  
+      if (this.state.orderBy === property && this.state.order === 'desc') {
+        order = 'asc';
       }
-    } 
-    this.setState({ data : temp });
-    if(event.target.value == "1"){
-      this.setState({ data : this.state.dataInit });
-    }
-    
+  
+      this.setState({ order, orderBy });
+    };
+  
+    //select start
+    componentDidMount() {
+      this.setState({
+        labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+      });
+  
+      //for select
+      table.select({
+          filterByFormula: 'AND(student_id = 405401369)',
+          view: "Grid view"
+          }).eachPage((records, fetchNextPage) => {
+            this.setState({records});
+            console.log(records);
+            const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+            // This function (`page`) will get called for each page of records.
+            var count = class_id.length;
+            var temp=[];
+            var temp2=[];
+            for(var index = 0; index < count; index++) {
+              temp.push(class_id[index]);
+            }
 
+            var classResult = temp.filter(function(element, index, arr){
+              return arr.indexOf(element) === index;
+            });
+            console.log(classResult);
+            for(var index = 0; index < classResult.length; index++){
+              temp2.push(classResult[index]);
+            }
 
-  };
-  //select end
-
-  render() {
-    const { classes } = this.props;
-    const { data, order, orderBy } = this.state;
-
-    return (
-    <div style={{marginTop:100}}>
-
-    {/* 下面是select跟title */}
-    <div className={classes.SelectRoot}>
-      
-      <div className={classes.SelectTable}>
-          <Typography class={classes.text} nowrap={true}>
-            <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.name}</a><a>的成績</a>
-            <a class={classes.textRight}>107學年</a>
-          </Typography>
-     
-      
-      <Divider variant="middle"/>
-      <FormControl variant="outlined" className={classes.formControl}>
-      
-        <InputLabel 
-          ref={ref => {
-            this.InputLabelRef = ref;
-          }}
-          htmlFor="outlined-age-native-simple"
-          style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
-        >
-          選擇班級/科目
-        </InputLabel>
-        <Select
-          native
-          value={this.state.age}
-          onChange={this.handleChange('age')}
-          input={
-            <OutlinedInput
-              name="Age"
-              labelWidth={this.state.labelWidth}
-              id="outlined-age-native-simple"
-            />
+            this.setState({ classData : temp2 });
+            fetchNextPage(); 
           }
-        >
-          <option value="" />
-
-          <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>全部科目</option>
-          {/* <option value="" /> */}
-          {/* <option value="" /> */}
-            {(this.state.classData)
-                .map((n,index) => {
-                  return (
-                    <option value={n} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n}</option>
-                  );
-                })}
-          {/* <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>國文A班</option>
-          <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學B班</option>
-          <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化A班</option> */}
-
-        </Select>
-      </FormControl>
-      </div>
-    </div>
-    {/* select跟title結束 */}
-
-    {/* 下面是table */}
-      <Paper className={classes.root}>
-        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              // numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={this.handleRequestSort}
-              //rowCount={data.length}
-            />
-            <TableBody>
-              {stableSort(data, getSorting(order, orderBy))
-                
-                .map(n => {
-                  return (
-                    <TableRow>
-
-                      <TableCell component="th" scope="row" padding="none" align="center"
-                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15}}>
-                        {n.classclass}
-                      </TableCell>
-
-                      <TableCell align="center"
-                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15}}>{n.date}</TableCell>
-
-                      <TableCell align="center"
-                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15}}>{n.score}</TableCell>
-
-                      <TableCell align="center"
-                      style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15}}>{n.rank}</TableCell>
-
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
+          );
+      //for studnet name
+      fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
+      .then((resp) => resp.json())
+      .then(data => {
+         this.setState({ studentData: data.records });
+  
+         const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
+         var temp = student_name[1];
+         console.log("SelectClass Hello");
+         console.log(student_name);
+        
+         this.setState({ name : temp });
+      }).catch(err => {
+        // Error 🙁
+      });
+  
+      //for table
+      fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/TestScore?api_key=keyA7EKdngjou4Dgy')
+      .then((resp) => resp.json())
+      .then(data => {
+         this.setState({ testScore: data.records });
+  
+      //https://cythilya.github.io/2018/06/17/array-and-object-handling/
+      const class_id = this.state.testScore.map(item => Object.values(item)[1].class_id);
+      const test_date = this.state.testScore.map(item => Object.values(item)[1].test_date);
+      const test_score = this.state.testScore.map(item => Object.values(item)[1].test_score);
+      const test_rank = this.state.testScore.map(item => Object.values(item)[1].test_rank);
+      console.log(class_id);
+      var count = class_id.length;
+      var temp=[];
+  
+      for(var index = 0; index < count; index++) {
+        temp.push(createData(class_id[index],test_date[index],test_score[index],test_rank[index]));
+      }
+      this.setState({ data : temp });
+      this.setState({ dataInit : temp })
+      }).catch(err => {
+        // Error 🙁
+      });
+    }
+  
+    handleChange = name => event => {
+      this.setState({ [name]: event.target.value });
+      //for select
+      console.log("In handleChange");
+  
+      let temp = [];
+      var count = this.state.dataInit.length;
+      console.log(event.target.value);
+  
+      for(var index = 0; index < count; index++) {
+        if(this.state.dataInit[index].classclass == event.target.value){
+          temp.push(this.state.dataInit[index]);
+          //console.log(temp);
+        }
+      } 
+      this.setState({ data : temp });
+      if(event.target.value == "1"){
+        this.setState({ data : this.state.dataInit });
+      }
+      
+  
+    };
+    //select end
+  
+    render() {
+      const { classes } = this.props;
+      const { data, order, orderBy } = this.state;
+  
+      return (
+      <div style={{marginTop:100}}>
+  
+      {/* 下面是select跟title */}
+      <div className={classes.SelectRoot}>
+        
+        <div className={classes.SelectTable}>
+            <Typography class={classes.text} nowrap={true}>
+              <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.name}</a><a>的成績</a>
+              <a class={classes.textRight}>107學年</a>
+            </Typography>
+       
+        
+        <Divider variant="middle"/>
+        <FormControl variant="outlined" className={classes.formControl}>
+        
+          <InputLabel 
+            ref={ref => {
+              this.InputLabelRef = ref;
+            }}
+            htmlFor="outlined-age-native-simple"
+            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
+          >
+            選擇班級/科目
+          </InputLabel>
+          <Select
+            native
+            value={this.state.age}
+            onChange={this.handleChange('age')}
+            input={
+              <OutlinedInput
+                name="Age"
+                labelWidth={this.state.labelWidth}
+                id="outlined-age-native-simple"
+              />
+            }
+          >
+            <option value="" />
+            <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>全部科目</option>
+            {/* <option value="" /> */}
+            {/* <option value="" /> */}
+              {(this.state.classData)
+                  .map((n,index) => {
+                    return (
+                      <option value={n} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n}</option>
+                    );
+                  })}
+            {/* <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>國文A班</option>
+            <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學B班</option>
+            <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化A班</option> */}
+          </Select>
+        </FormControl>
         </div>
-      </Paper>
-      {/* table結束 */}
-    </div>
-    );
+      </div>
+      {/* select跟title結束 */}
+  
+      {/* 下面是table */}
+        <Paper className={classes.root}>
+          {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table} aria-labelledby="tableTitle">
+              <EnhancedTableHead
+                // numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={this.handleRequestSort}
+                //rowCount={data.length}
+              />
+              <TableBody>
+                {stableSort(data, getSorting(order, orderBy))
+                  
+                  .map(n => {
+                    return (
+                      <TableRow>
+  
+                        <TableCell component="th" scope="row" padding="none" align="center"
+                        style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                        letterSpacing:4,fontSize:15}}>
+                          {n.classclass}
+                        </TableCell>
+  
+                        <TableCell align="center"
+                        style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                        letterSpacing:4,fontSize:15}}>{n.date}</TableCell>
+  
+                        <TableCell align="center"
+                        style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                        letterSpacing:4,fontSize:15}}>{n.score}</TableCell>
+  
+                        <TableCell align="center"
+                        style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                        letterSpacing:4,fontSize:15}}>{n.rank}</TableCell>
+  
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </div>
+        </Paper>
+        {/* table結束 */}
+      </div>
+      );
+    }
   }
-}
-
-EnhancedTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-
-export default withStyles(styles)(EnhancedTable);
-
+  
+  EnhancedTable.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+  
+  export default withStyles(styles)(EnhancedTable);

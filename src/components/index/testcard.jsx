@@ -157,6 +157,7 @@ class ImgMediaCard extends React.Component {
       }
       console.log(temp);
       this.setState({ userData : temp });
+      console.log(this.state.userData);
       fetchNextPage(); 
     }
     );
