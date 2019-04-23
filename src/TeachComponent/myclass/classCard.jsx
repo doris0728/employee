@@ -10,6 +10,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { BrowserRouter as NavLink } from "react-router-dom";
+import Arrowright from '@material-ui/icons/ArrowRightAltRounded';
+import CardHeader from '@material-ui/core/CardHeader';
+import IconButton from '@material-ui/core/IconButton';
+import { ButtonBase } from '@material-ui/core';
 
 const styles = {
   card: {
@@ -61,10 +65,13 @@ const styles = {
 function classCard(props) {
   const { classes } = props;
   return (
-
+    
     <div align="center">
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/Tclass'>
+    
     <Card className={classes.card}>
+    {/* <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/Tclass'> */}
+    
+    
     <div>
     
       <CardActionArea>
@@ -99,7 +106,9 @@ function classCard(props) {
       </CardActionArea>
       
       </div>
-    </Card></NavLink>
+      {/* </NavLink> */} 
+    </Card>
+    {/* </NavLink> */}
 
     <Card className={classes.card}>
     <div>

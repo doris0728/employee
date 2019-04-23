@@ -13,7 +13,7 @@ const styles = theme => ({
     width: '90%',
     height: '70%',
     marginLeft: 40,
-    //marginBottom: 100,
+    marginBottom: 20,
     //marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     overflowY: 'auto',

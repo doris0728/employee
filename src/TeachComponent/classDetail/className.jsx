@@ -16,7 +16,7 @@ import HomeworkButton from '@material-ui/icons/EditOutlined'
 const styles = {
   card: {
     //maxWidth: 345,
-    height: 75,
+    height: 85,
     //width:'80%',
     marginTop:30,
   },
@@ -35,7 +35,7 @@ const styles = {
     fontFamily: "Microsoft Jhenghei",
     fontSize: 25,
     fontWeight: 'bold',
-    marginTop:4,
+    marginTop:10,
     letterSpacing:6,
     textAlign:'left'
     },
@@ -50,7 +50,7 @@ const styles = {
     fontFamily: "Microsoft Jhenghei",
     fontSize: 14,
     fontWeight: 'bold',
-    marginTop:11,
+    marginTop:18,
     marginLeft:25
   },
   divclass:{
@@ -63,7 +63,7 @@ const styles = {
     fontFamily: "Microsoft Jhenghei",
     fontSize: 14,
     fontWeight: 'bold',
-    marginTop:26,
+    marginTop:35,
     //marginLeft:25
   },
   button:{

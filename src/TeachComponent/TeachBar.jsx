@@ -30,6 +30,7 @@ import Logowhite from './image/goodmorningwhite.png';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import myclassComponent from './myclass/myclassComponent'
 import ClassDetail from './classDetail/classDetailComponent'
+import ClassScore from './classScore/scoreComponent'
 
 const theme = createMuiTheme({
   typography: {
@@ -291,6 +292,7 @@ class MiniDrawer extends React.Component {
         <div>
           <Route exact path="/" component={myclassComponent}/>
           <Route path="/Tclass" component={ClassDetail}/>
+          <Route path="/classScore" component={ClassScore}/>
           {/* <Route exact path="/" component={IndexComponent}/>
           <Route path="/attend" component={AttendComponent} />
           <Route path="/score" component={ScoreComponent} />
