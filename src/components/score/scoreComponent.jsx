@@ -253,15 +253,24 @@ class EnhancedTable extends React.Component {
             // This function (`page`) will get called for each page of records.
             var count = class_id.length;
             var temp=[];
+            var temp2=[];
             for(var index = 0; index < count; index++) {
               temp.push(class_id[index]);
-            
             }
-            this.setState({ classData : temp });
+
+            var classResult = temp.filter(function(element, index, arr){
+              return arr.indexOf(element) === index;
+            });
+            console.log(classResult);
+            for(var index = 0; index < classResult.length; index++){
+              temp2.push(classResult[index]);
+            }
+
+            this.setState({ classData : temp2 });
             fetchNextPage(); 
           }
           );
-  
+      //for studnet name
       fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
       .then((resp) => resp.json())
       .then(data => {
@@ -305,7 +314,7 @@ class EnhancedTable extends React.Component {
     handleChange = name => event => {
       this.setState({ [name]: event.target.value });
       //for select
-      console.log("In handleChange")
+      console.log("In handleChange");
   
       let temp = [];
       var count = this.state.dataInit.length;

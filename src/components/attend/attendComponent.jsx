@@ -26,11 +26,34 @@ import Select from '@material-ui/core/Select';
 import ReactDOM from 'react-dom';
 import RightIcon from '@material-ui/icons/DoneRounded';
 import FailIcon from '@material-ui/icons/CloseRounded';
+import Airtable from 'airtable';
 
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+
+//for select
+let temp = [];
+function caculateMounth(rawDate) {
+  // temp = rawDate.split("-");
+  // rawDate = temp[1];
+  // var Date = temp[1] + "月";
+  var Date = rawDate + "月";
+  
+  return {rawDate,Date};
+}
+// let counter = 0;
+// function createData(date, classclass, attend, homework) {
+//   counter += 1;
+//   return { id: counter, date, classclass, attend, homework};
+// }
 
 let counter = 0;
 function createData(date, classclass, attend, homework) {
   counter += 1;
+  if (homework == true){
+    homework = <RightIcon style={{color:'#00a600'}}/>
+  }else{
+    homework = <FailIcon color="error"/>
+  }
   return { id: counter, date, classclass, attend, homework};
 }
 
@@ -201,18 +224,20 @@ class EnhancedTable extends React.Component {
     orderBy: 'score',
     selected: [],
     data: [
-        createData('10月7日','數學B班', 3.7,<FailIcon style={{color:'red'}}/>),
-        createData('10月7日', '數學B班',25.0,<RightIcon style={{color:'green'}}/>),
-        createData( '10月7日','數學B班', 16.0, <FailIcon style={{color:'red'}}/>),
-        createData('10月7日','數學B班', 6.0, <FailIcon style={{color:'red'}}/>),
-        createData('10月7日','數學B班', 16.0, <RightIcon style={{color:'green'}}/>),
-        createData('10月7日','數學B班',3.2, <RightIcon style={{color:'green'}}/>),
+        // createData('10月7日','數學B班', 3.7,<FailIcon style={{color:'red'}}/>),
+        // createData('10月7日', '數學B班',25.0,<RightIcon style={{color:'green'}}/>),
+        // createData( '10月7日','數學B班', 16.0, <FailIcon style={{color:'red'}}/>),
+        // createData('10月7日','數學B班', 6.0, <FailIcon style={{color:'red'}}/>),
+        // createData('10月7日','數學B班', 16.0, <RightIcon style={{color:'green'}}/>),
+        // createData('10月7日','數學B班',3.2, <RightIcon style={{color:'green'}}/>),
       
     ],
+    dataInit: [],
     //下面是select跟title的
     age: '',
     name: '王映心',
     labelWidth: 0,
+    mounth: [],
   };
 
   handleRequestSort = (event, property) => {
@@ -231,10 +256,65 @@ class EnhancedTable extends React.Component {
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     });
+
+    
+    base('Attend').select({view: 'Grid view'})
+    .eachPage(
+      (records, fetchNextPage) => {
+        this.setState({records});
+        console.log(records);
+        const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
+        const attend_time = this.state.records.map((record, index) => record.fields['attend_time']);
+        const attend_hw = this.state.records.map((record, index) => record.fields['attend_hw']);
+        const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+        console.log(attend_date);
+
+        var count = attend_date.length;
+        var temp=[];
+        var temp2=[];
+        var temp3=[];
+        for(var index = 0; index < count; index++) {
+          //temp.push(caculateMounth(attend_date[index]));
+          temp3.push(attend_date[index].split("-")[1]);
+          temp2.push(createData(attend_date[index],class_id[index],attend_time[index],attend_hw[index]));
+          
+        }
+        var dateResult = temp3.filter(function(element, index, arr){
+          return arr.indexOf(element) === index;
+        });
+        for(var index = 0; index < dateResult.length; index++){
+          temp.push(caculateMounth(dateResult[index]));
+        }
+
+        this.setState({ mounth : temp });
+        this.setState({ data : temp2 });
+        this.setState({ dataInit : temp2 });
+
+        fetchNextPage();
+      }
+    );
+
   }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+    //for select
+
+    let temp = [];
+    var count = this.state.dataInit.length;
+    console.log(event.target.value);
+
+    for(var index = 0; index < count; index++) {
+      var month = this.state.dataInit[index].date.split("-")[1];
+      if(month == event.target.value){
+        temp.push(this.state.dataInit[index]);
+      }
+    } 
+    this.setState({ data : temp });
+    if(event.target.value == "1"){
+      this.setState({ data : this.state.dataInit });
+    }
+    
   };
   //select end
 
@@ -280,9 +360,16 @@ class EnhancedTable extends React.Component {
           }
         >
           <option value="" />
-          <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
+          <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>全部紀錄</option>
+          {(this.state.mounth)
+                .map((n,index) => {
+                  return (
+                    <option value={n.rawDate} style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n.Date}</option>
+                  );
+                })}
+          {/* <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
           <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
-          <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
+          <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option> */}
         </Select>
       </FormControl>
       </div>

@@ -9,17 +9,34 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { FormControl, FormHelperText, Divider, Typography } from '@material-ui/core';
+import { fetchPostStudent } from '../../api';
 
 export default class FormDialog extends React.Component {
   state = {
     open: false,
+    student_email:'',
   };
+  
 
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
   handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleChange = name => event => {
+    this.setState({
+        [name] : event.target.value});
+  };
+
+  handleSubmit = (e)=> {
+    e.preventDefault()
+    let data = {fields:{student_email:{}}};
+    data.fields.student_email = this.state.student_email;
+
+    fetchPostStudent(data);
     this.setState({ open: false });
   };
 
@@ -56,13 +73,14 @@ export default class FormDialog extends React.Component {
               type="email"
               fullWidth
               variant="outlined"
+              onChange={this.handleChange('student_email')}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               取消
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick= {this.handleSubmit} color="primary">
               確認
             </Button>
           </DialogActions>
