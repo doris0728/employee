@@ -28,7 +28,7 @@ import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Head from './TeachHead.jsx';
 import Logowhite from './image/goodmorningwhite.png';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-import myclassComponent from './myclass/myclassComponent'
+import myclassComponent from './myclass/myclassAll'
 import ClassDetail from './classDetail/classDetailComponent'
 import ClassScore from './classScore/scoreComponent'
 
