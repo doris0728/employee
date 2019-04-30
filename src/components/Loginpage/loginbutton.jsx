@@ -8,10 +8,10 @@ import green from '@material-ui/core/colors/green';
 import orange from '@material-ui/core/colors/orange';
 
 const styles = theme => ({
-  margin: {
+  buttonmargin: {
     margin: theme.spacing.unit,
   },
-  cssRoot: {
+  buttoncssRoot: {
     color: theme.palette.getContrastText(purple[500]),
     backgroundColor: orange[400],
     '&:hover': {
@@ -58,14 +58,14 @@ const styles = theme => ({
 //   },
 });
 
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
-  },
-  typography: {
-    useNextVariants: true,
-  },
-});
+// const theme = createMuiTheme({
+//   palette: {
+//     primary: green,
+//   },
+//   typography: {
+//     useNextVariants: true,
+//   },
+// });
 
 function CustomizedButtons(props) {
   const { classes } = props;
@@ -75,7 +75,7 @@ function CustomizedButtons(props) {
       <Button
         variant="contained"
         color="primary"
-        className={classNames(classes.margin, classes.cssRoot)}
+        className={classNames(classes.buttonmargin, classes.buttoncssRoot)}
       >
         L o g i n
       </Button>

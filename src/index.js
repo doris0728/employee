@@ -8,17 +8,10 @@ import Try from './components/tabletry.jsx'
 import Reserve from './components/reserve/reserveComponent.jsx'
 import Login from './components/Loginpage/logincomponent'
 import TeachBar from './TeachComponent/TeachBar'
+import App from './App'
+import LoginAll from './components/Loginpage/loginAll'
 
-// const user = 'student';
-// const viewpage =(user)=> {
-//     switch (user){
-//         case 'teacher' : return <TeachBar/>
-
-//         case 'student': return <Bar/>
-//     }
-// }
-
-ReactDOM.render(<TeachBar/>, document.getElementById('root'));
+ReactDOM.render(<LoginAll/>, document.getElementById('root'));
 //ReactDOM.render({viewpage}, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
