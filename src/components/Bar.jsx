@@ -191,16 +191,17 @@ class MiniDrawer extends React.Component {
           <div className={classes.toolbar}>
           <Head/>
           
-          <Typography variant="overline" gutterBottom>
-            Doris Wang 
+          <div>
+          <Typography  
+            style={{fontSize:15,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:2,}}>
+            王映心
           </Typography>
-        
-          {/* <br></br>
-          
-          <Typography variant="overline" gutterBottom>
+
+          <Typography >
             #405401279    
-          </Typography> */}
-          
+          </Typography>
+          </div>
+
             <IconButton onClick={this.handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
@@ -219,12 +220,13 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/">
+        <NavLink activeClassName="active" to="/bar" style={{textDecoration:'none'}}>
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
               </ListItemIcon>
-            <ListItemText primary="Index"/>
+              <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>首頁</a></ListItemText>
           </ListItem>
         </NavLink>
 
@@ -235,42 +237,47 @@ class MiniDrawer extends React.Component {
           {/* <Typography>
             最新消息
           </Typography> */}
-          <ListItemText inset primary="Latest News" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>最新消息</a></ListItemText>
         </ListItem>
 
-        <NavLink activeClassName='active' to='/score'>
+        <NavLink activeClassName='active' to='/score' style={{textDecoration:'none'}}>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
           </ListItemIcon>
-          <ListItemText inset primary="My Score" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>成績查詢</a></ListItemText>
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/attend'>
+        <NavLink activeClassName='active' to='/attend' style={{textDecoration:'none'}}>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
           </ListItemIcon>
-          <ListItemText inset primary="My Attendance" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>出勤查詢</a></ListItemText>
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/reserve">
+        <NavLink activeClassName="active" to="/reserve" style={{textDecoration:'none'}}>
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
-          <ListItemText inset primary="Make-up Class" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>補課申請</a></ListItemText>
         </ListItem>
         </NavLink>
         
-        <NavLink activeClassName="active" to="/mypage">
+        <NavLink activeClassName="active" to="/mypage" style={{textDecoration:'none'}}>
         <ListItem button>
           <ListItemIcon>
             <FaceIcon />
           </ListItemIcon>
-          <ListItemText inset primary="My Page" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>我的頁面</a></ListItemText>
         </ListItem>
         </NavLink>
 
@@ -297,7 +304,7 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
-          <Route exact path="/" component={IndexComponent}/>
+          <Route exact path="/bar" component={IndexComponent}/>
           <Route path="/attend" component={AttendComponent} />
           <Route path="/score" component={ScoreComponent} />
           <Route path="/reserve" component={ReserveComponent}/>

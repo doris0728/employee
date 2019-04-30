@@ -213,7 +213,7 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none'}}>
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
@@ -290,15 +290,9 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
-          <Route exact path="/" component={myclassComponent}/>
+          <Route exact path="/teach" component={myclassComponent}/>
           <Route path="/Tclass" component={ClassDetail}/>
           <Route path="/classScore" component={ClassScore}/>
-          {/* <Route exact path="/" component={IndexComponent}/>
-          <Route path="/attend" component={AttendComponent} />
-          <Route path="/score" component={ScoreComponent} />
-          <Route path="/reserve" component={ReserveComponent}/>
-          <Route path="/reserve2" component={Reserve2}/>
-          <Route path="/reserve3" component={Reserve3}/> */}
         </div>
         </MuiThemeProvider>
       </div>

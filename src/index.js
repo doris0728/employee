@@ -11,7 +11,7 @@ import TeachBar from './TeachComponent/TeachBar'
 import App from './App'
 import LoginAll from './components/Loginpage/loginAll'
 
-ReactDOM.render(<LoginAll/>, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
 //ReactDOM.render({viewpage}, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
