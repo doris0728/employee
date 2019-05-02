@@ -227,27 +227,25 @@ class MiniDrawer extends React.Component {
           <ListItemIcon  >
             <LatestnewsIcon />
           </ListItemIcon>
-          {/* <Typography>
-            最新消息
-          </Typography> */}
-          <ListItemText inset primary="Latest News" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>最新消息</a></ListItemText>
         </ListItem>
 
-        <NavLink activeClassName='active' to='/score'>
+        <NavLink activeClassName='active' to='/Tclass'>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
           </ListItemIcon>
-          <ListItemText inset primary="My Score" />
+          <ListItemText inset primary="班級頁面" />
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/attend'>
+        <NavLink activeClassName='active' to='/classscore'>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
           </ListItemIcon>
-          <ListItemText inset primary="My Attendance" />
+          <ListItemText inset primary="班級成績" />
         </ListItem>
         </NavLink>
 
