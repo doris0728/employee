@@ -6,10 +6,13 @@ import Button from '@material-ui/core/Button';
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 import orange from '@material-ui/core/colors/orange';
+import IndexComponent from '../index/appComponent.jsx';
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
+    marginLeft: 60,
   },
   cssRoot: {
     color: theme.palette.getContrastText(purple[500]),
@@ -71,16 +74,24 @@ function CustomizedButtons(props) {
   const { classes } = props;
 
   return (
+    // <Router>
     <div>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classNames(classes.margin, classes.cssRoot)}
-      >
-        L o g i n
-      </Button>
-      
+      {/* <NavLink activeClassName="active" to="/"> */}
+        <Button
+          variant="contained"
+          color="primary"
+          className={classNames(classes.margin, classes.cssRoot)}
+        >
+          L o g i n
+        </Button>
+      {/* </NavLink>
+
+      <div>
+        <Route path="/" component={IndexComponent}/>
+      </div>
+       */}
     </div>
+    // </Router>
   );
 }
 

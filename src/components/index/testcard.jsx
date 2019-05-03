@@ -20,6 +20,7 @@ import { FormControl, FormHelperText, Divider } from '@material-ui/core';
 import { isNullOrUndefined } from 'util';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Airtable from 'airtable';
+import Login from '../Loginpage/login';
 
 const TABLE_NAME = 'TestScore';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
@@ -207,10 +208,16 @@ class ImgMediaCard extends React.Component {
             className={classes.typetestcss}
             title="Test Score"
           />
-     
+
+      <CardActionArea onClick={Login}>
+        {/* <ButtonBase
+          className={props.classes.cardAction}
+          onClick={event => { ... }}
+      > */}
       <div className={classes.div1}>
         {this.state.userData.map(score => <ClassCard {...score} /> )}
       </div>
+      </CardActionArea>
       </Card>
       </div>
       

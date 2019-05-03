@@ -13,7 +13,8 @@ import { Typography } from 'antd';
 import Divider from '@material-ui/core/Divider';
 import RangePicker from "react-range-picker"
 //import DateRangePicker from 'react-daterange-picker';
-import MultipleDatePicker from 'react-multiple-datepicker'
+import MultipleDatePicker from 'react-multiple-datepicker';
+import DatePicker from './DatePicker';
 import { Input } from 'semantic-ui-react';
 //import DateRangePicker from 'react-daterange-picker';
 //import moment from 'moment-range';
@@ -60,8 +61,20 @@ const styles = theme => ({
   },
 
   date:{
-    marginLeft:35,
+    marginLeft:65,
     marginTop:20,
+    display: 'flex',
+  },
+  datepicker:{
+    backgroundcolor: '#5A3DAA',
+    height: 300,
+  },
+  choosedate:{
+    color: '#5A3DAA',
+    fontFamily:"Microsoft JhengHei",
+    letterSpacing:4,
+    fontWeight: "bold",
+    marginRight: 30,
   }
 
 });
@@ -132,8 +145,18 @@ class NativeSelects extends React.Component {
         </FormControl>
         </div>
         <div className={classes.date}>
-        <MultipleDatePicker onSubmit={dates => console.log('selected date', dates)} className={classes.datepicker}>
-        </MultipleDatePicker>
+        <div>
+        <Typography className={classes.choosedate}>選擇日期</Typography>
+        </div>
+        <div>
+        <DatePicker className={classes.datepicker}/>
+        {/* <input type="text"
+            class="datepicker-here"
+       data-language='en'
+       data-multiple-dates="3"
+       data-multiple-dates-separator=", "
+       data-position='top left'/> */}
+       </div>
         </div>
       </div>
     );

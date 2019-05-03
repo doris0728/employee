@@ -141,6 +141,7 @@ function ImgMediaCard(props) {
         <div>
           <AlertCard/>
         </div>   
+        
       </div>
            
     </div>

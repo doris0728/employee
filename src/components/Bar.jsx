@@ -137,8 +137,6 @@ class MiniDrawer extends React.Component {
     this.indexbutton = this.indexbutton.bind(this);
   }
 
-
-
   render() {
     const { classes, theme } = this.props;
   
@@ -218,7 +216,7 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/">
+        <NavLink activeClassName="active" to="/index">
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
@@ -296,7 +294,7 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
-          <Route exact path="/" component={IndexComponent}/>
+          <Route exact path="/index" component={IndexComponent}/>
           <Route path="/attend" component={AttendComponent} />
           <Route path="/score" component={ScoreComponent} />
           <Route path="/reserve" component={ReserveComponent}/>
