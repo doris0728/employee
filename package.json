@@ -15,6 +15,7 @@
     "react-date-range": "^0.9.4",
     "react-daterange-picker": "^2.0.1",
     "react-dom": "^16.8.4",
+    "react-google-charts": "^3.0.12",
     "react-multiple-datepicker": "^0.1.0",
     "react-native-divide": "^1.0.1",
     "react-range-picker": "^0.6.1",
