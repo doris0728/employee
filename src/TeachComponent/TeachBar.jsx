@@ -31,6 +31,9 @@ import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import myclassComponent from './myclass/myclassAll'
 import ClassDetail from './classDetail/classDetailComponent'
 import ClassScore from './classScore/scoreComponent'
+import TestAnalysis from './testAnalysis/testanalysisComponent'
+import TeachRecord from './teachRecord/recordComponent'
+import ChangePasswdIcon from '@material-ui/icons/LockRounded'
 
 const theme = createMuiTheme({
   typography: {
@@ -249,21 +252,23 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/reserve">
+        <NavLink activeClassName="active" to="/teachrecord">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
-          <ListItemText inset primary="Make-up Class" />
+          <ListItemText inset primary="教學進度" />
         </ListItem>
         </NavLink>
         
+        <NavLink activeClassName="active" to="/analysis">
         <ListItem button>
           <ListItemIcon>
-            <FaceIcon />
+            <EventIcon />
           </ListItemIcon>
-          <ListItemText inset primary="My Page" />
+          <ListItemText inset primary="考試分析" />
         </ListItem>
+        </NavLink>
 
         <br></br>
 
@@ -278,11 +283,26 @@ class MiniDrawer extends React.Component {
           </List> */}
 
         <br></br>
+        <ListItem button>
+          <ListItemIcon>
+          <FaceIcon />
+          </ListItemIcon>
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>更改帳號</a></ListItemText>
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <ChangePasswdIcon />
+          </ListItemIcon>
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>更改密碼</a></ListItemText>
+        </ListItem>
           <ListItem button>
           <ListItemIcon>
             <ExitIcon />
           </ListItemIcon>
-          <ListItemText inset primary="Log Out" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>登出</a></ListItemText>
         </ListItem>
         </Drawer>
 
@@ -291,6 +311,8 @@ class MiniDrawer extends React.Component {
           <Route exact path="/teach" component={myclassComponent}/>
           <Route path="/Tclass" component={ClassDetail}/>
           <Route path="/classScore" component={ClassScore}/>
+          <Route path="/analysis" component={TestAnalysis}/>
+          <Route path="/teachrecord" component={TeachRecord}/>
         </div>
         </MuiThemeProvider>
       </div>

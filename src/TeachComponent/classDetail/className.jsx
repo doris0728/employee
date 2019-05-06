@@ -78,7 +78,7 @@ function classCard(props) {
     <Card className={classes.card}>
     <div>
     
-      <CardActionArea>
+      
         <div className={classes.div1}> 
         <div className={classes.divclass}>
         
@@ -119,7 +119,6 @@ function classCard(props) {
         </div>
         
         </div>
-      </CardActionArea>
       </div>
     </Card>
    
