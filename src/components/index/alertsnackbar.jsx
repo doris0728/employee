@@ -15,8 +15,10 @@ import Divider from '@material-ui/core/Divider';
 import Airtable from 'airtable';
 
 const TABLE_NAME = 'TestScore';
+const TABLE_NAME_ATTEND = 'Attend';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
+const tableAttend = base(TABLE_NAME_ATTEND);
 
 
 const variantIcon = {
@@ -58,17 +60,17 @@ function MySnackbarContent(props) {
           {message}
         </span>
       }
-      action={[
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          className={classes.close}
-          onClick={onClose}
-        >
-          <CloseIcon className={classes.icon} />
-        </IconButton>,
-      ]}
+      // action={[
+      //   <IconButton
+      //     key="close"
+      //     aria-label="Close"
+      //     color="inherit"
+      //     className={classes.close}
+      //     onClick={onClose}
+      //   >
+      //     <CloseIcon className={classes.icon} />
+      //   </IconButton>,
+      // ]}
       {...other}
     />
   );
@@ -103,7 +105,21 @@ function createData(class_id) {
   //   class_id += (class_id[i] + " ");
   // }
   // console.log(class_id);
-  class_id = "成 績 預 警: " + class_id; 
+  class_id = "成 績 預 警 : " + class_id; 
+  return { class_id };
+}
+
+function createAttendData(class_id, attend_date) {
+  // class_id = class_id.split("");
+  // console.log(class_id.length);
+  // for(var i = 0 ; i < class_id.length; i ++){
+  //   class_id += (class_id[i] + " ");
+  // }
+  // console.log(class_id);
+  var attend_month = attend_date.split("-");
+  console.log(attend_month);
+  //class_id = "缺 課 預 警 : " + attend_date + " " + class_id; 
+  class_id = "缺 課 預 警 : " + attend_month[1] + "-" + attend_month[2] + " " + class_id; 
   return { class_id };
 }
 
@@ -111,6 +127,7 @@ class CustomizedSnackbars extends React.Component {
   state = {
     open: false,
     userData:[],
+    attendData:[],
   };
   componentDidMount(){
     table.select({
@@ -128,11 +145,33 @@ class CustomizedSnackbars extends React.Component {
           }
           
         }
-        console.log(temp);
         this.setState({ userData : temp });
         fetchNextPage(); 
       }
       );
+
+      tableAttend.select({
+        
+        filterByFormula: 'AND(student_id = 405401279)',
+        view: "Grid view",
+        maxRecords: 3,
+        }).eachPage((records, fetchNextPage) => {  
+          const class_id = records.map((record, index) => record.fields['class_id']);
+          const attend_hw = records.map((record, index) => record.fields['attend_hw']);
+          const attend_date = records.map((record, index) => record.fields['attend_date']);
+          var temp=[];
+          for(var index = 0; index < attend_hw.length; index++) {
+            if(attend_hw[index] != true){
+              temp.push(createAttendData(class_id[index],attend_date[index]));
+            }
+            
+          }
+
+          this.setState({ attendData : temp });
+          fetchNextPage(); 
+        }
+        );
+      
   }
 
   handleClick = () => {
@@ -156,6 +195,13 @@ class CustomizedSnackbars extends React.Component {
       message={class_id}
       /> 
     );
+    const AttendCard =({class_id, attend_date}) => (
+      <MySnackbarContentWrapper
+       variant="classalert"
+       className={classes.margin}
+       message={class_id}
+       /> 
+     );
     
     return (
       <div>
@@ -176,16 +222,18 @@ class CustomizedSnackbars extends React.Component {
           /> */}
         </Snackbar>
         {this.state.userData.map(score => <ClassCard {...score} /> )}
+        {this.state.attendData.map(absent => <AttendCard {...absent} /> )}
         {/* <MySnackbarContentWrapper
           variant="gradealert"
           className={classes.margin}
           message=" 成 績 預 警 : 物 理 A 班"
         /> */}
-        <MySnackbarContentWrapper
+
+        {/* <MySnackbarContentWrapper
           variant="classalert"
           className={classes.margin}
           message=" 缺 課 預 警 : 物 理 A 班"
-        />
+        /> */}
         </div>
         <Divider className={classes.divider}/>
         <div>

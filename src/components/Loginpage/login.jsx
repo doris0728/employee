@@ -63,6 +63,7 @@ function Login(props) {
             <img src ={Goodmorninglogo} height ="101.25" width ="155.25"/>
       </Typography>
       </div>
+      
       <div>
       <LoginSelect/>
       <div>
@@ -71,6 +72,7 @@ function Login(props) {
       </NavLink>
       </div>
       </div>
+
       <div>
       <Typography className={classes.amusecss}>
             <img src ={Ferris} height="103.5" width="317.4"/>

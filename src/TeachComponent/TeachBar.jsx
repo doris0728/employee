@@ -25,18 +25,12 @@ import AssignIcon from '@material-ui/icons/AssignmentRounded';
 import EventIcon from '@material-ui/icons/EventRounded';
 import FaceIcon from '@material-ui/icons/FaceRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
-import Head from './head.jsx';
+import Head from './TeachHead.jsx';
 import Logowhite from './image/goodmorningwhite.png';
-
-import ScoreComponent from './score/score-app';
-//import ScoreComponent from './score/scoreComponent';
-import AttendComponent from './attend/attendComponent';
-import ReserveComponent from './reserve/reserveComponent';
-import IndexComponent from './index/appComponent';
-import Reserve2 from './reserve2/reserveComponent2';
-import Reserve3 from './reserveList/reserveListComponent';
-import MyPage from './studentpage/studentpage';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import myclassComponent from './myclass/myclassAll'
+import ClassDetail from './classDetail/classDetailComponent'
+import ClassScore from './classScore/scoreComponent'
 
 const theme = createMuiTheme({
   typography: {
@@ -53,7 +47,7 @@ const styles = theme => ({
     //fontfamily:"Microsoft JhengHei",
   },
   appBar: {
-    background:'#FFBF5F',
+    background:'#5A3DAA',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -123,7 +117,7 @@ const styles = theme => ({
 
 class MiniDrawer extends React.Component {
   state = {
-    open: false, 
+    open: true, 
   };
 
   handleDrawerOpen = () => {
@@ -138,6 +132,8 @@ class MiniDrawer extends React.Component {
     this.indexbutton = this.indexbutton.bind(this);
   }
 
+
+
   render() {
     const { classes, theme } = this.props;
   
@@ -147,7 +143,7 @@ class MiniDrawer extends React.Component {
         <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <AppBar
-          position="fixed"
+          //position="fixed"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: this.state.open,
           })}
@@ -189,17 +185,16 @@ class MiniDrawer extends React.Component {
           <div className={classes.toolbar}>
           <Head/>
           
-          <div>
-          <Typography  
-            style={{fontSize:15,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:2,}}>
-            王映心
+          <Typography variant="overline" gutterBottom>
+            Doris Wang 
           </Typography>
-
-          <Typography >
+        
+          {/* <br></br>
+          
+          <Typography variant="overline" gutterBottom>
             #405401279    
-          </Typography>
-          </div>
-
+          </Typography> */}
+          
             <IconButton onClick={this.handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
@@ -218,13 +213,13 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/bar" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none'}}>
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
               </ListItemIcon>
-              <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>首頁</a></ListItemText>
+            <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>我的班級</a></ListItemText>
           </ListItem>
         </NavLink>
 
@@ -232,52 +227,43 @@ class MiniDrawer extends React.Component {
           <ListItemIcon  >
             <LatestnewsIcon />
           </ListItemIcon>
-          {/* <Typography>
-            最新消息
-          </Typography> */}
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,}}>最新消息</a></ListItemText>
         </ListItem>
 
-        <NavLink activeClassName='active' to='/score' style={{textDecoration:'none'}}>
+        <NavLink activeClassName='active' to='/Tclass'>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
           </ListItemIcon>
-          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>成績查詢</a></ListItemText>
+          <ListItemText inset primary="班級頁面" />
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/attend' style={{textDecoration:'none'}}>
+        <NavLink activeClassName='active' to='/classscore'>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
           </ListItemIcon>
-          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>出勤查詢</a></ListItemText>
+          <ListItemText inset primary="班級成績" />
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/reserve" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/reserve">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
-          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>補課申請</a></ListItemText>
+          <ListItemText inset primary="Make-up Class" />
         </ListItem>
         </NavLink>
         
-        <NavLink activeClassName="active" to="/mypage" style={{textDecoration:'none'}}>
         <ListItem button>
           <ListItemIcon>
             <FaceIcon />
           </ListItemIcon>
-          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>我的頁面</a></ListItemText>
+          <ListItemText inset primary="My Page" />
         </ListItem>
-        </NavLink>
 
         <br></br>
 
@@ -302,13 +288,9 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
-          <Route exact path="/bar" component={IndexComponent}/>
-          <Route path="/attend" component={AttendComponent} />
-          <Route path="/score" component={ScoreComponent} />
-          <Route path="/reserve" component={ReserveComponent}/>
-          <Route path="/reserve2" component={Reserve2}/>
-          <Route path="/reserve3" component={Reserve3}/>
-          <Route path="/mypage" component={MyPage}/>
+          <Route exact path="/teach" component={myclassComponent}/>
+          <Route path="/Tclass" component={ClassDetail}/>
+          <Route path="/classScore" component={ClassScore}/>
         </div>
         </MuiThemeProvider>
       </div>

@@ -10,11 +10,11 @@ import IndexComponent from '../index/appComponent.jsx';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const styles = theme => ({
-  margin: {
+  buttonmargin: {
     margin: theme.spacing.unit,
     marginLeft: 60,
   },
-  cssRoot: {
+  buttoncssRoot: {
     color: theme.palette.getContrastText(purple[500]),
     backgroundColor: orange[400],
     '&:hover': {
@@ -61,14 +61,14 @@ const styles = theme => ({
 //   },
 });
 
-const theme = createMuiTheme({
-  palette: {
-    primary: green,
-  },
-  typography: {
-    useNextVariants: true,
-  },
-});
+// const theme = createMuiTheme({
+//   palette: {
+//     primary: green,
+//   },
+//   typography: {
+//     useNextVariants: true,
+//   },
+// });
 
 function CustomizedButtons(props) {
   const { classes } = props;
@@ -76,20 +76,14 @@ function CustomizedButtons(props) {
   return (
     // <Router>
     <div>
-      {/* <NavLink activeClassName="active" to="/"> */}
-        <Button
-          variant="contained"
-          color="primary"
-          className={classNames(classes.margin, classes.cssRoot)}
-        >
-          L o g i n
-        </Button>
-      {/* </NavLink>
-
-      <div>
-        <Route path="/" component={IndexComponent}/>
-      </div>
-       */}
+      <Button
+        variant="contained"
+        color="primary"
+        className={classNames(classes.buttonmargin, classes.buttoncssRoot)}
+      >
+        L o g i n
+      </Button>
+      
     </div>
     // </Router>
   );
