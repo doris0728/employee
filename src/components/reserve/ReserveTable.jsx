@@ -216,9 +216,7 @@ class SimpleTable extends React.Component{
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
                         letterSpacing:4,fontSize:15,fontWeight: "bold"}}>日期</TableCell>
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                        letterSpacing:4,fontSize:15,fontWeight: "bold"}}>校區</TableCell>
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                        letterSpacing:4,fontSize:15,fontWeight: "bold"}}>補課時間</TableCell>
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
                         letterSpacing:4,fontSize:15,fontWeight: "bold"}}>人數</TableCell>
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
