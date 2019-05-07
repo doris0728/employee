@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/icons/TrendingFlatRounded'
 
 //import AttendComponent from '../attend/attendComponent';
-import { BrowserRouter as NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { Typography } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
 

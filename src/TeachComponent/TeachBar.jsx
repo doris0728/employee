@@ -252,13 +252,13 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none',color:'#818181'}}>
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
               </ListItemIcon>
             <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>我的班級</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>我的班級</a></ListItemText>
           </ListItem>
         </NavLink>
 
@@ -267,7 +267,7 @@ class MiniDrawer extends React.Component {
             <LatestnewsIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>最新消息</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
         </ListItem>
 
         <NavLink activeClassName='active' to='/Tclass'>
@@ -324,31 +324,28 @@ class MiniDrawer extends React.Component {
           <FaceIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>更改帳號</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>更改帳號</a></ListItemText>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
             <ChangePasswdIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>更改密碼</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>更改密碼</a></ListItemText>
         </ListItem>
           <ListItem button>
           <ListItemIcon>
             <ExitIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>登出</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>登出</a></ListItemText>
         </ListItem>
         </Drawer>
 
         {/* 插入components */}
         <div>
-        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none'}}>
-        <button>測試</button>
-        </NavLink>
           <Route exact path="/teach" component={myclassComponent}/>
-          <Route path="/Tclass" component={ClassDetail}/>
+          <Route path="/classdetail" component={ClassDetail}/>
           <Route path="/classScore" component={ClassScore}/>
           <Route path="/analysis" component={TestAnalysis}/>
           <Route path="/teachrecord" component={TeachRecord}/>

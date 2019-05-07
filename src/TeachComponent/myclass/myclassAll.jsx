@@ -15,6 +15,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Airtable from 'airtable';
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 const styles = theme => ({
   //下面開始是select
@@ -186,10 +187,9 @@ class NativeSelects extends React.Component {
 
       <div align="center">
     
+
+    <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/classdetail'>
     <Card className={classes.card}>
-    {/* <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/Tclass'> */}
-    
-    
     <div>
     
       <CardActionArea>
@@ -222,11 +222,9 @@ class NativeSelects extends React.Component {
         
         </div>
       </CardActionArea>
-      
       </div>
-      {/* </NavLink> */} 
     </Card>
-    {/* </NavLink> */}
+    </NavLink>
 
     <Card className={classes.card}>
     <div>

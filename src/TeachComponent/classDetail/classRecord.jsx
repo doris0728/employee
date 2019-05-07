@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 //import Button from '@material-ui/core/Button';
 import {Divider} from '@material-ui/core'
 //import AttendComponent from '../attend/attendComponent';
-import { BrowserRouter as NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { Typography } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/icons/TrendingFlatRounded'
@@ -66,8 +66,9 @@ function SimpleTable(props) {
     <div className={classes.title}>
     <Typography style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:18,
     fontWeight:'bold',marginLeft:32,marginTop:15}}>上週教學進度</Typography>
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/classScore'>
-      <IconButton style={{marginLeft:55}}><Button/></IconButton></NavLink>
+      <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/teachrecord'>
+      <IconButton style={{marginLeft:55}}><Button/></IconButton>
+      </NavLink>
     </div>
     <Paper className={classes.root}>
     <div>

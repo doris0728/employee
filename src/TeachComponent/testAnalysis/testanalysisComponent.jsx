@@ -17,10 +17,10 @@ import Chart from "react-google-charts";
 //analysischart data
 const analysisdata = [
   ["", "", { role: "style" }],
-  ["A", 8.94, "#b87333"], // RGB value
-  ["B", 10.49, "silver"], // English color name
-  ["C", 19.3, "gold"],
-  ["D", 21.45, "color: #e5e4e2"] // CSS-style declaration
+  ["A", 8.94, "#5A3DAA"], // RGB value
+  ["B", 10.49, "#FFC880"], // English color name
+  ["C", 19.3, "#FFC880"],
+  ["D", 21.45, "#FFC880"] // CSS-style declaration
 ];
 
 //chart style
