@@ -102,7 +102,8 @@ function ImgMediaCard(props) {
      
         <CardHeader
           className={classes.typetestcss}
-          title="Alert"
+          title={<a style={{fontSize:20,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#6C6C6C'}}>預警</a>}
         />
         <CardContent>
             <Alertsnack/>
@@ -110,7 +111,8 @@ function ImgMediaCard(props) {
 
         <CardHeader
             className={classes.typetestcss}
-            title="Make-up Class"
+            title={<a style={{fontSize:20,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#6C6C6C'}}>補課提醒</a>}
         />
 
         <CardContent>

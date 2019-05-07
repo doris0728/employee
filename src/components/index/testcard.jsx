@@ -206,7 +206,8 @@ class ImgMediaCard extends React.Component {
               </NavLink>
             }
             className={classes.typetestcss}
-            title="Test Score"
+            title={<a style={{fontSize:20,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#6C6C6C'}}>考試成績</a>}
           />
      
       <div className={classes.div1}>

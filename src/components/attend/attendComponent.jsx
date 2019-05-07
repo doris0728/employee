@@ -29,6 +29,8 @@ import FailIcon from '@material-ui/icons/CloseRounded';
 import Airtable from 'airtable';
 
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const TABLE_NAME = 'Attend';
+const table = base(TABLE_NAME);
 
 //for select
 let temp = [];
@@ -235,7 +237,7 @@ class EnhancedTable extends React.Component {
     dataInit: [],
     //下面是select跟title的
     age: '',
-    name: '王映心',
+    name: '',
     labelWidth: 0,
     mounth: [],
   };
@@ -257,44 +259,112 @@ class EnhancedTable extends React.Component {
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     });
 
-    
-    base('Attend').select({view: 'Grid view'})
-    .eachPage(
-      (records, fetchNextPage) => {
+    //for select
+    table.select({
+      filterByFormula: 'AND(student_id = 405401369)',
+      view: "Grid view"
+      }).eachPage((records, fetchNextPage) => {
         this.setState({records});
         console.log(records);
-        const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
-        const attend_time = this.state.records.map((record, index) => record.fields['attend_time']);
-        const attend_hw = this.state.records.map((record, index) => record.fields['attend_hw']);
         const class_id = this.state.records.map((record, index) => record.fields['class_id']);
-        console.log(attend_date);
-
-        var count = attend_date.length;
+        // This function (`page`) will get called for each page of records.
+        var count = class_id.length;
         var temp=[];
         var temp2=[];
-        var temp3=[];
         for(var index = 0; index < count; index++) {
-          //temp.push(caculateMounth(attend_date[index]));
-          temp3.push(attend_date[index].split("-")[1]);
-          temp2.push(createData(attend_date[index],class_id[index],attend_time[index],attend_hw[index]));
-          
+          temp.push(class_id[index]);
         }
-        var dateResult = temp3.filter(function(element, index, arr){
+
+        var classResult = temp.filter(function(element, index, arr){
           return arr.indexOf(element) === index;
         });
-        for(var index = 0; index < dateResult.length; index++){
-          temp.push(caculateMounth(dateResult[index]));
+        console.log(classResult);
+        for(var index = 0; index < classResult.length; index++){
+          temp2.push(classResult[index]);
         }
 
-        this.setState({ mounth : temp });
-        this.setState({ data : temp2 });
-        this.setState({ dataInit : temp2 });
-
-        fetchNextPage();
+        this.setState({ classData : temp2 });
+        fetchNextPage(); 
       }
-    );
+      );
+  //for studnet name
+  fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
+  .then((resp) => resp.json())
+  .then(data => {
+     this.setState({ studentData: data.records });
 
+     const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
+     var temp = student_name[1];
+     console.log("SelectClass Hello");
+     console.log(student_name);
+    
+     this.setState({ name : temp });
+  }).catch(err => {
+    // Error 🙁
+  });
+
+  //for table
+  fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/TestScore?api_key=keyA7EKdngjou4Dgy')
+  .then((resp) => resp.json())
+  .then(data => {
+     this.setState({ Attend: data.records });
+
+  //https://cythilya.github.io/2018/06/17/array-and-object-handling/
+  const class_id = this.state.Attend.map(item => Object.values(item)[1].attend_date);
+  const test_date = this.state.Attend.map(item => Object.values(item)[1].class_id);
+  const test_score = this.state.Attend.map(item => Object.values(item)[1].attend_time);
+  const test_rank = this.state.Attend.map(item => Object.values(item)[1].attend_hw);
+  console.log(class_id);
+  var count = class_id.length;
+  var temp=[];
+
+  for(var index = 0; index < count; index++) {
+    temp.push(createData(class_id[index],test_date[index],test_score[index],test_rank[index]));
   }
+  this.setState({ data : temp });
+  this.setState({ dataInit : temp })
+  }).catch(err => {
+    // Error 🙁
+  });
+}
+    
+    // base('Attend').select({view: 'Grid view'})
+    // .eachPage(
+    //   (records, fetchNextPage) => {
+    //     this.setState({records});
+    //     console.log(records);
+    //     const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
+    //     const attend_time = this.state.records.map((record, index) => record.fields['attend_time']);
+    //     const attend_hw = this.state.records.map((record, index) => record.fields['attend_hw']);
+    //     const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+    //     console.log(attend_date);
+
+    //     var count = attend_date.length;
+    //     var temp=[];
+    //     var temp2=[];
+    //     var temp3=[];
+    //     for(var index = 0; index < count; index++) {
+    //       //temp.push(caculateMounth(attend_date[index]));
+    //       temp3.push(attend_date[index].split("-")[1]);
+    //       temp2.push(createData(attend_date[index],class_id[index],attend_time[index],attend_hw[index]));
+          
+    //     }
+    //     var dateResult = temp3.filter(function(element, index, arr){
+    //       return arr.indexOf(element) === index;
+    //     });
+    //     for(var index = 0; index < dateResult.length; index++){
+    //       temp.push(caculateMounth(dateResult[index]));
+    //     }
+
+    //     this.setState({ mounth : temp });
+    //     this.setState({ data : temp2 });
+    //     this.setState({ dataInit : temp2 });
+
+    //     fetchNextPage();
+    //   }
+    // );
+
+  //}
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });

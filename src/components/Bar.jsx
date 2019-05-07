@@ -124,6 +124,8 @@ const styles = theme => ({
 class MiniDrawer extends React.Component {
   state = {
     open: false, 
+    studentName:'',
+    studentID:'',
   };
 
   handleDrawerOpen = () => {
@@ -138,6 +140,40 @@ class MiniDrawer extends React.Component {
     this.indexbutton = this.indexbutton.bind(this);
   }
 
+  componentDidMount(){
+    //for student name
+    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
+    .then((resp) => resp.json())
+    .then(data => {
+      this.setState({ studentData: data.records });
+      const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
+      
+      var temp = student_name[1];
+      console.log("SelectClass Hello");
+      console.log(student_name);
+      
+      this.setState({ studentName : temp });
+    }).catch(err => {
+      // Error 🙁
+    });
+
+    //for student Id
+    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
+    .then((resp) => resp.json())
+    .then(data => {
+      this.setState({ studentData: data.records });
+      const student_id = this.state.studentData.map(item => Object.values(item)[1].student_id);
+      
+      var temp = student_id[1];
+      console.log("SelectClass Hello");
+      console.log(student_id);
+      
+      this.setState({ studentID : temp });
+    }).catch(err => {
+      // Error 🙁
+    });
+
+  }
 
 
   render() {
@@ -194,11 +230,10 @@ class MiniDrawer extends React.Component {
           <div>
           <Typography  
             style={{fontSize:15,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:2,}}>
-            王映心
+            {this.state.studentName}
           </Typography>
-
           <Typography style={{fontSize:12,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:2,}}>
-            #405401279    
+            #{this.state.studentID}   
           </Typography>
           </div>
 
@@ -220,13 +255,13 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/bar" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/bar" style={{textDecoration:'none',color:'#818181'}}>
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
               </ListItemIcon>
               <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>首頁</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>首頁</a></ListItemText>
           </ListItem>
         </NavLink>
 
@@ -238,46 +273,46 @@ class MiniDrawer extends React.Component {
             最新消息
           </Typography> */}
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>最新消息</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
         </ListItem>
 
-        <NavLink activeClassName='active' to='/score' style={{textDecoration:'none'}}>
+        <NavLink activeClassName='active' to='/score' style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>成績查詢</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>成績查詢</a></ListItemText>
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/attend' style={{textDecoration:'none'}}>
+        <NavLink activeClassName='active' to='/attend' style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>出勤查詢</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>出勤查詢</a></ListItemText>
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/reserve" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/reserve" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>補課申請</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>補課申請</a></ListItemText>
         </ListItem>
         </NavLink>
         
-        <NavLink activeClassName="active" to="/mypage" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/mypage" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <FaceIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>我的頁面</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>我的頁面</a></ListItemText>
         </ListItem>
         </NavLink>
 
@@ -298,7 +333,8 @@ class MiniDrawer extends React.Component {
           <ListItemIcon>
             <ExitIcon />
           </ListItemIcon>
-          <ListItemText inset primary="Log Out" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#6C6C6C'}}>登出</a></ListItemText>
         </ListItem>
         </Drawer>
 

@@ -419,7 +419,6 @@ class MiniDrawer extends React.Component {
             <TextField style={{width: 300}} utoFocus margin="dense" id="passwd" label="請輸入新密碼"
               type="passwdnew" fullWidth variant="outlined"/>
           </DialogContent>
-
           <DialogContent>
             <TextField style={{width: 300}} utoFocus margin="dense" id="passwd3" label="再次輸入新密碼"
               type="password" fullWidth variant="outlined"/>
@@ -441,6 +440,7 @@ class MiniDrawer extends React.Component {
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>登出</a></ListItemText>
         </ListItem>
+        
         </Drawer>
 
         {/* 插入components */}
