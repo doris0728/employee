@@ -25,12 +25,16 @@ import AssignIcon from '@material-ui/icons/AssignmentRounded';
 import EventIcon from '@material-ui/icons/EventRounded';
 import FaceIcon from '@material-ui/icons/FaceRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
-import Head from './TeachHead.jsx';
+//import Head from './TeachHead.jsx';
 import Logowhite from './image/goodmorningwhite.png';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import myclassComponent from './myclass/myclassAll'
 import ClassDetail from './classDetail/classDetailComponent'
 import ClassScore from './classScore/scoreComponent'
+import TestAnalysis from './testAnalysis/testanalysisComponent'
+import TeachRecord from './teachRecord/recordComponent'
+import ChangePasswdIcon from '@material-ui/icons/LockRounded'
+import Airtable from 'airtable';
 
 const theme = createMuiTheme({
   typography: {
@@ -100,7 +104,6 @@ const styles = theme => ({
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
-    
   },
   content: {
     flexGrow: 1,
@@ -115,9 +118,12 @@ const styles = theme => ({
 });
 
 
+
 class MiniDrawer extends React.Component {
   state = {
     open: true, 
+    teacherName:'',
+    teacherEmail:'',
   };
 
   handleDrawerOpen = () => {
@@ -132,7 +138,42 @@ class MiniDrawer extends React.Component {
     this.indexbutton = this.indexbutton.bind(this);
   }
 
+  componentDidMount(){
+    //for teacher name
+    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Teacher?api_key=keyA7EKdngjou4Dgy')
+    .then((resp) => resp.json())
+    .then(data => {
+      this.setState({ teacherData: data.records });
+      const teacher_name = this.state.teacherData.map(item => Object.values(item)[1].teacher_name);
+      
+      var temp = teacher_name[1];
+      console.log("SelectClass Hello");
+      console.log(teacher_name);
+      
+      this.setState({ teacherName : temp });
+    }).catch(err => {
+      // Error 🙁
+    });
 
+    //for teacher email
+    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Teacher?api_key=keyA7EKdngjou4Dgy')
+    .then((resp) => resp.json())
+    .then(data => {
+      this.setState({ teacherData: data.records });
+      const teacher_email = this.state.teacherData.map(item => Object.values(item)[1].teacher_email);
+      
+      var temp = teacher_email[1];
+      console.log("SelectClass Hello");
+      console.log(teacher_email);
+      
+      this.setState({ teacherEmail : temp });
+    }).catch(err => {
+      // Error 🙁
+    });
+
+  }
+
+  
 
   render() {
     const { classes, theme } = this.props;
@@ -183,17 +224,15 @@ class MiniDrawer extends React.Component {
           open={this.state.open}
         >
           <div className={classes.toolbar}>
-          <Head/>
-          
-          <Typography variant="overline" gutterBottom>
-            Doris Wang 
+
+          <div>
+          <Typography style={{fontSize:15,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:2,}}>
+          {this.state.teacherName}
           </Typography>
-        
-          {/* <br></br>
-          
-          <Typography variant="overline" gutterBottom>
-            #405401279    
-          </Typography> */}
+          <Typography style={{fontSize:12,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:1,}}>
+          {this.state.teacherEmail}
+          </Typography>
+          </div>
           
             <IconButton onClick={this.handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -249,21 +288,23 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/reserve">
+        <NavLink activeClassName="active" to="/teachrecord">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
-          <ListItemText inset primary="Make-up Class" />
+          <ListItemText inset primary="教學進度" />
         </ListItem>
         </NavLink>
         
+        <NavLink activeClassName="active" to="/analysis">
         <ListItem button>
           <ListItemIcon>
-            <FaceIcon />
+            <EventIcon />
           </ListItemIcon>
-          <ListItemText inset primary="My Page" />
+          <ListItemText inset primary="考試分析" />
         </ListItem>
+        </NavLink>
 
         <br></br>
 
@@ -278,19 +319,39 @@ class MiniDrawer extends React.Component {
           </List> */}
 
         <br></br>
+        <ListItem button>
+          <ListItemIcon>
+          <FaceIcon />
+          </ListItemIcon>
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>更改帳號</a></ListItemText>
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <ChangePasswdIcon />
+          </ListItemIcon>
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>更改密碼</a></ListItemText>
+        </ListItem>
           <ListItem button>
           <ListItemIcon>
             <ExitIcon />
           </ListItemIcon>
-          <ListItemText inset primary="Log Out" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,}}>登出</a></ListItemText>
         </ListItem>
         </Drawer>
 
         {/* 插入components */}
         <div>
+        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none'}}>
+        <button>測試</button>
+        </NavLink>
           <Route exact path="/teach" component={myclassComponent}/>
           <Route path="/Tclass" component={ClassDetail}/>
           <Route path="/classScore" component={ClassScore}/>
+          <Route path="/analysis" component={TestAnalysis}/>
+          <Route path="/teachrecord" component={TeachRecord}/>
         </div>
         </MuiThemeProvider>
       </div>

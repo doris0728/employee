@@ -28,48 +28,16 @@ import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
 let id = 0;
-function createData(date, range, averagescore, button) {
+function createData(date, expectrecord, record) {
   id += 1;
-  return { id, date, range, averagescore, button};
+  return { id, date, expectrecord, record};
 }
 const rows = [
-    createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),
-    createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),
+    createData('10月7日', '英文講義CH1', '英文講義CH1' ),
+    createData('10月7日', '英文講義CH1', '英文講義CH1' ),
+    createData('10月7日', '英文講義CH1', '英文講義CH1' ),
+    createData('10月7日', '英文講義CH1', '英文講義CH1' ),
+    createData('10月7日', '英文講義CH1', '英文講義CH1' ),
   ];
 
 
@@ -121,10 +89,10 @@ class EnhancedTableHead extends React.Component {
 
 const styles = theme => ({
   root: {
-    width:820,
+    width:780,
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
-    marginLeft:100,
+    marginLeft:120,
     marginRight:70,
     marginBottom:20,
   },
@@ -142,7 +110,8 @@ const styles = theme => ({
     //marginLeft:34,
     //marginTop:20,
     //height:'50px',
-    width:1020
+    width:1020,
+    marginLeft:10
   },
   SelectTable:{
     //marginTop:'3vh',
@@ -154,7 +123,7 @@ const styles = theme => ({
     minWidth: 200,
     maxHeight:50,
     marginTop:20,
-    marginLeft:100,
+    marginLeft:110,
   },
   selectEmpty: {
    // marginTop: theme.spacing.unit * 2,
@@ -171,7 +140,7 @@ const styles = theme => ({
   },
   textRight:{
     fontSize:13,
-    paddingLeft:'71%',
+    paddingLeft:'65%',
     color:'#FFBF5F',
   }
 });
@@ -223,7 +192,7 @@ class EnhancedTable extends React.Component {
       
       <div className={classes.SelectTable}>
           <Typography class={classes.text} nowrap={true}>
-            <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.classname}</a><a>的成績</a>
+            <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.classname}</a><a>的教學紀錄</a>
             <a class={classes.textRight}>107學年</a>
           </Typography>
      
@@ -272,11 +241,9 @@ class EnhancedTable extends React.Component {
             <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
                       letterSpacing:4,fontSize:15,fontWeight: "bold"}}>日期</TableCell>
             <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}>考試範圍</TableCell>
+                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}>預期進度</TableCell>
             <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}>平均分數</TableCell>
-            <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}></TableCell>
+                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}>實際進度</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -285,11 +252,9 @@ class EnhancedTable extends React.Component {
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
                       letterSpacing:2,fontSize:15}}>{row.date}</TableCell>
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:2,fontSize:15}}>{row.range}</TableCell>
+                      letterSpacing:2,fontSize:15}}>{row.expectrecord}</TableCell>
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:2,fontSize:15}}>{row.averagescore}</TableCell>
-              <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:2,fontSize:15}}>{row.button}</TableCell>
+                      letterSpacing:2,fontSize:15}}>{row.record}</TableCell>
             </TableRow>
           ))}
         </TableBody>
