@@ -35,6 +35,13 @@ import TestAnalysis from './testAnalysis/testanalysisComponent'
 import TeachRecord from './teachRecord/recordComponent'
 import ChangePasswdIcon from '@material-ui/icons/LockRounded'
 import Airtable from 'airtable';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const theme = createMuiTheme({
   typography: {
@@ -124,6 +131,8 @@ class MiniDrawer extends React.Component {
     open: true, 
     teacherName:'',
     teacherEmail:'',
+    mailopen: false,
+    passwdopen: false,
   };
 
   handleDrawerOpen = () => {
@@ -137,6 +146,27 @@ class MiniDrawer extends React.Component {
   constuctor() {
     this.indexbutton = this.indexbutton.bind(this);
   }
+
+  //change email
+  mailhandleClickOpen = () => {
+    this.setState({ mailopen: true });
+    console.log("click")
+  };
+
+  mailhandleClose = () => {
+    this.setState({ mailopen: false });
+  };
+  //change email end
+
+  //change password
+  passwdhandleClickOpen = () => {
+    this.setState({ passwdopen: true });
+  };
+
+  passwdhandleClose = () => {
+    this.setState({ passwdopen: false });
+  };
+  //change password end
 
   componentDidMount(){
     //for teacher name
@@ -319,20 +349,91 @@ class MiniDrawer extends React.Component {
           </List> */}
 
         <br></br>
-        <ListItem button>
+        
+        {/* 更改帳號 */}
+        <ListItem button variant="contained" onClick={this.mailhandleClickOpen}>
           <ListItemIcon>
-          <FaceIcon />
+            <FaceIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>更改帳號</a></ListItemText>
         </ListItem>
-        <ListItem button>
+
+        <Dialog open={this.state.mailopen} onClose={this.mailhandleClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <a style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",
+              fontSize:25}}>更改帳號</a>
+              </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>密碼</a>
+            </DialogContentText>
+            <TextField style={{marginTop: 10, width: 300}} autoFocus margin="dense" id="passwd" label="請輸入密碼"
+              type="password" fullWidth variant="outlined"/>
+          </DialogContent>
+
+          <DialogContent>
+            <DialogContentText>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>新帳號</a>
+            </DialogContentText>
+            <TextField style={{width: 300}} utoFocus margin="dense" id="email" label="請輸入新帳號"
+              type="email" fullWidth variant="outlined"/>
+          </DialogContent>
+          
+          <DialogActions>
+            <Button onClick={this.mailhandleClose} color="primary">
+              取消 </Button>
+            <Button onClick={this.mailhandleClose} color="primary">
+              確認 </Button>
+          </DialogActions>
+        </Dialog>
+        {/* 更改帳號結束 */}
+
+        {/* 更改密碼 */}
+        <ListItem button onClick={this.passwdhandleClickOpen}>
           <ListItemIcon>
             <ChangePasswdIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>更改密碼</a></ListItemText>
         </ListItem>
+        <Dialog open={this.state.passwdopen} onClose={this.passwdhandleClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <a style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",
+              fontSize:25}}>更改密碼</a>
+              </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>舊密碼</a>
+            </DialogContentText>
+            <TextField style={{marginTop: 10, width: 300}} autoFocus margin="dense" id="passwd" label="請輸入舊密碼"
+              type="password" fullWidth variant="outlined"/>
+          </DialogContent>
+
+          <DialogContent>
+            <DialogContentText>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>更改密碼</a>
+            </DialogContentText>
+            <TextField style={{width: 300}} utoFocus margin="dense" id="passwd" label="請輸入新密碼"
+              type="passwdnew" fullWidth variant="outlined"/>
+          </DialogContent>
+
+          <DialogContent>
+            <TextField style={{width: 300}} utoFocus margin="dense" id="passwd3" label="再次輸入新密碼"
+              type="password" fullWidth variant="outlined"/>
+          </DialogContent>
+          
+          <DialogActions>
+            <Button onClick={this.passwdhandleClose} color="primary">
+              取消 </Button>
+            <Button onClick={this.passwdhandleClose} color="primary">
+              確認 </Button>
+          </DialogActions>
+        </Dialog>
+        {/* 更改密碼結束 */}
+
           <ListItem button>
           <ListItemIcon>
             <ExitIcon />
