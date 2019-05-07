@@ -125,7 +125,7 @@ function _taggedTemplateLiteral(strings, raw) {
 
 var StyledDatePicker = _styledComponents.default.div(_templateObject, function (_ref) {
   var open = _ref.open;
-  return !open && 'display: none';
+  return !open && 'display: none;';
 });
 
 var Backdrop = _styledComponents.default.div(_templateObject2);
@@ -228,6 +228,7 @@ function (_Component) {
         readOnly: true
       }) : _react.default.createElement("input", {
         type: "text",
+        
         readOnly: true,
         value: this.state.selectedDates.map(function (date) {
           return _utils.default.toString(date);

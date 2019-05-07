@@ -16,6 +16,7 @@ import RangePicker from "react-range-picker"
 import MultipleDatePicker from 'react-multiple-datepicker';
 import DatePicker from './DatePicker';
 import { Input } from 'semantic-ui-react';
+import { green } from '@material-ui/core/colors';
 //import DateRangePicker from 'react-daterange-picker';
 //import moment from 'moment-range';
 
@@ -75,7 +76,8 @@ const styles = theme => ({
     letterSpacing:4,
     fontWeight: "bold",
     marginRight: 30,
-  }
+  },
+
 
 });
 
@@ -149,13 +151,7 @@ class NativeSelects extends React.Component {
         <Typography className={classes.choosedate}>選擇日期</Typography>
         </div>
         <div>
-        <DatePicker className={classes.datepicker}/>
-        {/* <input type="text"
-            class="datepicker-here"
-       data-language='en'
-       data-multiple-dates="3"
-       data-multiple-dates-separator=", "
-       data-position='top left'/> */}
+        <DatePicker/>
        </div>
         </div>
       </div>
