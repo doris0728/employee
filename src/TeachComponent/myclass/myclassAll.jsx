@@ -14,6 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
+import Airtable from 'airtable';
 
 const styles = theme => ({
   //下面開始是select

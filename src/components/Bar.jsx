@@ -197,7 +197,7 @@ class MiniDrawer extends React.Component {
             王映心
           </Typography>
 
-          <Typography >
+          <Typography style={{fontSize:12,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:2,}}>
             #405401279    
           </Typography>
           </div>
