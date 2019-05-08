@@ -17,6 +17,7 @@ import MultipleDatePicker from 'react-multiple-datepicker'
 import { Input } from 'semantic-ui-react';
 //import DateRangePicker from 'react-daterange-picker';
 //import moment from 'moment-range';
+import DatePicker from './DatePicker'
 
 const styles = theme => ({
   root: {
@@ -60,8 +61,9 @@ const styles = theme => ({
   },
 
   date:{
-    marginLeft:35,
+    marginLeft:70,
     marginTop:20,
+    display:'flex'
   }
 
 });
@@ -132,8 +134,10 @@ class NativeSelects extends React.Component {
         </FormControl>
         </div>
         <div className={classes.date}>
-        <MultipleDatePicker onSubmit={dates => console.log('selected date', dates)} className={classes.datepicker}>
-        </MultipleDatePicker>
+        {/* <MultipleDatePicker onSubmit={dates => console.log('selected date', dates)} className={classes.datepicker}>
+        </MultipleDatePicker> */}
+        <Typography style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>選擇時間</Typography>
+        <DatePicker/>
         </div>
       </div>
     );
