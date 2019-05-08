@@ -92,6 +92,7 @@ const styles = theme => ({
       width:250,
       height:28,
       marginLeft:10,
+      marginTop:5
   },
 });
 
@@ -142,12 +143,15 @@ class NativeSelects extends React.Component {
           <td align="left"><a className={classes.texttitle}>時間</a>
           <a className={classes.detail}>{this.state.time}</a></td></tr>
 
-          <tr align=""><td colspan="2"><Typography class={classes.texttitle}>選擇課程
+          <tr align=""><td colspan="2">
+          <div style={{display:'flex'}}>
+          <Typography class={classes.texttitle} style={{marginTop:20}}>選擇課程</Typography>
+          {/* 下面的Typography對select的選項只有bold有用 */}
+          <Typography style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>
           <FormControl variant="outlined" className={classes.formControl}>
-        
           <InputLabel 
             ref={ref => {
-              this.InputLabelRef = ref;
+              this.InputLabelRef = ref
             }}
             htmlFor="outlined-age-native-simple">
           </InputLabel>
@@ -168,15 +172,15 @@ class NativeSelects extends React.Component {
             <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學A班 02/14</option>
             <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化C班 03/03</option>
           </Select>
-        </FormControl> 
-          </Typography></td></tr>
+        </FormControl> </Typography></div>
+          </td></tr>
 
           <tr align="center"><td colspan="2"> 
           {/* <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/reserve3'> */}
             <Button onClick={this.handleClickOpen}
             variant="contained"
-            style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-            backgroundColor:'#FFBF5F',color:'white'}}>
+            style={{fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
+            backgroundColor:'#FFBF5F',color:'white',marginTop:25}}>
              預約</Button>
             {/* </NavLink> */}
             </td></tr>
@@ -199,8 +203,11 @@ class NativeSelects extends React.Component {
             <a style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>取消</a>
             </Button> */}
             <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/reserve3'>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              <a style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>確定</a>
+            <Button onClick={this.handleClose} color="primary" autoFocus 
+            style={{fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:13,fontWeight:"bold",
+            backgroundColor:'#FFBF5F',color:'white'}}>
+              {/* <a style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>確定</a> */}
+              確定
             </Button></NavLink>
           </DialogActions>
         </Dialog>
