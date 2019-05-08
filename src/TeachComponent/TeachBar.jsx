@@ -300,7 +300,7 @@ class MiniDrawer extends React.Component {
             letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
         </ListItem>
 
-        <NavLink activeClassName='active' to='/Tclass'>
+        <NavLink activeClassName='active' to='/classdetail'>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />

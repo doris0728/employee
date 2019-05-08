@@ -30,11 +30,11 @@ const analysisoption = {
 };
 
 const data=[
-  ['', '及格', '不及格','缺考'],
-  ['', 41, 30,10],
+  ['','及格', '不及格','缺考'],
+  [ '',41, 30,10],
 ];
 const option={
-  //title: 'Population of Largest U.S. Cities',
+  colors: ['#5A3DAA', '#FFBF5F','#ECECEC'],
   chartArea: { width: '95%' },
   isStacked: true,
   height:120,
@@ -47,7 +47,9 @@ const option={
     baselineColor: 'none',
     ticks: []
   },
-  legend: {position: 'none'}
+  legend: {
+    position: 'none'
+  },
 };
 
 const styles = theme => ({
