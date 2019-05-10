@@ -188,7 +188,7 @@ class NativeSelects extends React.Component {
       <div align="center">
     
 
-    <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/classdetail'>
+    <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/teach/classdetail'>
     <Card className={classes.card}>
     <div>
     

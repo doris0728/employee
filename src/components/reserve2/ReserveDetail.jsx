@@ -115,7 +115,6 @@ class NativeSelects extends React.Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
-
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -202,7 +201,7 @@ class NativeSelects extends React.Component {
             {/* <Button onClick={this.handleClose} color="primary" onClick={this.handleClose}>
             <a style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>取消</a>
             </Button> */}
-            <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/reserve3'>
+            <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/bar/reserve3'>
             <Button onClick={this.handleClose} color="primary" autoFocus 
             style={{fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:13,fontWeight:"bold",
             backgroundColor:'#FFBF5F',color:'white'}}>

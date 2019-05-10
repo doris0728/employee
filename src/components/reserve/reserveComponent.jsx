@@ -36,7 +36,7 @@ const table = base(TABLE_NAME);
 
 let  id = 0;
 function createData(date, region, time,people,reserve) {
-    id += 1;reserve= <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/reserve2'>
+    id += 1;reserve= <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/bar/reserve2'>
     <Button variant="contained" 
     style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
     backgroundColor:'#FFBF5F',color:'white'}}>
@@ -216,7 +216,7 @@ class EnhancedTable extends React.Component {
       //table的 
       order: 'asc',
       orderBy: 'score',
-      selected: [],
+      //selected: [],
       data: [
       //   createData('數學B班', 305, 3.7, 67),
       //   createData('數學A班', 452, 25.0, 51),
@@ -234,12 +234,10 @@ class EnhancedTable extends React.Component {
       age: '',
       name: '',
       labelWidth: 0,
-      studentData: [],
-      classData: [],
-      classId:'',
       //doris
       testReserve: [],
       rows:[],
+      reserveData:[],
     };
   
     handleRequestSort = (event, property) => {
@@ -283,7 +281,7 @@ class EnhancedTable extends React.Component {
               temp2.push(classResult[index]);
             }
 
-            this.setState({ classData : temp2 });
+            this.setState({ reserveData : temp2 });
             fetchNextPage(); 
           }
           );
@@ -320,6 +318,7 @@ class EnhancedTable extends React.Component {
        temp.push(createData(reserve_date[index],reserve_address[index],reserve_time[index],reserve_people[index]));
      }
      this.setState({ rows : temp });
+     this.setState({dataInit : temp});
      }).catch(err => {
        // Error 🙁
      });
@@ -335,14 +334,14 @@ class EnhancedTable extends React.Component {
       console.log(event.target.value);
   
       for(var index = 0; index < count; index++) {
-        if(this.state.dataInit[index].classclass == event.target.value){
+        if(this.state.dataInit[index].region == event.target.value){
           temp.push(this.state.dataInit[index]);
           //console.log(temp);
         }
       } 
-      this.setState({ data : temp });
+      this.setState({ rows : temp });
       if(event.target.value == "1"){
-        this.setState({ data : this.state.dataInit });
+        this.setState({ rows : this.state.dataInit });
       }
       
   
@@ -385,7 +384,7 @@ class EnhancedTable extends React.Component {
             <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>所有校區</option>
             {/* <option value="" /> */}
             {/* <option value="" /> */}
-              {(this.state.classData)
+              {(this.state.reserveData)
                   .map((n,index) => {
                     return (
                       <option value={n} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n}</option>

@@ -107,11 +107,11 @@ function ImgMediaCard(props) {
     {/* big card */}
      
       <CardHeader
-          action={
-            <IconButton>
-              <Arrowright/>
-            </IconButton>
-          }
+          // action={
+          //   <IconButton>
+          //     <Arrowright/>
+          //   </IconButton>
+          // }
           className={classes.typetestcss}
           title={<a style={{fontSize:20,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>作業提醒</a>}

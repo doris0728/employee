@@ -71,7 +71,7 @@ function SimpleTable(props) {
     <div className={classes.title}>
     <Typography style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:18,
     fontWeight:'bold',marginLeft:32,marginTop:15}}>考試平均</Typography>
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/classScore'>
+    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/classScore'>
       <IconButton style={{marginLeft:400}}><Button/></IconButton></NavLink>
       </div>
     <Paper className={classes.root}>

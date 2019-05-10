@@ -34,7 +34,7 @@ function createData(date, range, averagescore, button) {
 }
 const rows = [
     createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
+    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
     <Button variant="contained"
     style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
     backgroundColor:'#FFBF5F',color:'white'}}>
@@ -42,28 +42,28 @@ const rows = [
     </NavLink>
     ),
     createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
+    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
     <Button variant="contained"
     style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
     backgroundColor:'#FFBF5F',color:'white'}}>
     答題分析 ></Button>
     </NavLink>
     ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
+    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
     <Button variant="contained"
     style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
     backgroundColor:'#FFBF5F',color:'white'}}>
     答題分析 ></Button>
     </NavLink>
     ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
+    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
     <Button variant="contained"
     style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
     backgroundColor:'#FFBF5F',color:'white'}}>
     答題分析 ></Button>
     </NavLink>
     ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
+    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
     <Button variant="contained"
     style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
     backgroundColor:'#FFBF5F',color:'white'}}>

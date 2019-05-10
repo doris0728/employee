@@ -199,7 +199,7 @@ class ImgMediaCard extends React.Component {
        
         <CardHeader
             action={
-              <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/score'>
+              <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/bar/score'>
               <IconButton>
                 <Arrowright/>
               </IconButton>

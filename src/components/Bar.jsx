@@ -276,7 +276,7 @@ class MiniDrawer extends React.Component {
             letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
         </ListItem>
 
-        <NavLink activeClassName='active' to='/score' style={{textDecoration:'none',color:'#818181'}}>
+        <NavLink activeClassName='active' to='/bar/score' style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
@@ -286,7 +286,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/attend' style={{textDecoration:'none',color:'#818181'}}>
+        <NavLink activeClassName='active' to='/bar/attend' style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
@@ -296,7 +296,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/reserve" style={{textDecoration:'none',color:'#818181'}}>
+        <NavLink activeClassName="active" to="/bar/reserve" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
@@ -306,7 +306,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
         
-        <NavLink activeClassName="active" to="/mypage" style={{textDecoration:'none',color:'#818181'}}>
+        <NavLink activeClassName="active" to="/bar/mypage" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <FaceIcon />
@@ -329,6 +329,7 @@ class MiniDrawer extends React.Component {
           </List> */}
 
         <br></br>
+        <NavLink activeClassName="active" to="/" style={{textDecoration:'none',color:'#818181'}}>
           <ListItem button>
           <ListItemIcon>
             <ExitIcon />
@@ -336,17 +337,18 @@ class MiniDrawer extends React.Component {
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>登出</a></ListItemText>
         </ListItem>
+        </NavLink>
         </Drawer>
 
         {/* 插入components */}
         <div>
           <Route exact path="/bar" component={IndexComponent}/>
-          <Route path="/attend" component={AttendComponent} />
-          <Route path="/score" component={ScoreComponent} />
-          <Route path="/reserve" component={ReserveComponent}/>
-          <Route path="/reserve2" component={Reserve2}/>
-          <Route path="/reserve3" component={Reserve3}/>
-          <Route path="/mypage" component={MyPage}/>
+          <Route path="/bar/attend" component={AttendComponent} />
+          <Route path="/bar/score" component={ScoreComponent} />
+          <Route path="/bar/reserve" component={ReserveComponent}/>
+          <Route path="/bar/reserve2" component={Reserve2}/>
+          <Route path="/bar/reserve3" component={Reserve3}/>
+          <Route path="/bar/mypage" component={MyPage}/>
         </div>
         </MuiThemeProvider>
       </div>

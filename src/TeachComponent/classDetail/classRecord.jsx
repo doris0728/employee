@@ -66,7 +66,7 @@ function SimpleTable(props) {
     <div className={classes.title}>
     <Typography style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:18,
     fontWeight:'bold',marginLeft:32,marginTop:15}}>上週教學進度</Typography>
-      <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/teachrecord'>
+      <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/teach/teachrecord'>
       <IconButton style={{marginLeft:55}}><Button/></IconButton>
       </NavLink>
     </div>

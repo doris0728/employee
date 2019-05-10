@@ -162,7 +162,6 @@ class MiniDrawer extends React.Component {
   passwdhandleClickOpen = () => {
     this.setState({ passwdopen: true });
   };
-
   passwdhandleClose = () => {
     this.setState({ passwdopen: false });
   };
@@ -300,7 +299,7 @@ class MiniDrawer extends React.Component {
             letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
         </ListItem>
 
-        <NavLink activeClassName='active' to='/classdetail'>
+        <NavLink activeClassName='active' to='/teach/classdetail'>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
@@ -309,7 +308,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/classscore'>
+        <NavLink activeClassName='active' to='/teach/classscore'>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
@@ -318,7 +317,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/teachrecord">
+        <NavLink activeClassName="active" to="/teach/teachrecord">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
@@ -327,7 +326,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
         
-        <NavLink activeClassName="active" to="/analysis">
+        <NavLink activeClassName="active" to="/teach/analysis">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
@@ -416,11 +415,11 @@ class MiniDrawer extends React.Component {
             <DialogContentText>
             <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>更改密碼</a>
             </DialogContentText>
-            <TextField style={{width: 300}} utoFocus margin="dense" id="passwd" label="請輸入新密碼"
+            <TextField style={{width: 300}} margin="dense" id="passwd" label="請輸入新密碼"
               type="passwdnew" fullWidth variant="outlined"/>
           </DialogContent>
           <DialogContent>
-            <TextField style={{width: 300}} utoFocus margin="dense" id="passwd3" label="再次輸入新密碼"
+            <TextField style={{width: 300}} margin="dense" id="passwd3" label="再次輸入新密碼"
               type="password" fullWidth variant="outlined"/>
           </DialogContent>
           
@@ -446,10 +445,10 @@ class MiniDrawer extends React.Component {
         {/* 插入components */}
         <div>
           <Route exact path="/teach" component={myclassComponent}/>
-          <Route path="/classdetail" component={ClassDetail}/>
-          <Route path="/classScore" component={ClassScore}/>
-          <Route path="/analysis" component={TestAnalysis}/>
-          <Route path="/teachrecord" component={TeachRecord}/>
+          <Route path="/teach/classdetail" component={ClassDetail}/>
+          <Route path="/teach/classScore" component={ClassScore}/>
+          <Route path="/teach/analysis" component={TestAnalysis}/>
+          <Route path="/teach/teachrecord" component={TeachRecord}/>
         </div>
         </MuiThemeProvider>
       </div>
