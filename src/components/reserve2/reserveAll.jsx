@@ -28,6 +28,14 @@ const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWI
 const attendTABLE_NAME = 'Attend';
 const attendTable = base(attendTABLE_NAME);
 
+let counter = 0;
+function createData(class_id, class_date) {
+  counter += 1;
+  var class_selection = class_id +" "+ class_date;
+  
+  return {id:counter, class_selection};
+}
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -134,6 +142,7 @@ class NativeSelects extends React.Component {
     // date:'',
     // time:'',
     labelWidth: 0,
+    classData:[],
   };
 
   handleChange = name => event => {
@@ -193,7 +202,7 @@ class NativeSelects extends React.Component {
           var temp=[];
           var temp2=[];
           for(var index = 0; index < count; index++) {
-            temp.push(class_id[index] + attend_date[index]);
+            temp.push(createData(class_id[index] ,attend_date[index]));
           }
 
           var classResult = temp.filter(function(element, index, arr){
@@ -266,10 +275,11 @@ class NativeSelects extends React.Component {
             }
           >
             <option value="" />
+
             {(this.state.classData)
                   .map((n,index) => {
                     return (
-                      <option key={n} value={n} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n}</option>
+                      <option key={n.id} value={n.class_selection} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n.class_selection}</option>
                     );
                   })}
             {/* <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>國文B班 10/30</option>
