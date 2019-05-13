@@ -106,7 +106,7 @@ function ImgMediaCard(props) {
             letterSpacing:4,color:'#6C6C6C'}}>預警</a>}
         />
         <CardContent>
-            <Alertsnack/>
+            <Alertsnack UserId={props.UserId}/>
         </CardContent>
 
         <CardHeader

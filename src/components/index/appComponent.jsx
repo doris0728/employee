@@ -10,11 +10,12 @@ import Home from './Home.jsx';
 // });
 export default class ReactApp extends React.Component {
     
+    
     render() {
         const { classes } = this.props;
         return (
                 <div>
-                    <Home/>
+                    <Home  UserId={this.props.UserId}/>
                 </div>
             
             )

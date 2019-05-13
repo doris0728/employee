@@ -37,6 +37,11 @@ import Reserve2 from './reserve2/reserveComponent2';
 import Reserve3 from './reserveList/reserveListComponent';
 import MyPage from './studentpage/studentpage';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import Airtable from 'airtable';
+
+const TABLE_NAME = 'Student';
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
 
 const theme = createMuiTheme({
   typography: {
@@ -142,41 +147,33 @@ class MiniDrawer extends React.Component {
 
   componentDidMount(){
     //for student name
-    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
-    .then((resp) => resp.json())
-    .then(data => {
-      this.setState({ studentData: data.records });
-      const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
-      
-      var temp = student_name[1];
-      console.log("SelectClass Hello");
-      console.log(student_name);
-      
-      this.setState({ studentName : temp });
-    }).catch(err => {
-      // Error 🙁
-    });
+     const fileterSentence = 'AND(student_email = ' + this.props.history.location.state + ')'
 
-    //for student Id
-    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
-    .then((resp) => resp.json())
-    .then(data => {
-      this.setState({ studentData: data.records });
-      const student_id = this.state.studentData.map(item => Object.values(item)[1].student_id);
-      
-      var temp = student_id[1];
-      console.log("SelectClass Hello");
-      console.log(student_id);
-      
-      this.setState({ studentID : temp });
-    }).catch(err => {
-      // Error 🙁
-    });
+    table.select({
+      //filterByFormula:('{student_email}=\'fabienne.yang@mail.com\''),
+      //filterByFormula:'AND(student_email =\'fabienne.yang@mail.com\')',
+      //filterByFormula:'AND(student_email =${'+this.props.history.location.state+'})',
+      //filterByFormula: fileterSentence,
+      view: "Grid view"
+    }).eachPage((records, fetchNextPage) => {
+      this.setState({ records });
+      const student_name = this.state.records.map((record, index) => record.fields['student_name']);
+      const student_email = this.state.records.map((record, index) => record.fields['student_email']);
+      const student_id = this.state.records.map((record, index) => record.fields['student_id']);
 
+      for(var index = 0; index <student_email.length; index++) {
+        if(student_email[index] == this.props.history.location.state){
+          this.setState({ studentName : student_name[index] });
+          this.setState({ studentID : student_id[index] });
+        }
+      }
+    }
+    );
   }
 
 
   render() {
+    //console.log(this.props.history.location.state);
     const { classes, theme } = this.props;
   
     return (
@@ -342,7 +339,8 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
-          <Route exact path="/bar" component={IndexComponent}/>
+          {/* <Route exact path="/bar" component={IndexComponent}/> */}
+          <Route exact path="/bar" render={(props) => <IndexComponent {...props} UserId={this.state.studentID} />}/>
           <Route path="/bar/attend" component={AttendComponent} />
           <Route path="/bar/score" component={ScoreComponent} />
           <Route path="/bar/reserve" component={ReserveComponent}/>

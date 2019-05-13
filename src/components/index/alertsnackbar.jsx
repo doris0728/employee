@@ -16,9 +16,11 @@ import Airtable from 'airtable';
 
 const TABLE_NAME = 'TestScore';
 const TABLE_NAME_ATTEND = 'Attend';
+const TABLE_NAME_STU = 'Student';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
 const tableAttend = base(TABLE_NAME_ATTEND);
+const tableStudent = base(TABLE_NAME_STU);
 
 
 const variantIcon = {
@@ -117,7 +119,6 @@ function createAttendData(class_id, attend_date) {
   // }
   // console.log(class_id);
   var attend_month = attend_date.split("-");
-  console.log(attend_month);
   //class_id = "缺 課 預 警 : " + attend_date + " " + class_id; 
   class_id = "缺 課 預 警 : " + attend_month[1] + "-" + attend_month[2] + " " + class_id; 
   return { class_id };
@@ -129,49 +130,59 @@ class CustomizedSnackbars extends React.Component {
     userData:[],
     attendData:[],
   };
-  componentDidMount(){
-    table.select({
-      filterByFormula: 'AND(student_id = 405401369)',
-      view: "Grid view",
-      maxRecords: 3,
-      }).eachPage((records, fetchNextPage) => {  
-        const class_id = records.map((record, index) => record.fields['class_id']);
-        const test_score = records.map((record, index) => record.fields['test_score']);
 
-        var temp=[];
-        for(var index = 0; index < test_score.length; index++) {
-          if(test_score[index] < 60){
-            temp.push(createData(class_id[index]));
-          }
-          
-        }
-        this.setState({ userData : temp });
-        fetchNextPage(); 
-      }
-      );
-
-      tableAttend.select({
-        
-        filterByFormula: 'AND(student_id = 405401279)',
+  // shouldComponentUpdate(nextProps) {
+  //   if (this.props.UserId !== nextProps.UserId) {
+  //     console.log("in true");
+  //     return true;
+  //   }
+  //     return false;
+  //  }
+  componentDidUpdate(prevProps){
+    if (this.props.UserId !== prevProps.UserId) {
+      const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+      console.log(filterSentence);
+      table.select({
+        filterByFormula: filterSentence,
         view: "Grid view",
-        maxRecords: 3,
+        //maxRecords: 3,
         }).eachPage((records, fetchNextPage) => {  
           const class_id = records.map((record, index) => record.fields['class_id']);
-          const attend_hw = records.map((record, index) => record.fields['attend_hw']);
-          const attend_date = records.map((record, index) => record.fields['attend_date']);
+          const test_score = records.map((record, index) => record.fields['test_score']);
+  
           var temp=[];
-          for(var index = 0; index < attend_hw.length; index++) {
-            if(attend_hw[index] != true){
-              temp.push(createAttendData(class_id[index],attend_date[index]));
+          for(var index = 0; index < test_score.length; index++) {
+            if(test_score[index] < 60){
+              temp.push(createData(class_id[index]));
             }
             
           }
-
-          this.setState({ attendData : temp });
+          this.setState({ userData : temp });
           fetchNextPage(); 
         }
         );
+  
+        tableAttend.select({
+          
+          filterByFormula: filterSentence,
+          view: "Grid view",
+          maxRecords: 3,
+          }).eachPage((records, fetchNextPage) => {  
+            const class_id = records.map((record, index) => record.fields['class_id']);
+            const attend_hw = records.map((record, index) => record.fields['attend_hw']);
+            const attend_date = records.map((record, index) => record.fields['attend_date']);
+            var temp=[];
+            for(var index = 0; index < attend_hw.length; index++) {
+              if(attend_hw[index] != true){
+                temp.push(createAttendData(class_id[index],attend_date[index]));
+              }
+            }
+            this.setState({ attendData : temp });
+            fetchNextPage(); 
+          }
+          );
       
+  }      
   }
 
   handleClick = () => {
@@ -187,6 +198,7 @@ class CustomizedSnackbars extends React.Component {
   };
 
   render() {
+    console.log(this.props.UserId);
     const { classes } = this.props;
     const ClassCard =({class_id}) => (
      <MySnackbarContentWrapper
