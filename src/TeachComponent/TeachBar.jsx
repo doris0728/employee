@@ -42,6 +42,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {fetchPostTeacher} from '../api';
+
+function sleep (time){
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 const theme = createMuiTheme({
   typography: {
@@ -130,7 +135,7 @@ class MiniDrawer extends React.Component {
   state = {
     open: true, 
     teacherName:'',
-    teacherEmail:'',
+    //teacherEmail:'',
     mailopen: false,
     passwdopen: false,
   };
@@ -155,6 +160,17 @@ class MiniDrawer extends React.Component {
 
   mailhandleClose = () => {
     this.setState({ mailopen: false });
+  };
+
+  handleSubmit = (e)=> {
+    e.preventDefault()
+    let data = {fields:{teacher_email:{}}};
+    data.fields.teacher_email = this.state.teacher_email;
+    fetchPostTeacher(data);
+    this.setState({ open: false });
+    sleep(500).then(() => {
+      window.location.reload();
+    })
   };
   //change email end
 
@@ -195,7 +211,7 @@ class MiniDrawer extends React.Component {
       console.log("SelectClass Hello");
       console.log(teacher_email);
       
-      this.setState({ teacherEmail : temp });
+      this.setState({ teacher_email : temp });
     }).catch(err => {
       // Error 🙁
     });
@@ -259,7 +275,7 @@ class MiniDrawer extends React.Component {
           {this.state.teacherName}
           </Typography>
           <Typography style={{fontSize:12,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:1,}}>
-          {this.state.teacherEmail}
+          {this.state.teacher_email}
           </Typography>
           </div>
           
@@ -364,17 +380,17 @@ class MiniDrawer extends React.Component {
               fontSize:25}}>更改帳號</a>
               </DialogTitle>
 
-          <DialogContent>
+          {/* <DialogContent>
             <DialogContentText>
             <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>密碼</a>
             </DialogContentText>
             <TextField style={{marginTop: 10, width: 300}} autoFocus margin="dense" id="passwd" label="請輸入密碼"
               type="password" fullWidth variant="outlined"/>
-          </DialogContent>
+          </DialogContent> */}
 
           <DialogContent>
             <DialogContentText>
-            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>新帳號</a>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>以後可以用此信箱登入</a>
             </DialogContentText>
             <TextField style={{width: 300}} utoFocus margin="dense" id="email" label="請輸入新帳號"
               type="email" fullWidth variant="outlined"/>
@@ -383,7 +399,7 @@ class MiniDrawer extends React.Component {
           <DialogActions>
             <Button onClick={this.mailhandleClose} color="primary">
               取消 </Button>
-            <Button onClick={this.mailhandleClose} color="primary">
+            <Button onClick={this.mailhandleSubmit} color="primary">
               確認 </Button>
           </DialogActions>
         </Dialog>

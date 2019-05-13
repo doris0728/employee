@@ -33,8 +33,8 @@ import ScoreComponent from './score/score-app';
 import AttendComponent from './attend/attendComponent';
 import ReserveComponent from './reserve/reserveComponent';
 import IndexComponent from './index/appComponent';
-import Reserve2 from './reserve2/reserveComponent2';
-import Reserve3 from './reserveList/reserveListComponent';
+import Reserve2All from './reserve2/reserveAll';
+import Reserve3 from './reserveList/reserve3All';
 import MyPage from './studentpage/studentpage';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Airtable from 'airtable';
@@ -344,7 +344,7 @@ class MiniDrawer extends React.Component {
           <Route path="/bar/attend" component={AttendComponent} />
           <Route path="/bar/score" component={ScoreComponent} />
           <Route path="/bar/reserve" component={ReserveComponent}/>
-          <Route path="/bar/reserve2" component={Reserve2}/>
+          <Route path="/bar/reserve2" component={Reserve2All}/>
           <Route path="/bar/reserve3" component={Reserve3}/>
           <Route path="/bar/mypage" component={MyPage}/>
         </div>
