@@ -36,9 +36,10 @@ const table = base(TABLE_NAME);
 
 let  id = 0;
 function createData(date, region, time,people,reserve) {
-    id += 1;reserve= <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/bar/reserve2'>
+    id += 1;reserve= <NavLink style={{textDecoration:'none'}} activeClassName='active' 
+    to={{pathname:'/bar/reserve2', reserveProps:{name : date,region,time}}}>
     <Button variant="contained" 
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
+    style={{fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
     backgroundColor:'#FFBF5F',color:'white'}}>
     預約</Button>
     </NavLink>

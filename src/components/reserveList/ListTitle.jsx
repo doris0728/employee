@@ -24,7 +24,7 @@ const styles = theme => ({
     //height:'50px',
     width:'94vw'
   },
-  table:{
+  reservetitle:{
     //marginTop:'3vh',
     align:'center',
     width:'100%',
@@ -68,7 +68,7 @@ class NativeSelects extends React.Component {
       
       <div className={classes.root}>
       
-        <div className={classes.table}>
+        <div className={classes.reservetitle}>
             <Typography class={classes.text} nowrap={true}>
               <a style={{marginLeft:35}}>補課紀錄</a>
               <a class={classes.textRight}>107學年</a>

@@ -10,6 +10,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { FormControl, FormHelperText, Divider, Typography } from '@material-ui/core';
 import { fetchPostStudent } from '../../api';
+import SelectInput from '@material-ui/core/Select/SelectInput';
+
+function sleep (time){
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 export default class FormDialog extends React.Component {
   state = {
@@ -35,9 +40,11 @@ export default class FormDialog extends React.Component {
     e.preventDefault()
     let data = {fields:{student_email:{}}};
     data.fields.student_email = this.state.student_email;
-
     fetchPostStudent(data);
     this.setState({ open: false });
+    sleep(500).then(() => {
+      window.location.reload();
+    })
   };
 
   render() {
