@@ -35,6 +35,12 @@ const table = base(TABLE_NAME);
 let id = 0;
 function createData(date, range, averagescore, button) {
   id += 1;
+  button=<NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
+  <Button variant="contained"
+  style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
+  backgroundColor:'#FFBF5F',color:'white'}}>
+  答題分析 ></Button>
+  </NavLink>
   return { id, date, range, averagescore, button };
 }
 
