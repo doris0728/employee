@@ -190,7 +190,7 @@ class NativeSelects extends React.Component {
 
       //for select
       attendTable.select({
-        filterByFormula: 'AND(student_id = 405401369)',
+        filterByFormula: 'AND(student_id = 405401152)',
         view: "Grid view"
         }).eachPage((records, fetchNextPage) => {
           this.setState({records});

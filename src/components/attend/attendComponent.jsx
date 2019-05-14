@@ -275,6 +275,7 @@ class EnhancedTable extends React.Component {
         var temp3=[];
         for(var index = 0; index < count; index++) {
           //temp.push(caculateMounth(attend_date[index]));
+          //temp3.push(attend_date[index]);
           temp3.push(attend_date[index].split("-")[1]);
           temp2.push(createData(attend_date[index],class_id[index],attend_time[index],attend_hw[index]));
           
