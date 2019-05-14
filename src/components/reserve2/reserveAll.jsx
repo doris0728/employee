@@ -29,9 +29,9 @@ const attendTABLE_NAME = 'Attend';
 const attendTable = base(attendTABLE_NAME);
 
 let counter = 0;
-function createData(class_id, class_date) {
+function createData(class_id, attend_date) {
   counter += 1;
-  var class_selection = class_id +" "+ class_date;
+  var class_selection = class_id +" "+ attend_date;
   
   return {id:counter, class_selection};
 }
@@ -149,22 +149,22 @@ class NativeSelects extends React.Component {
     this.setState({ [name]: event.target.value });
 
     //for select
-    console.log("In handleChange");
+    // console.log("In handleChange");
   
-    let temp = [];
-    var count = this.state.dataInit.length;
-    console.log(event.target.value);
+    // let temp = [];
+    // var count = this.state.dataInit.length;
+    // console.log(event.target.value);
 
-    for(var index = 0; index < count; index++) {
-      if(this.state.dataInit[index].classclass == event.target.value){
-        temp.push(this.state.dataInit[index]);
-        //console.log(temp);
-      }
-    } 
-    this.setState({ data : temp });
-    if(event.target.value == "1"){
-      this.setState({ data : this.state.dataInit });
-    }
+    // for(var index = 0; index < count; index++) {
+    //   if(this.state.dataInit[index].classclass == event.target.value){
+    //     temp.push(this.state.dataInit[index]);
+    //     //console.log(temp);
+    //   }
+    // } 
+    // this.setState({ data : temp });
+    // if(event.target.value == "1"){
+    //   this.setState({ data : this.state.dataInit });
+    // }
   };
 
   handleClickOpen = () => {
@@ -190,7 +190,8 @@ class NativeSelects extends React.Component {
 
       //for select
       attendTable.select({
-        filterByFormula: 'AND(student_id = 405401152)',
+        filterByFormula: 'AND(student_id = 405401279)',
+
         view: "Grid view"
         }).eachPage((records, fetchNextPage) => {
           this.setState({records});

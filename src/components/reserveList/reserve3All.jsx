@@ -17,7 +17,7 @@ import Reserve3 from '../reserveList/reserveListComponent'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Airtable from 'airtable';
 
-const TABLE_NAME = 'ReserveTime';
+const TABLE_NAME = 'ReserveStudent';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
 
@@ -61,8 +61,8 @@ const styles = theme => ({
     fontWeight: "bold",
     color:'#FFBF5F',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:4,
-    marginLeft:35,
+    letterSpacing:2,
+    //marginLeft:25,
   },
   detail:{
     marginLeft:22,
@@ -70,7 +70,7 @@ const styles = theme => ({
     fontWeight: "bold",
     color:'#969696',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:4,
+    letterSpacing:2,
   },
   //title
   reservetitle:{
@@ -100,12 +100,36 @@ class NativeSelects extends React.Component {
   state = {
     age: '',
     name: '王映心',
-    region:'古亭校區',
-    date:'03/25',
-    time:'12:00',
-    class:'國文B班 02/14',
+    region:'',
+    date:'',
+    time:'',
+    class:'',
     labelWidth: 0,
   };
+
+  //airtable
+  componentDidMount() {
+
+    const fileterSentence = 'AND(student_id = 405401279)'
+    console.log(fileterSentence);
+    table.select({
+        filterByFormula: fileterSentence,
+        view: "Grid view",
+        maxRecords: 1
+    }).eachPage((records, fetchNextPage) => {
+        this.setState({ records });
+
+        const reserve_date = this.state.records.map((record, index) => record.fields['reserve_date']);
+        const reserve_address = this.state.records.map((record, index) => record.fields['reserve_address']);
+        const reserve_time = this.state.records.map((record, index) => record.fields['reserve_time']);
+        const reserve_class = this.state.records.map((record, index) => record.fields['reserve_class'])
+        this.setState({
+            date : reserve_date, region : reserve_address, time : reserve_time, class : reserve_class
+        });
+        fetchNextPage();
+    }
+    );
+}
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -113,7 +137,7 @@ class NativeSelects extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    console.log(this.state.region);
     return (
       <div className={classes.root}>
 
@@ -131,17 +155,17 @@ class NativeSelects extends React.Component {
       <table className={classes.table}>
           <tr align="center"><td colspan="2"><Typography class={classes.text1}>補課資料</Typography></td></tr>
 
-          <tr><td align="left"><a className={classes.texttitle}>姓名</a>
+          <tr><td align="left"><a className={classes.texttitle} style={{marginLeft:35}}>姓名</a>
           <a className={classes.detail}>{this.state.name}</a></td>
           <td align="left"><a className={classes.texttitle}>校區</a>
           <a className={classes.detail}>{this.state.region}</a></td></tr>
 
-          <tr><td align="left"><a className={classes.texttitle}>日期</a>
+          <tr><td align="left"><a className={classes.texttitle} style={{marginLeft:35}}>日期</a>
           <a className={classes.detail}>{this.state.date}</a></td>
           <td align="left"><a className={classes.texttitle}>時間</a>
           <a className={classes.detail}>{this.state.time}</a></td></tr>
 
-          <tr align=""><td colspan="2"><a className={classes.texttitle}>預約課程</a>
+          <tr align=""><td colspan="2"><a className={classes.texttitle} style={{marginLeft:35}}>預約課程</a>
           <a className={classes.detail}>{this.state.class}</a></td></tr>
 
       </table>
@@ -151,17 +175,17 @@ class NativeSelects extends React.Component {
       <table className={classes.table}>
           <tr align="center"><td colspan="2"><Typography class={classes.text1}>補課資料</Typography></td></tr>
 
-          <tr><td align="left"><a className={classes.texttitle}>姓名</a>
+          <tr><td align="left"><a className={classes.texttitle} style={{marginLeft:35}}>姓名</a>
           <a className={classes.detail}>{this.state.name}</a></td>
           <td align="left"><a className={classes.texttitle}>校區</a>
           <a className={classes.detail}>{this.state.region}</a></td></tr>
 
-          <tr><td align="left"><a className={classes.texttitle}>日期</a>
+          <tr><td align="left"><a className={classes.texttitle} style={{marginLeft:35}}>日期</a>
           <a className={classes.detail}>{this.state.date}</a></td>
           <td align="left"><a className={classes.texttitle}>時間</a>
           <a className={classes.detail}>{this.state.time}</a></td></tr>
 
-          <tr align=""><td colspan="2"><a className={classes.texttitle}>預約課程</a>
+          <tr align=""><td colspan="2"><a className={classes.texttitle} style={{marginLeft:35}}>預約課程</a>
           <a className={classes.detail}>{this.state.class}</a></td></tr>
 
       </table>

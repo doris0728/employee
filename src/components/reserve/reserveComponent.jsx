@@ -74,7 +74,7 @@ const rowshead = [
     { id: 'date', numeric: false, disablePadding: true, label:'日期' },
     { id: 'region', numeric: true, disablePadding: false, label: '校區' },
     { id: 'time', numeric: true, disablePadding: false, label: '補課時間' },
-    { id: 'people', numeric: true, disablePadding: false, label: '人數' },
+    { id: 'people', numeric: true, disablePadding: false, label: '剩餘人數' },
     { id: 'reserve', numeric: true, disablePadding: false, label: '預約' },
 ];
 

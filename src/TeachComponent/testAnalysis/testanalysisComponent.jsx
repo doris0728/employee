@@ -9,11 +9,11 @@ import Select from '@material-ui/core/Select';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Button from '@material-ui/core/Button';
-import {Card,Typography} from '@material-ui/core'; 
+import { Card, Typography } from '@material-ui/core';
 import GlobeIcon from '@material-ui/icons/LanguageRounded';
 import ManIcon from '@material-ui/icons/HowToRegRounded'
 import Chart from "react-google-charts";
-
+import Img from './reading.png'
 //analysischart data
 const analysisdata = [
   ["", "", { role: "style" }],
@@ -25,20 +25,20 @@ const analysisdata = [
 
 //chart style
 const analysisoption = {
-  width:300,
-  legend: {position: 'none'}
+  width: 300,
+  legend: { position: 'none' }
 };
 
-const data=[
-  ['','及格', '不及格','缺考'],
-  [ '',41, 30,10],
+const data = [
+  ['', '及格', '不及格', '缺考'],
+  ['', 41, 30, 10],
 ];
-const option={
-  colors: ['#5A3DAA', '#FFBF5F','#ECECEC'],
+const option = {
+  colors: ['#5A3DAA', '#FFBF5F', '#ECECEC'],
   chartArea: { width: '95%' },
   isStacked: true,
-  height:120,
-  width:950,
+  height: 120,
+  width: 950,
   hAxis: {
     baselineColor: 'none',
     ticks: []
@@ -55,7 +55,7 @@ const option={
 const styles = theme => ({
   table: {
     //width: 1020,
-    minWidth:400,
+    minWidth: 400,
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -67,30 +67,30 @@ const styles = theme => ({
     //marginLeft:34,
     //marginTop:20,
     //height:'50px',
-    width:1020,
-    marginLeft:10
+    width: 1020,
+    marginLeft: 10
   },
-  SelectTable:{
+  SelectTable: {
     //marginTop:'3vh',
-    align:'center',
-    width:'100%',
+    align: 'center',
+    width: '100%',
   },
-  text:{
+  text: {
     //marginLeft:35,
-    width:'100%',
-    marginBottom:15,
-    fontSize:20,
+    width: '100%',
+    marginBottom: 15,
+    fontSize: 20,
     fontWeight: "bold",
-    color:'#969696',
+    color: '#969696',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:4,
+    letterSpacing: 4,
   },
-  textRight:{
-    fontSize:13,
-    paddingLeft:'65%',
-    color:'#FFBF5F',
+  textRight: {
+    fontSize: 13,
+    paddingLeft: '65%',
+    color: '#FFBF5F',
   },
-  card:{
+  card: {
     backgroundColor: 'white',
     //border: '0.8px #FFBF5F solid',
     borderRadius: '2px',
@@ -99,28 +99,28 @@ const styles = theme => ({
     margin: '0 auto',
     //cardElevation:'0'
   },
-  divflex:{
-    display:'flex'
+  divflex: {
+    display: 'flex'
   },
-  analysis:{
-    display:'flex',
+  analysis: {
+    display: 'flex',
     flexWrap: 'wrap',
-    width:1010,
-    marginBottom:20
+    width: 1010,
+    marginBottom: 20
   },
-  analysisCard:{
-    width:305,
-    marginLeft:30,
-    marginTop:25
+  analysisCard: {
+    width: 305,
+    marginLeft: 30,
+    marginTop: 25
   },
-  analysistext:{
-    fontSize:16,
+  analysistext: {
+    fontSize: 16,
     fontWeight: "bold",
-    color:'#969696',
+    color: '#969696',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:1,
-    marginLeft:10,
-    marginTop:5
+    letterSpacing: 1,
+    marginLeft: 10,
+    marginTop: 5
   }
 });
 
@@ -138,53 +138,51 @@ class EnhancedTable extends React.Component {
     const { classes } = this.props;
 
     return (
-    <div style={{marginTop:100}}>
+      <div style={{ marginTop: 100 }}>
 
-    {/* 下面是select跟title */}
-    <div className={classes.SelectRoot}>
-      
-      <div className={classes.SelectTable}>
-          <Typography class={classes.text} nowrap={true}>
-            <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.classname}</a><a>考試分析</a>
-            <a class={classes.textRight}>107學年</a>
-          </Typography>
-      <Divider variant="middle"/>
+        {/* 下面是select跟title */}
+        <div className={classes.SelectRoot}>
 
-      <Card className={classes.card}>
-      <div className={classes.divflex}>
-        <div><ManIcon style={{height:'100%',width:70,marginLeft:20,color:'purple'}}/></div>
-        <Chart chartType="BarChart" data={data} options={option}/>
-        <div>  
+          <div className={classes.SelectTable}>
+            <Typography class={classes.text} nowrap={true}>
+              <a style={{ color: '#FFBF5F', marginLeft: 35 }}>{this.state.classname}</a><a>考試分析</a>
+              <a class={classes.textRight}>107學年</a>
+            </Typography>
+            <Divider variant="middle" />
+
+            <Card className={classes.card}>
+              <div className={classes.divflex}>
+                <div style={{marginTop:25,marginLeft:15}}><img src={Img} width="70"/></div>
+                <Chart chartType="BarChart" data={data} options={option} />
+
+              </div>
+            </Card>
+
+          </div>
+        </div>
+        {/* select跟title結束 */}
+
+        {/* 答題分析開始 */}
+        <div className={classes.analysis}>
+          <Card className={classes.analysisCard}>
+            <Typography className={classes.analysistext}>1</Typography>
+            <Chart chartType="ColumnChart" data={analysisdata} options={analysisoption} />
+          </Card>
+
+          <Card className={classes.analysisCard}>
+            <Typography className={classes.analysistext}>2</Typography>
+            <Chart chartType="ColumnChart" data={analysisdata} options={analysisoption} />
+          </Card>
+          <Card className={classes.analysisCard}>
+            <Typography className={classes.analysistext}>3</Typography>
+            <Chart chartType="ColumnChart" data={analysisdata} options={analysisoption} />
+          </Card>
+          <Card className={classes.analysisCard}>
+            <Typography className={classes.analysistext}>4</Typography>
+          </Card>
         </div>
 
       </div>
-      </Card>
-
-      </div>
-    </div>
-    {/* select跟title結束 */}
-
-    {/* 答題分析開始 */}
-    <div className={classes.analysis}>
-    <Card className={classes.analysisCard}>
-      <Typography className={classes.analysistext}>1</Typography>
-      <Chart chartType="ColumnChart" data={analysisdata} options={analysisoption}/>
-    </Card>
-
-    <Card className={classes.analysisCard}>
-      <Typography className={classes.analysistext}>2</Typography>
-      <Chart chartType="ColumnChart" data={analysisdata} options={analysisoption}/>
-    </Card>
-    <Card className={classes.analysisCard}>
-      <Typography className={classes.analysistext}>3</Typography>
-      <Chart chartType="ColumnChart" data={analysisdata} options={analysisoption}/>
-    </Card>
-    <Card className={classes.analysisCard}>
-      <Typography className={classes.analysistext}>4</Typography>
-    </Card>
-    </div>
-
-    </div>
     );
   }
 }
