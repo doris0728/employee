@@ -159,6 +159,29 @@ class ImgMediaCard extends React.Component {
       );
     }
   }
+
+  componentDidMount(){
+      const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+      table.select({
+      filterByFormula: filterSentence,
+      view: "Grid view",
+      maxRecords: 3,
+      }).eachPage((records, fetchNextPage) => {
+        const class_id = records.map((record, index) => record.fields['class_id']);
+        const test_score = records.map((record, index) => record.fields['test_score']);
+        const test_date = records.map((record, index) => record.fields['test_date']);
+
+        var temp=[];
+        for(var index = 0; index < 3; index++) {
+          temp.push(createData(class_id[index], test_score[index], test_date[index]));
+        }
+      
+        this.setState({ userData : temp });
+        fetchNextPage(); 
+      }
+      );
+  }
+
   render(props){
     const { classes } = this.props;
 
