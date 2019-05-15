@@ -214,6 +214,8 @@ class EnhancedTable extends React.Component {
       var temp = [];
       var temp2 = [];
       var temp3 = [];
+      var temp4 = [];
+      var total = [];
       for (var index = 0; index < count; index++) {
         temp.push(test_date[index].split("-")[1]);
       }

@@ -26,84 +26,84 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     //marginLeft:'42px',
-    marginTop:120,
-    width:'93vw'
+    marginTop: 120,
+    width: '93vw'
   },
-  card:{
-      width:550,
-      height:270,
-      marginTop:30,
-      marginLeft:315,
-      marginBottom:30,
+  card: {
+    width: 550,
+    height: 270,
+    marginTop: 30,
+    marginLeft: 315,
+    marginBottom: 30,
   },
-  table:{
-      border:1,
-      borderColor:'red',
-      BorderStyle:'solid',
-      rules:'all',
-      marginLeft:50,
-      marginTop:20,
-      width:450,
-      height:230,
-      backgroundColor:'#f0f0f0',
+  table: {
+    border: 1,
+    borderColor: 'red',
+    BorderStyle: 'solid',
+    rules: 'all',
+    marginLeft: 50,
+    marginTop: 20,
+    width: 450,
+    height: 230,
+    backgroundColor: '#f0f0f0',
   },
-  text1:{
-      //marginLeft:150,
-      //marginTop:7,
-      fontSize:18,
-      fontWeight: "bold",
-      color:'#66009D',
-      fontFamily: "Microsoft JhengHei",
-      letterSpacing:4,
-  },
-  texttitle:{
-    fontSize:16,
+  text1: {
+    //marginLeft:150,
+    //marginTop:7,
+    fontSize: 18,
     fontWeight: "bold",
-    color:'#FFBF5F',
+    color: '#66009D',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:2,
+    letterSpacing: 4,
+  },
+  texttitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: '#FFBF5F',
+    fontFamily: "Microsoft JhengHei",
+    letterSpacing: 2,
     //marginLeft:25,
   },
-  detail:{
-    marginLeft:22,
-    fontSize:16,
+  detail: {
+    marginLeft: 22,
+    fontSize: 16,
     fontWeight: "bold",
-    color:'#969696',
+    color: '#969696',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:2,
+    letterSpacing: 2,
   },
   //title
-  reservetitle:{
+  reservetitle: {
     //marginTop:'3vh',
-    align:'center',
-    width:'100%',
+    align: 'center',
+    width: '100%',
   },
-  text:{
+  text: {
     //marginLeft:35,
-    width:'100%',
-    marginBottom:15,
-    fontSize:20,
+    width: '100%',
+    marginBottom: 15,
+    fontSize: 20,
     fontWeight: "bold",
-    color:'#969696',
+    color: '#969696',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:4,
-    
+    letterSpacing: 4,
+
   },
-  textRight:{
-    fontSize:13,
-    paddingLeft:'79%',
-    color:'#FFBF5F',
+  textRight: {
+    fontSize: 13,
+    paddingLeft: '79%',
+    color: '#FFBF5F',
   }
 });
 
 class NativeSelects extends React.Component {
   state = {
     age: '',
-    name: '王映心',
-    region:'',
-    date:'',
-    time:'',
-    class:'',
+    name: '',
+    region: '',
+    date: '',
+    time: '',
+    class: '',
     labelWidth: 0,
   };
 
@@ -113,23 +113,39 @@ class NativeSelects extends React.Component {
     const fileterSentence = 'AND(student_id = 405401279)'
     console.log(fileterSentence);
     table.select({
-        filterByFormula: fileterSentence,
-        view: "Grid view",
-        maxRecords: 1
+      filterByFormula: fileterSentence,
+      view: "Grid view",
+      maxRecords: 1
     }).eachPage((records, fetchNextPage) => {
-        this.setState({ records });
-
-        const reserve_date = this.state.records.map((record, index) => record.fields['reserve_date']);
-        const reserve_address = this.state.records.map((record, index) => record.fields['reserve_address']);
-        const reserve_time = this.state.records.map((record, index) => record.fields['reserve_time']);
-        const reserve_class = this.state.records.map((record, index) => record.fields['reserve_class'])
-        this.setState({
-            date : reserve_date, region : reserve_address, time : reserve_time, class : reserve_class
-        });
-        fetchNextPage();
+      this.setState({ records });
+      console.log(records)
+      const reserve_date = this.state.records.map((record, index) => record.fields['reserve_date']);
+      const reserve_address = this.state.records.map((record, index) => record.fields['reserve_address']);
+      const reserve_time = this.state.records.map((record, index) => record.fields['reserve_time']);
+      const reserve_class = this.state.records.map((record, index) => record.fields['reserve_class'])
+      const student_id = this.state.records.map((record, index) => record.fields['student_id'])
+      this.setState({
+        date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
+      });
+      fetchNextPage();
     }
     );
-}
+
+    //for studnet name name隨機抓的跟預約沒關西嗚嗚
+    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
+      .then((resp) => resp.json())
+      .then(data => {
+        this.setState({ studentData: data.records });
+        const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
+        var temp = student_name[1];
+        console.log(student_name);
+
+        this.setState({ name: temp });
+      }).catch(err => {
+        // Error 🙁
+      });
+
+  }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -138,60 +154,48 @@ class NativeSelects extends React.Component {
   render() {
     const { classes } = this.props;
     console.log(this.state.region);
+
+    //////// 重複的部分改天繼續
+    // const AttendCard =({class_id, attend_date}) => (
+    //   <MySnackbarContentWrapper
+    //    variant="classalert"
+    //    className={classes.margin}
+    //    message={class_id}
+    //    /> 
+    //  );
+     ////////
     return (
       <div className={classes.root}>
 
         <div className={classes.reservetitle}>
-            <Typography class={classes.text} nowrap={true}>
-              <a style={{marginLeft:35}}>補課紀錄</a>
-              <a class={classes.textRight}>107學年</a>
-            </Typography>
-       
-        
-        <Divider variant="middle"/>
+          <Typography class={classes.text} nowrap={true}>
+            <a style={{ marginLeft: 35 }}>補課紀錄</a>
+            <a class={classes.textRight}>107學年</a>
+          </Typography>
+
+
+          <Divider variant="middle" />
         </div>
 
-      <Card className={classes.card}>
-      <table className={classes.table}>
-          <tr align="center"><td colspan="2"><Typography class={classes.text1}>補課資料</Typography></td></tr>
+        <Card className={classes.card}>
+          <table className={classes.table}>
+            <tr align="center"><td colspan="2"><Typography class={classes.text1}>補課資料</Typography></td></tr>
 
-          <tr><td align="left"><a className={classes.texttitle} style={{marginLeft:35}}>姓名</a>
-          <a className={classes.detail}>{this.state.name}</a></td>
-          <td align="left"><a className={classes.texttitle}>校區</a>
-          <a className={classes.detail}>{this.state.region}</a></td></tr>
+            <tr><td align="left"><a className={classes.texttitle} style={{ marginLeft: 35 }}>姓名</a>
+              <a className={classes.detail}>{this.state.name}</a></td>
+              <td align="left"><a className={classes.texttitle}>校區</a>
+                <a className={classes.detail}>{this.state.region}</a></td></tr>
 
-          <tr><td align="left"><a className={classes.texttitle} style={{marginLeft:35}}>日期</a>
-          <a className={classes.detail}>{this.state.date}</a></td>
-          <td align="left"><a className={classes.texttitle}>時間</a>
-          <a className={classes.detail}>{this.state.time}</a></td></tr>
+            <tr><td align="left"><a className={classes.texttitle} style={{ marginLeft: 35 }}>日期</a>
+              <a className={classes.detail}>{this.state.date}</a></td>
+              <td align="left"><a className={classes.texttitle}>時間</a>
+                <a className={classes.detail}>{this.state.time}</a></td></tr>
 
-          <tr align=""><td colspan="2"><a className={classes.texttitle} style={{marginLeft:35}}>預約課程</a>
-          <a className={classes.detail}>{this.state.class}</a></td></tr>
+            <tr align=""><td colspan="2"><a className={classes.texttitle} style={{ marginLeft: 35 }}>預約課程</a>
+              <a className={classes.detail}>{this.state.class}</a></td></tr>
 
-      </table>
-      </Card>
-
-      <Card className={classes.card}>
-      <table className={classes.table}>
-          <tr align="center"><td colspan="2"><Typography class={classes.text1}>補課資料</Typography></td></tr>
-
-          <tr><td align="left"><a className={classes.texttitle} style={{marginLeft:35}}>姓名</a>
-          <a className={classes.detail}>{this.state.name}</a></td>
-          <td align="left"><a className={classes.texttitle}>校區</a>
-          <a className={classes.detail}>{this.state.region}</a></td></tr>
-
-          <tr><td align="left"><a className={classes.texttitle} style={{marginLeft:35}}>日期</a>
-          <a className={classes.detail}>{this.state.date}</a></td>
-          <td align="left"><a className={classes.texttitle}>時間</a>
-          <a className={classes.detail}>{this.state.time}</a></td></tr>
-
-          <tr align=""><td colspan="2"><a className={classes.texttitle} style={{marginLeft:35}}>預約課程</a>
-          <a className={classes.detail}>{this.state.class}</a></td></tr>
-
-      </table>
-      </Card>
-
-
+          </table>
+        </Card>
       </div>
     );
   }
