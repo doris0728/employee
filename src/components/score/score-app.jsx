@@ -27,8 +27,10 @@ import ReactDOM from 'react-dom';
 import Airtable from 'airtable';
 
 const TABLE_NAME = 'TestScore';
+const STU_TABLE_NAME = 'Student';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
+const studentTable = base(STU_TABLE_NAME);
 
 
 let counter = 0;
@@ -240,74 +242,58 @@ class EnhancedTable extends React.Component {
       this.setState({
         labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
       });
-  
+
+      const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
       //for select
       table.select({
-          filterByFormula: 'AND(student_id = 405401369)',
+          filterByFormula: filterSentence,
           view: "Grid view"
           }).eachPage((records, fetchNextPage) => {
             this.setState({records});
             console.log(records);
             const class_id = this.state.records.map((record, index) => record.fields['class_id']);
-            // This function (`page`) will get called for each page of records.
+
+
+            const test_date = this.state.records.map((record, index) => record.fields['test_date']);
+            const test_score = this.state.records.map((record, index) => record.fields['test_score']);
+            const test_rank = this.state.records.map((record, index) => record.fields['test_rank']);
+
+            //for select
             var count = class_id.length;
             var temp=[];
             var temp2=[];
             for(var index = 0; index < count; index++) {
               temp.push(class_id[index]);
             }
-
             var classResult = temp.filter(function(element, index, arr){
               return arr.indexOf(element) === index;
             });
-            console.log(classResult);
             for(var index = 0; index < classResult.length; index++){
               temp2.push(classResult[index]);
             }
-
             this.setState({ classData : temp2 });
+
+            //for table
+            var tempT=[];
+            for(var index = 0; index < class_id.length; index++) {
+              tempT.push(createData(class_id[index],test_date[index],test_score[index],test_rank[index]));
+            }
+            this.setState({ data : tempT });
+            this.setState({ dataInit : tempT })
             fetchNextPage(); 
           }
           );
       //for studnet name
-      fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
-      .then((resp) => resp.json())
-      .then(data => {
-         this.setState({ studentData: data.records });
-  
-         const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
-         var temp = student_name[1];
-         console.log("SelectClass Hello");
-         console.log(student_name);
-        
-         this.setState({ name : temp });
-      }).catch(err => {
-        // Error 🙁
-      });
-  
-      //for table
-      fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/TestScore?api_key=keyA7EKdngjou4Dgy')
-      .then((resp) => resp.json())
-      .then(data => {
-         this.setState({ testScore: data.records });
-  
-      //https://cythilya.github.io/2018/06/17/array-and-object-handling/
-      const class_id = this.state.testScore.map(item => Object.values(item)[1].class_id);
-      const test_date = this.state.testScore.map(item => Object.values(item)[1].test_date);
-      const test_score = this.state.testScore.map(item => Object.values(item)[1].test_score);
-      const test_rank = this.state.testScore.map(item => Object.values(item)[1].test_rank);
-      console.log(class_id);
-      var count = class_id.length;
-      var temp=[];
-  
-      for(var index = 0; index < count; index++) {
-        temp.push(createData(class_id[index],test_date[index],test_score[index],test_rank[index]));
-      }
-      this.setState({ data : temp });
-      this.setState({ dataInit : temp })
-      }).catch(err => {
-        // Error 🙁
-      });
+      studentTable.select({
+        filterByFormula: filterSentence,
+        view: "Grid view"
+        }).eachPage((records, fetchNextPage) => {
+          this.setState({records});
+          const student_name = this.state.records.map((record, index) => record.fields['student_name']);
+          this.setState({ name : student_name[0] });
+          fetchNextPage(); 
+        }
+        );
     }
   
     handleChange = name => event => {

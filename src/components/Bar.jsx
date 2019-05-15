@@ -341,12 +341,15 @@ class MiniDrawer extends React.Component {
         <div>
           {/* <Route exact path="/bar" component={IndexComponent}/> */}
           <Route exact path="/bar" render={(props) => <IndexComponent {...props} UserId={this.state.studentID} />}/>
-          <Route path="/bar/attend" component={AttendComponent} />
-          <Route path="/bar/score" component={ScoreComponent} />
+          {/* <Route path="/bar/attend" component={AttendComponent} /> */}
+          <Route path="/bar/attend" render={(props) => <AttendComponent {...props} UserId={this.state.studentID} />} />
+          {/* <Route path="/bar/score" component={ScoreComponent} /> */}
+          <Route path="/bar/score" render={(props) => <ScoreComponent {...props} UserId={this.state.studentID}/>}/>
           <Route path="/bar/reserve" component={ReserveComponent}/>
           <Route path="/bar/reserve2" component={Reserve2All}/>
           <Route path="/bar/reserve3" component={Reserve3}/>
-          <Route path="/bar/mypage" component={MyPage}/>
+          {/* <Route path="/bar/mypage" component={MyPage}/> */}
+          <Route path="/bar/mypage" render={(props) => <MyPage {...props} UserId={this.state.studentID} />}/>
         </div>
         </MuiThemeProvider>
       </div>

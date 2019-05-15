@@ -136,38 +136,28 @@ class ImgMediaCard extends React.Component {
     //studentData: [],
     userData:[],
   };
-  componentDidMount() {
-    table.select({
-    filterByFormula: 'AND(student_id = 405401369)',
-    view: "Grid view",
-    maxRecords: 3,
-    }).eachPage((records, fetchNextPage) => {
-      //temp.push(records.fields);
-      //this.setState({records});
-      //console.log(records);
+  componentDidUpdate(prevProps){
+    if (this.props.UserId !== prevProps.UserId) {
+      const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+      table.select({
+      filterByFormula: filterSentence,
+      view: "Grid view",
+      maxRecords: 3,
+      }).eachPage((records, fetchNextPage) => {
+        const class_id = records.map((record, index) => record.fields['class_id']);
+        const test_score = records.map((record, index) => record.fields['test_score']);
+        const test_date = records.map((record, index) => record.fields['test_date']);
 
-      const class_id = records.map((record, index) => record.fields['class_id']);
-      const test_score = records.map((record, index) => record.fields['test_score']);
-      const test_date = records.map((record, index) => record.fields['test_date']);
-      // // This function (`page`) will get called for each page of records.
-
-      var temp=[];
-      for(var index = 0; index < 3; index++) {
-        temp.push(createData(class_id[index], test_score[index], test_date[index]));
+        var temp=[];
+        for(var index = 0; index < 3; index++) {
+          temp.push(createData(class_id[index], test_score[index], test_date[index]));
+        }
+      
+        this.setState({ userData : temp });
+        fetchNextPage(); 
       }
-      console.log(temp);
-      this.setState({ userData : temp });
-      console.log(this.state.userData);
-      fetchNextPage(); 
+      );
     }
-    );
-    // fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/TestScore?api_key=keyA7EKdngjou4Dgy')
-    // .then((resp) => resp.json())
-    // .then(data => {
-    //    this.setState({ studentData: data.records });
-    // }).catch(err => {
-    //   // Error 🙁
-    // });
   }
   render(props){
     const { classes } = this.props;

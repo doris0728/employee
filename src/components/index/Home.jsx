@@ -131,12 +131,12 @@ const styles = {
 class ImgMediaCard extends React.Component {
   render() {
     const { classes } = this.props;
-    console.log(this.props.UserId);
+    //console.log(this.props.UserId);
     return (
       <div>
         <div className={classes.wrap}>
           <div>
-            <TestCard/>
+            <TestCard UserId={this.props.UserId}/>
             <HomeworkCard/>
           </div>
           <div>

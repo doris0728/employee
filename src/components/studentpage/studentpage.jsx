@@ -27,10 +27,10 @@ function ImgMediaCard(props) {
     <div>
       <div className={classes.wrap}>
       <div>
-        <ProfileCard/>
+        <ProfileCard UserId={props.UserId}/>
       </div>
       <div>
-        <CouseCard/>
+        <CouseCard UserId={props.UserId}/>
       </div>
       
       
