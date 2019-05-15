@@ -346,8 +346,10 @@ class MiniDrawer extends React.Component {
           {/* <Route path="/bar/score" component={ScoreComponent} /> */}
           <Route path="/bar/score" render={(props) => <ScoreComponent {...props} UserId={this.state.studentID}/>}/>
           <Route path="/bar/reserve" component={ReserveComponent}/>
-          <Route path="/bar/reserve2" component={Reserve2All}/>
-          <Route path="/bar/reserve3" component={Reserve3}/>
+          {/* <Route path="/bar/reserve2" component={Reserve2All}/> */}
+          <Route path="/bar/reserve2" render={(props) => <Reserve2All {...props} UserId={this.state.studentID}/>}/>
+          {/* <Route path="/bar/reserve3" component={Reserve3}/> */}
+          <Route path="/bar/reserve3" render={(props) => <Reserve3 {...props} UserId={this.state.studentID}/>}/>
           {/* <Route path="/bar/mypage" component={MyPage}/> */}
           <Route path="/bar/mypage" render={(props) => <MyPage {...props} UserId={this.state.studentID} />}/>
         </div>

@@ -17,9 +17,16 @@ import Reserve3 from '../reserveList/reserveListComponent'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Airtable from 'airtable';
 
+const STU_TABLE_NAME = 'Student';
 const TABLE_NAME = 'ReserveStudent';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
+const studentTable = base(TABLE_NAME);
+
+function createData(name, region, date, time, reserve_class) {
+
+  return {name, region, date, time, reserve_class};
+}
 
 const styles = theme => ({
   root: {
@@ -100,50 +107,52 @@ class NativeSelects extends React.Component {
   state = {
     age: '',
     name: '',
-    region: '',
-    date: '',
-    time: '',
-    class: '',
+    // region: '',
+    // date: '',
+    // time: '',
+    // class: '',
     labelWidth: 0,
+    reserveData:[],
   };
 
   //airtable
   componentDidMount() {
+    const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
 
-    const fileterSentence = 'AND(student_id = 405401279)'
-    console.log(fileterSentence);
-    table.select({
-      filterByFormula: fileterSentence,
-      view: "Grid view",
-      maxRecords: 1
-    }).eachPage((records, fetchNextPage) => {
-      this.setState({ records });
-      console.log(records)
-      const reserve_date = this.state.records.map((record, index) => record.fields['reserve_date']);
-      const reserve_address = this.state.records.map((record, index) => record.fields['reserve_address']);
-      const reserve_time = this.state.records.map((record, index) => record.fields['reserve_time']);
-      const reserve_class = this.state.records.map((record, index) => record.fields['reserve_class'])
-      const student_id = this.state.records.map((record, index) => record.fields['student_id'])
-      this.setState({
-        date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
-      });
-      fetchNextPage();
-    }
-    );
+    //for studnet name
+    studentTable.select({
+      filterByFormula: filterSentence,
+      view: "Grid view"
+      }).eachPage((records, fetchNextPage) => {
+        this.setState({records});
+        const student_name = this.state.records.map((record, index) => record.fields['student_name']);
+        this.setState({ name : student_name[0] });
+        fetchNextPage(); 
+      }
+      );
 
-    //for studnet name name隨機抓的跟預約沒關西嗚嗚
-    fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
-      .then((resp) => resp.json())
-      .then(data => {
-        this.setState({ studentData: data.records });
-        const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
-        var temp = student_name[1];
-        console.log(student_name);
-
-        this.setState({ name: temp });
-      }).catch(err => {
-        // Error 🙁
-      });
+      table.select({
+        filterByFormula: filterSentence,
+        view: "Grid view",
+      }).eachPage((records, fetchNextPage) => {
+        this.setState({ records });
+        var temp = [];
+        const reserve_date = this.state.records.map((record, index) => record.fields['reserve_date']);
+        const reserve_address = this.state.records.map((record, index) => record.fields['reserve_address']);
+        const reserve_time = this.state.records.map((record, index) => record.fields['reserve_time']);
+        const reserve_class = this.state.records.map((record, index) => record.fields['reserve_class']);
+        const student_id = this.state.records.map((record, index) => record.fields['student_id']);
+  
+        for(var index = 0; index < reserve_address.length; index++) {
+          temp.push(createData(student_id[index],reserve_address[index],reserve_date[index],reserve_time[index],reserve_class[index]));
+        }
+        // this.setState({
+        //   date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
+        // });
+        this.setState({ reserveData: temp });
+        fetchNextPage();
+      }
+      );
 
   }
 
@@ -153,17 +162,28 @@ class NativeSelects extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.state.region);
 
-    //////// 重複的部分改天繼續
-    // const AttendCard =({class_id, attend_date}) => (
-    //   <MySnackbarContentWrapper
-    //    variant="classalert"
-    //    className={classes.margin}
-    //    message={class_id}
-    //    /> 
-    //  );
-     ////////
+    const ReserveCard =({name, region,date,time,reserve_class}) => (
+      <Card className={classes.card}>
+      <table className={classes.table}>
+        <tr align="center"><td colspan="2"><Typography class={classes.text1}>補課資料</Typography></td></tr>
+
+        <tr><td align="left"><a className={classes.texttitle} style={{ marginLeft: 35 }}>學號</a>
+          <a className={classes.detail}>{name}</a></td>
+          <td align="left"><a className={classes.texttitle}>校區</a>
+            <a className={classes.detail}>{region}</a></td></tr>
+
+        <tr><td align="left"><a className={classes.texttitle} style={{ marginLeft: 35 }}>日期</a>
+          <a className={classes.detail}>{date}</a></td>
+          <td align="left"><a className={classes.texttitle}>時間</a>
+            <a className={classes.detail}>{time}</a></td></tr>
+
+        <tr align=""><td colspan="2"><a className={classes.texttitle} style={{ marginLeft: 35 }}>預約課程</a>
+          <a className={classes.detail}>{reserve_class}</a></td></tr>
+
+      </table>
+    </Card>
+     );
     return (
       <div className={classes.root}>
 
@@ -176,8 +196,9 @@ class NativeSelects extends React.Component {
 
           <Divider variant="middle" />
         </div>
+        {this.state.reserveData.map(reserve => <ReserveCard {...reserve} /> )}
 
-        <Card className={classes.card}>
+        {/* <Card className={classes.card}>
           <table className={classes.table}>
             <tr align="center"><td colspan="2"><Typography class={classes.text1}>補課資料</Typography></td></tr>
 
@@ -195,7 +216,7 @@ class NativeSelects extends React.Component {
               <a className={classes.detail}>{this.state.class}</a></td></tr>
 
           </table>
-        </Card>
+        </Card> */}
       </div>
     );
   }

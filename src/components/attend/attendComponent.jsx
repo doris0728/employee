@@ -306,7 +306,6 @@ class EnhancedTable extends React.Component {
         fetchNextPage(); 
       }
       );
-
   }
 
   handleChange = name => event => {

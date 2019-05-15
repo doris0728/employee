@@ -18,3 +18,6 @@ export const fetchPostStudent = (payload) => axios.patch(updateURL, payload, con
 export const fetchPostTeacher = (payload) => axios.patch(teacherUpdateURL, payload, config)
 
 export const fetchPostClassMember = (payload) => axios.post('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/ClassMember?view=Grid%20view', payload, config)
+
+//Reserve Stu
+export const fetchPostReserveStudent = (payload) => axios.post('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/ReserveStudent?view=Grid%20view', payload, config)

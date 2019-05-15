@@ -21,10 +21,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Airtable from 'airtable';
+import { fetchPostReserveStudent } from '../../api';
 
 const TABLE_NAME = 'Student';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
-//const table = base(TABLE_NAME);
+const table = base(TABLE_NAME);
 const attendTABLE_NAME = 'Attend';
 const attendTable = base(attendTABLE_NAME);
 
@@ -147,84 +148,67 @@ class NativeSelects extends React.Component {
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
-
-    //for select
-    // console.log("In handleChange");
-  
-    // let temp = [];
-    // var count = this.state.dataInit.length;
-    // console.log(event.target.value);
-
-    // for(var index = 0; index < count; index++) {
-    //   if(this.state.dataInit[index].classclass == event.target.value){
-    //     temp.push(this.state.dataInit[index]);
-    //     //console.log(temp);
-    //   }
-    // } 
-    // this.setState({ data : temp });
-    // if(event.target.value == "1"){
-    //   this.setState({ data : this.state.dataInit });
-    // }
   };
 
   handleClickOpen = () => {
+    let data = { fields: { student_id:{}, reserve_date:{}, reserve_address:{}, reserve_time:{}, reserve_class:{}} };
+    data.fields.student_id = this.props.UserId;
+    data.fields.reserve_date = this.props.location.reserveProps.name;
+    data.fields.reserve_address = this.props.location.reserveProps.region;
+    data.fields.reserve_time = this.props.location.reserveProps.time;
+    data.fields.reserve_class = this.state.age;
+    fetchPostReserveStudent(data);
+
     this.setState({ open: true });
   };
 
   componentDidMount() {
-      //for studnet name
-
-      fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
-      .then((resp) => resp.json())
-      .then(data => {
-         this.setState({ studentData: data.records });
-  
-         const student_name = this.state.studentData.map(item => Object.values(item)[1].student_name);
-         var temp = student_name[1];
-         console.log("SelectClass Hello");
-         console.log(student_name);
-        
-         this.setState({ name : temp });
-      }).catch(err => {
-        // Error 🙁
-      });
+    const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+    
+    //for studnet name
+    table.select({
+      filterByFormula: filterSentence,
+      view: "Grid view"
+      }).eachPage((records, fetchNextPage) => {
+        this.setState({records});
+        const student_name = this.state.records.map((record, index) => record.fields['student_name']);
+        this.setState({ name : student_name[0] });
+        fetchNextPage(); 
+      }
+      );
 
       //for select
-      attendTable.select({
-        filterByFormula: 'AND(student_id = 405401279)',
+    attendTable.select({
+      filterByFormula: filterSentence,
+      view: "Grid view"
+      }).eachPage((records, fetchNextPage) => {
+        this.setState({records});
+        const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+        const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
 
-        view: "Grid view"
-        }).eachPage((records, fetchNextPage) => {
-          this.setState({records});
-          const class_id = this.state.records.map((record, index) => record.fields['class_id']);
-          const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
-          // This function (`page`) will get called for each page of records.
-          console.log(attend_date[0]);
-          var count = class_id.length;
-          var temp=[];
-          var temp2=[];
-          for(var index = 0; index < count; index++) {
-            temp.push(createData(class_id[index] ,attend_date[index]));
-          }
-
-          var classResult = temp.filter(function(element, index, arr){
-            return arr.indexOf(element) === index;
-          });
-          console.log(classResult);
-          for(var index = 0; index < classResult.length; index++){
-            temp2.push(classResult[index]);
-          }
-
-          this.setState({ classData : temp2 });
-          fetchNextPage(); 
+        var count = class_id.length;
+        var temp=[];
+        var temp2=[];
+        for(var index = 0; index < count; index++) {
+          temp.push(createData(class_id[index] ,attend_date[index]));
         }
-        );
+
+        var classResult = temp.filter(function(element, index, arr){
+          return arr.indexOf(element) === index;
+        });
+        for(var index = 0; index < classResult.length; index++){
+          temp2.push(classResult[index]);
+        }
+
+        this.setState({ classData : temp2 });
+        fetchNextPage(); 
+      }
+      );
         //select end
   }
  
   render() {
     const { classes } = this.props;
-    console.log(this.props.location.reserveProps) //reserve/reserveComponent沒辦法傳data
     return (
       <div className={classes.root}>
       <div className={classes.reservetitle}>
