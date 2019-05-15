@@ -218,15 +218,7 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'score',
       //selected: [],
-      data: [
-      //   createData('數學B班', 305, 3.7, 67),
-      //   createData('數學A班', 452, 25.0, 51),
-      //   createData('理化A班', 262, 16.0, 24),
-      //   createData('國文A班', 159, 6.0, 24),
-      //   createData('數學A班', 356, 16.0, 49),
-      //   createData('數學B班', 408, 3.2, 87),
-        
-      ],
+      data: [],
       dataInit:[],
       //下面是select跟title的
       // age: '',

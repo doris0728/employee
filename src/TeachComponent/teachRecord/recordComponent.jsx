@@ -45,6 +45,12 @@ function createData(date, expectrecord, record) {
 //   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
  ];
 
+ let temp = [];
+ function caculateMonth(rawDate) {
+   var Date = rawDate + "月";
+   
+   return {rawDate,Date};
+ }
 
 // class EnhancedTableHead extends React.Component {
 //   createSortHandler = property => event => {
@@ -166,6 +172,7 @@ class EnhancedTable extends React.Component {
     classData: [],
     dataInit: [],
     rows:[],
+    month:[],
   };
 
   //   handleRequestSort = (event, property) => {
@@ -221,7 +228,7 @@ class EnhancedTable extends React.Component {
       var temp2 = [];
       var temp3=[];
       for (var index = 0; index < count; index++) {
-        temp.push( schedule_date[index]);
+        temp.push( schedule_date[index].split("-")[1]);
       }
 
       var classResult = temp.filter(function (element, index, arr) {
@@ -257,7 +264,8 @@ class EnhancedTable extends React.Component {
     console.log(event.target.value);
 
     for (var index = 0; index < count; index++) {
-      if (this.state.dataInit[index].date == event.target.value) {
+      var month = this.state.dataInit[index].date.split("-")[1];
+      if(month == event.target.value){
         temp.push(this.state.dataInit[index]);
       }
     }

@@ -137,7 +137,7 @@ class NativeSelects extends React.Component {
   
   state = {
     age: '',
-    //name: '',
+    name: '',
     // region:'',
     // date:'',
     // time:'',
@@ -173,6 +173,7 @@ class NativeSelects extends React.Component {
 
   componentDidMount() {
       //for studnet name
+
       fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Student?api_key=keyA7EKdngjou4Dgy')
       .then((resp) => resp.json())
       .then(data => {
