@@ -16,17 +16,19 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Airtable from 'airtable';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-
+const ClassRoom_TABLE = 'CloaaRoom';
 const TABLE_NAME = 'ClassDay';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
+const CRtable = base(ClassRoom_TABLE);
 
-function createData(class_id, class_day, class_start_time, class_end_time) {
+function createData(class_id, class_time,classroom_place) {
 
-  return { class_id, class_day, class_start_time, class_end_time };
+  return { class_id, class_time, classroom_place};
 }
 
-// function createData(class_time) {
+// let temp = [];
+// function createDate(class_time) {
 //   class_time = class_day + class_start_time + ' - ' +class_end_time; 
 //   return { class_time };
 // }
@@ -100,12 +102,20 @@ const styles = theme => ({
     fontSize: 14,
     fontWeight: 'bold',
     marginTop: 11,
-    marginLeft: 25
+    marginLeft: 25,
+    letterSpacing: 2,
   },
   divclass: {
     //backgroundColor:'red',
     //width:420
     width: 200
+  },
+  texttime:{
+    color: "#818181",
+    fontFamily: "Microsoft Jhenghei",
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop: 11,
   }
 });
 
@@ -132,9 +142,28 @@ class NativeSelects extends React.Component {
       const class_day = this.state.records.map((record, index) => record.fields['class_day']);
       const class_start_time = this.state.records.map((record, index) => record.fields['class_start_time']);
       const class_end_time = this.state.records.map((record, index) => record.fields['class_end_time']);
+      const classroom_id = this.state.records.map((record,index) => record.fields['classroom_id']);
+      for (var index = 0; index < class_id.length; index++) {
+        temp.push(createData(class_id[index], class_day[index] + class_start_time[index] + '-' + class_end_time[index]));
+      }
+      // this.setState({
+      //   date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
+      // });
+      this.setState({ ClassData: temp });
+      fetchNextPage();
+    }
+    );
+
+    CRtable.select({
+      view: "Grid view",
+    }).eachPage((records, fetchNextPage) => {
+      this.setState({ records });
+      var temp = [];
+      console.log(records);
+      const classroom_place = this.state.records.map((record, index) => record.fields['classroom_place']);
 
       for (var index = 0; index < class_id.length; index++) {
-        temp.push(createData(class_id[index], class_day[index], class_start_time[index], class_end_time[index]));
+        temp.push(createData(class_id[index], class_day[index] + class_start_time[index] + '-' + class_end_time[index]));
       }
       // this.setState({
       //   date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
@@ -153,7 +182,7 @@ class NativeSelects extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const ClassCard = ({ class_id, class_day, class_start_time, class_end_time }) => (
+    const ClassCard = ({ class_id, class_day, class_time }) => (
       <NavLink style={{ textDecoration: 'none', color: '#818181' }} activeClassName='active' to='/teach/classdetail'>
         <Card className={classes.card}>
           <div>
@@ -164,12 +193,12 @@ class NativeSelects extends React.Component {
                 </div>
                 <div>
                   <CardContent><div>
-                      <Typography className={classes.textdetail}>{class_day}</Typography></div>
-                      </CardContent>
+                    <Typography className={classes.textdetail}>{class_time}</Typography></div>
+                  </CardContent>
                 </div>
                 <div>
                   <CardContent><div>
-                      <Typography className={classes.textdetail}>台北校區 11樓</Typography></div>
+                    <Typography className={classes.textdetail}>台北校區 11樓</Typography></div>
                   </CardContent>
                 </div>
               </div>
