@@ -27,13 +27,14 @@ const styles = {
   card: {
     //maxWidth: 345,
     height: 75,
+    marginBottom:20,
   },
 
-  card2: {
-    //maxWidth: 345,
-    height: 75,
-    marginTop: 30,
-  },
+  // card2: {
+  //   //maxWidth: 345,
+  //   height: 75,
+  //   marginTop: 30,
+  // },
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: 'cover',

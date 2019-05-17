@@ -37,13 +37,13 @@ function createData(date, expectrecord, record) {
   id += 1;
   return { id, date, expectrecord, record };
 }
- const rows = [
+//const rows = [
 //   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
 //   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
 //   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
 //   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
 //   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
- ];
+//]; 
 
  let temp = [];
  function caculateMonth(rawDate) {

@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Airtable from 'airtable';
+import Typography from 'antd/lib/typography/Typography';
 
 const TABLE_NAME = 'Homework';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
@@ -189,17 +190,23 @@ class SimpleTable extends React.Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Class</TableCell>
-              <TableCell >Homework</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell><Typography style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#969696'}}>班級</Typography></TableCell>
+              <TableCell ><Typography style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#969696'}}>作業</Typography></TableCell>
+              <TableCell><Typography style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#969696'}}>繳交日期</Typography></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map(row => (
               <TableRow key={row.id}>
-                <TableCell component="th" scope="row">{row.Class}</TableCell>
-                <TableCell>{row.Homework}</TableCell>
-                <TableCell>{row.Date}</TableCell>
+                <TableCell component="th" scope="row"><Typography style={{fontSize:16,fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#969696'}}>{row.Class}</Typography></TableCell>
+                <TableCell><Typography style={{fontSize:16,fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#969696'}}>{row.Homework}</Typography></TableCell>
+                <TableCell><Typography style={{fontSize:16,fontFamily: "Microsoft JhengHei",
+            letterSpacing:2,color:'#969696'}}>{row.Date}</Typography></TableCell>
               </TableRow>
             ))}
           </TableBody>
