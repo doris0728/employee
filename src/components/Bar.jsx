@@ -222,7 +222,7 @@ class MiniDrawer extends React.Component {
           open={this.state.open}
         >
           <div className={classes.toolbar}>
-          <Head/>
+          <Head UserId={this.state.studentID}/>
           
           <div>
           <Typography  

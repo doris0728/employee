@@ -137,7 +137,7 @@ class ImgMediaCard extends React.Component {
         <div className={classes.wrap}>
           <div>
             <TestCard UserId={this.props.UserId}/>
-            <HomeworkCard/>
+            <HomeworkCard UserId={this.props.UserId}/>
           </div>
           <div>
             <AlertCard UserId={this.props.UserId}/>
