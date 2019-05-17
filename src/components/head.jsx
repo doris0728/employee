@@ -42,6 +42,25 @@ class ImageAvatars extends React.Component {
   state = {
     studentData: '',
   };
+
+  componentDidUpdate(prevProps){
+    if (this.props.UserId !== prevProps.UserId) {
+      const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+
+      table.select({
+        filterByFormula: filterSentence,
+        view: "Grid view"
+        }).eachPage((records, fetchNextPage) => {
+          this.setState({records});
+          const student_img = this.state.records.map((record, index) => record.fields['student_img'][0].url); 
+          this.setState({ studentData : student_img[0] });
+          //console.log(this.state.studentData);
+          fetchNextPage(); 
+        }
+        );
+
+    }
+  }
   componentDidMount() {
     const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
 
