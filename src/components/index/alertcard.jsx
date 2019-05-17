@@ -116,7 +116,7 @@ function ImgMediaCard(props) {
         />
 
         <CardContent>
-            <Classalert/>
+            <Classalert UserId={props.UserId}/>
         </CardContent>
     
     </Card>

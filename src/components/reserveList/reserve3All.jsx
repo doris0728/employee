@@ -116,7 +116,8 @@ class NativeSelects extends React.Component {
   };
 
   //airtable
-  componentDidMount() {
+  componentDidUpdate(prevProps){
+    if (this.props.UserId !== prevProps.UserId) {
     const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
 
     //for studnet name
@@ -153,7 +154,7 @@ class NativeSelects extends React.Component {
         fetchNextPage();
       }
       );
-
+    }
   }
 
   handleChange = name => event => {
@@ -161,9 +162,10 @@ class NativeSelects extends React.Component {
   };
 
   render() {
+    console.log(this.props.UserId);
     const { classes } = this.props;
 
-    const ReserveCard =({name, region,date,time,reserve_class}) => (
+    const ReserveCard =({name, region, date, time, reserve_class}) => (
       <Card className={classes.card}>
       <table className={classes.table}>
         <tr align="center"><td colspan="2"><Typography class={classes.text1}>補課資料</Typography></td></tr>

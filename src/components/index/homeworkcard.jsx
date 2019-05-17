@@ -117,7 +117,7 @@ function ImgMediaCard(props) {
             letterSpacing:4,color:'#6C6C6C'}}>作業提醒</a>}
         />
 
-        <HomeTable/>
+        <HomeTable UserId={props.UserId}/>
       
     
     </Card>
