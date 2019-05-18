@@ -21,9 +21,9 @@ const TABLE_NAME = 'ClassDay';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
 
-function createData(class_id, class_day, class_start_time, class_end_time) {
+function createData(class_id, class_day) {
 
-  return { class_id, class_day, class_start_time, class_end_time };
+  return { class_id, class_day};
 }
 // function createData(class_time) {
 //   class_time = class_day + class_start_time + ' - ' +class_end_time; 
@@ -99,7 +99,8 @@ const styles = theme => ({
     fontSize: 14,
     fontWeight: 'bold',
     marginTop: 11,
-    marginLeft: 25
+    marginLeft: 25,
+    letterSpacing: 2,
   },
   divclass: {
     //backgroundColor:'red',
@@ -135,7 +136,8 @@ class NativeSelects extends React.Component {
       const class_end_time = this.state.records.map((record, index) => record.fields['class_end_time']);
 
       for (var index = 0; index < class_id.length; index++) {
-        temp.push(createData(class_id[index], class_day[index], class_start_time[index], class_end_time[index]));
+        // temp.push(createData(class_id[index], class_day[index], class_start_time[index], class_end_time[index]));
+        temp.push(createData(class_id[index], class_day[index] + class_start_time[index] + '-' + class_end_time[index]));
       }
       // this.setState({
       //   date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
@@ -175,7 +177,7 @@ class NativeSelects extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const ClassCard = ({ class_id, class_day, class_start_time, class_end_time }) => (
+    const ClassCard = ({ class_id, class_day }) => (
       <NavLink style={{ textDecoration: 'none', color: '#818181' }} activeClassName='active' to='/teach/classdetail'>
         <Card className={classes.card}>
           <div>
@@ -229,7 +231,7 @@ class NativeSelects extends React.Component {
                   />
                 }
               >
-                <option value="" />
+                {/* <option value="" /> */}
                 <option value="1" style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>所有校區</option>
                 {/* <option value="" /> */}
                 {/* <option value="" /> */}

@@ -12,119 +12,158 @@ import Divider from '@material-ui/core/Divider';
 import { BrowserRouter as NavLink } from "react-router-dom";
 import TeachButton from '@material-ui/icons/ListOutlined'
 import HomeworkButton from '@material-ui/icons/EditOutlined'
+import Airtable from 'airtable';
+
+const TABLE_NAME = 'ClassDay';
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
+
+function createData(class_id, class_time) {
+
+  return { class_id, class_time };
+}
 
 const styles = {
   card: {
     //maxWidth: 345,
     height: 85,
     //width:'80%',
-    marginTop:30,
+    marginTop: 30,
   },
 
-//   card2: {
-//     //maxWidth: 345,
-//     height: 75,
-//     marginTop: 30,
-//   },
-//   media: {
-//     // ⚠️ object-fit is not supported by IE 11.
-//     //objectFit: 'cover',
-//   },
-    text:{
-    color:'#5A3DAA',
+  //   card2: {
+  //     //maxWidth: 345,
+  //     height: 75,
+  //     marginTop: 30,
+  //   },
+  //   media: {
+  //     // ⚠️ object-fit is not supported by IE 11.
+  //     //objectFit: 'cover',
+  //   },
+  text: {
+    color: '#5A3DAA',
     fontFamily: "Microsoft Jhenghei",
     fontSize: 25,
     fontWeight: 'bold',
-    marginTop:10,
-    letterSpacing:6,
-    textAlign:'left'
-    },
-   div1:{
+    marginTop: 10,
+    letterSpacing: 6,
+    textAlign: 'left'
+  },
+  div1: {
     //position:"absolute",
     //display: "inline",
     display: 'flex',
-    marginLeft:50,
+    marginLeft: 50,
   },
-  textdetail:{
+  textdetail: {
     color: "#818181",
     fontFamily: "Microsoft Jhenghei",
     fontSize: 14,
     fontWeight: 'bold',
-    marginTop:18,
-    marginLeft:25
+    marginTop: 18,
+    marginLeft: 25
   },
-  divclass:{
+  divclass: {
     //backgroundColor:'red',
     //width:420
-    width:180
+    width: 180
   },
-  textrecord:{
+  textrecord: {
     color: "#818181",
     fontFamily: "Microsoft Jhenghei",
     fontSize: 14,
     fontWeight: 'bold',
-    marginTop:35,
+    marginTop: 35,
     //marginLeft:25
   },
-  button:{
-      marginTop:10,
+  button: {
+    marginTop: 10,
   }
 };
 
-function classCard(props) {
-  const { classes } = props;
-  return (
-    <div align="center">
-    <Card className={classes.card}>
-    <div>
-    
-      
-        <div className={classes.div1}> 
-        <div className={classes.divclass}>
-        
-        <CardContent>
-        
-        <Typography className={classes.text}>數學A班</Typography>
-        </CardContent>
-        </div>
-        <div>
-        <CardContent>
-            <div>
-            <Typography className={classes.textdetail}>
-                每周三 21:30 ~ 23:00
-            </Typography>
-            </div>
-        </CardContent>
-        </div>
-        <div>
-        <CardContent>
-            <div>
-            <Typography className={classes.textdetail}>
-                台北校區 11樓
-            </Typography>
-            </div>
-        </CardContent>
-        </div>
+class classCard extends React.Component {
+  state = {
+    ClassData: [],
+    dataInit: [],
+  };
 
-        <div>
-        <CardContent>
-            <Typography className={classes.textrecord}>
-                <HomeworkButton style={{marginLeft:60}}/>
-                <a style={{marginLeft:5}}>考試紀錄</a>
-                <TeachButton style={{marginLeft:20}}/>
-                <a style={{marginLeft:5}}>教學紀錄</a>
-            </Typography>
-            
-        </CardContent>
-        </div>
-        
-        </div>
+  componentDidMount() {
+
+    table.select({
+      view: "Grid view",
+    }).eachPage((records, fetchNextPage) => {
+      this.setState({ records });
+      var temp = [];
+      var temp2 = [];
+      console.log(records);
+      const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+      const class_day = this.state.records.map((record, index) => record.fields['class_day']);
+      const class_start_time = this.state.records.map((record, index) => record.fields['class_start_time']);
+      const class_end_time = this.state.records.map((record, index) => record.fields['class_end_time']);
+
+      for (var index = 0; index < class_id.length; index++) {
+        //temp.push(createData(class_id[index], class_day[index], class_start_time[index], class_end_time[index]));
+        temp.push(createData(class_id),class_day[index] + class_start_time[index] + '-' + class_end_time[index]);
+      }
+      // for (var index = 0; index < class_id.length; index++) {
+      //   //temp.push(createData(class_id[index], class_day[index], class_start_time[index], class_end_time[index]));
+      //   temp2.push(createData(class_day[index] + class_start_time[index] + '-' + class_end_time[index]));
+      // }
+      // this.setState({
+      //   date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
+      // });
+      this.setState({ ClassData: temp });
+      this.setState({ dataInit: temp });
+      this.setState({ class_id: class_id[0] });
+      //this.setState({ class_time : temp2});
+      fetchNextPage();
+    }
+    );
+
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div align="center">
+        <Card className={classes.card}>
+          <div>
+            <div className={classes.div1}>
+              <div className={classes.divclass}>
+                <CardContent><Typography className={classes.text}>{this.state.class_id}</Typography></CardContent>
+              </div>
+              <div>
+                <CardContent><div>
+                  <Typography className={classes.textdetail}>{this.state.class_time}</Typography></div>
+                </CardContent>
+              </div>
+              <div>
+                <CardContent><div>
+                  <Typography className={classes.textdetail}>台北校區 11樓</Typography>
+                </div>
+                </CardContent>
+              </div>
+
+              <div>
+                <CardContent>
+                  <Typography className={classes.textrecord}>
+                    <HomeworkButton style={{ marginLeft: 60 }} />
+                    <a style={{ marginLeft: 5 }}>考試紀錄</a>
+                    <TeachButton style={{ marginLeft: 20 }} />
+                    <a style={{ marginLeft: 5 }}>教學紀錄</a>
+                  </Typography>
+
+                </CardContent>
+              </div>
+
+            </div>
+          </div>
+        </Card>
+
       </div>
-    </Card>
-   
-    </div>
-     
-  );
+
+    );
+  }
 }
 
 classCard.propTypes = {

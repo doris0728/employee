@@ -63,8 +63,9 @@ const rows = [
   createData('10月7日', 'CH1~CH2', '80'),
 ];
 
-function SimpleTable(props) {
-  const { classes } = props;
+class SimpleTable extends React.Component {
+  render(){
+  const { classes } = this.props;
 
   return (
     <Paper className={classes.paper}>
@@ -103,6 +104,7 @@ function SimpleTable(props) {
     </Paper>
     </Paper>
   );
+          }
 }
 
 SimpleTable.propTypes = {
