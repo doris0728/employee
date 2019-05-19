@@ -13,6 +13,11 @@ import Button from '@material-ui/icons/TrendingFlatRounded'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { Typography } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
+import Airtable from 'airtable';
+
+const TABLE_NAME = 'TestScore';
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
 
 
 const styles = theme => ({
@@ -57,22 +62,73 @@ function createData(date,range, averagescore) {
 
 
 const rows = [
-  createData('10月7日', 'CH1~CH2', '80'),
-  createData('10月7日', 'CH1~CH2', '80'),
-  createData('10月7日', 'CH1~CH2', '80'),
-  createData('10月7日', 'CH1~CH2', '80'),
+  // createData('10月7日', 'CH1~CH2', '80'),
+  // createData('10月7日', 'CH1~CH2', '80'),
+  // createData('10月7日', 'CH1~CH2', '80'),
+  // createData('10月7日', 'CH1~CH2', '80'),
 ];
 
 class SimpleTable extends React.Component {
+
+  state = {
+    classData: [],
+    dataInit: [],
+    rows: [],
+  };
+
+  componentDidMount() {
+
+    table.select({
+      //filterByFormula: 'AND(class_id = 數學A班)',
+      view: "Grid view"
+    }).eachPage((records, fetchNextPage) => {
+      this.setState({ records });
+      console.log(records);
+      const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+      const test_date = this.state.records.map((record, index) => record.fields['test_date']);
+      const test_name = this.state.records.map((record, index) => record.fields['test_name']);
+      const test_score = this.state.records.map((record, index) => record.fields['test_score'])
+      var count = class_id.length;
+      var temp = [];
+      var temp2 = [];
+      var temp3 = [];
+      for (var index = 0; index < count; index++) {
+        temp.push(test_date[index].split("-")[1]);
+      }
+
+      var classResult = temp.filter(function (element, index, arr) {
+        return arr.indexOf(element) === index;
+      });
+      console.log(classResult);
+      for (var index = 0; index < classResult.length; index++) {
+        temp2.push(classResult[index]);
+      }
+
+      //table
+      for (var index = 0; index < test_date.length; index++) {
+        temp3.push(createData(test_date[index], test_name[index], test_score[index]));
+      }
+      this.setState({ rows: temp3 });
+      this.setState({ dataInit: temp3 })
+
+      this.setState({ classData: temp2 });
+      fetchNextPage();
+    }
+    );
+
+  }
+
+
   render(){
   const { classes } = this.props;
+
 
   return (
     <Paper className={classes.paper}>
     <div className={classes.title}>
     <Typography style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:18,
     fontWeight:'bold',marginLeft:32,marginTop:15}}>考試平均</Typography>
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/classScore'>
+    <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/teach/classScore'>
       <IconButton style={{marginLeft:400}}><Button/></IconButton></NavLink>
       </div>
     <Paper className={classes.root}>
@@ -89,14 +145,14 @@ class SimpleTable extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
+          {this.state.rows.map(row => (
             <TableRow key={row.id}>
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:3,fontSize:15}}>{row.date}</TableCell>
+                      fontSize:15}}>{row.date}</TableCell>
               <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:1,fontSize:15}}>{row.range}</TableCell>
+                      fontSize:15}}>{row.range}</TableCell>
               <TableCell align="center" style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:3,fontSize:15,fontWeight: "bold"}}>{row.averagescore}</TableCell>
+                      fontSize:15,fontWeight: "bold"}}>{row.averagescore}</TableCell>
             </TableRow>
           ))}
         </TableBody>

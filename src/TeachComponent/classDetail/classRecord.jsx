@@ -93,8 +93,8 @@ class SimpleTable extends React.Component{
       }
       this.setState({ ClassData: temp });
       this.setState({ dataInit: temp });
-      this.setState({ schedule1: schedule_real[0].split("=")[0] });
-      this.setState({ schedule2: schedule_real[0].split("=")[1] });
+      this.setState({ schedule1: schedule_real[0].split(" ")[0] });
+      this.setState({ schedule2: schedule_real[0].split(" ")[1]});
       //this.setState({ class_time : temp2});
       fetchNextPage();
     }

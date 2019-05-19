@@ -9,10 +9,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import { BrowserRouter as NavLink } from "react-router-dom";
-import TeachButton from '@material-ui/icons/ListOutlined'
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import TeachButton from '@material-ui/icons/SpellcheckOutlined'
 import HomeworkButton from '@material-ui/icons/EditOutlined'
 import Airtable from 'airtable';
+import IconButton from '@material-ui/core/IconButton';
+import { Icon } from 'antd';
 
 const TABLE_NAME = 'ClassDay';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
@@ -61,7 +63,8 @@ const styles = {
     fontSize: 14,
     fontWeight: 'bold',
     marginTop: 18,
-    marginLeft: 25
+    marginLeft: 25,
+    letterSpacing: 1,
   },
   divclass: {
     //backgroundColor:'red',
@@ -115,7 +118,7 @@ class classCard extends React.Component {
       this.setState({ ClassData: temp });
       this.setState({ dataInit: temp });
       this.setState({ class_id: class_id[0] });
-      //this.setState({ class_time : temp2});
+      this.setState({ class_time : class_day[0] + class_start_time[0] + '-' + class_end_time[0] });
       fetchNextPage();
     }
     );
@@ -147,12 +150,12 @@ class classCard extends React.Component {
               <div>
                 <CardContent>
                   <Typography className={classes.textrecord}>
-                    <HomeworkButton style={{ marginLeft: 60 }} />
-                    <a style={{ marginLeft: 5 }}>考試紀錄</a>
-                    <TeachButton style={{ marginLeft: 20 }} />
-                    <a style={{ marginLeft: 5 }}>教學紀錄</a>
+                    <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/teach/classScore'>
+                    <HomeworkButton style={{ marginLeft: 70,height:20}}/>考試紀錄</NavLink>
+                    <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/teach/teachrecord'>
+                    <TeachButton style={{ marginLeft: 20 }} />教學紀錄</NavLink>
                   </Typography>
-
+ 
                 </CardContent>
               </div>
 
