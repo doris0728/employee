@@ -79,7 +79,7 @@ class SimpleTable extends React.Component {
   componentDidMount() {
 
     table.select({
-      //filterByFormula: 'AND(class_id = 數學A班)',
+      filterByFormula: 'AND(class_id = "數學A班")',
       view: "Grid view"
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });

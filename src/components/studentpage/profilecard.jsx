@@ -161,6 +161,7 @@ class ImgMediaCard extends React.Component {
         const student_email = this.state.records.map((record, index) => record.fields['student_email']);
         const student_img = this.state.records.map((record, index) => record.fields['student_img'][0].url); 
 
+
         this.setState({ stu_id : student_id, stu_name : student_name, stu_img : student_img 
         ,stu_school : student_school , stu_grade : student_grade, stu_email : student_email, stu_phone : student_phone});
           
@@ -196,7 +197,7 @@ class ImgMediaCard extends React.Component {
         <div className={classes.div1}>
           <Typography align="left" className={classes.schoolcss}>學生信箱</Typography>
           <div>
-            <Emaildiag/>
+            <Emaildiag UserId={this.props.UserId}/>
           </div>
         </div>
   
