@@ -42,6 +42,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import LatestNews from './latestnews/news'
 import {fetchPostTeacher} from '../api';
 
 function sleep (time){
@@ -307,13 +308,14 @@ class MiniDrawer extends React.Component {
           </ListItem>
         </NavLink>
 
+        <NavLink activeClassName="active" to="/teach/latestnews" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon  >
             <LatestnewsIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
-        </ListItem>
+        </ListItem></NavLink>
 
         <NavLink activeClassName='active' to='/teach/classdetail'>
         <ListItem button>
@@ -465,6 +467,7 @@ class MiniDrawer extends React.Component {
           <Route path="/teach/classScore" component={ClassScore}/>
           <Route path="/teach/analysis" component={TestAnalysis}/>
           <Route path="/teach/teachrecord" component={TeachRecord}/>
+          <Route path="/teach/latestnews" component={LatestNews}/>
         </div>
         </MuiThemeProvider>
       </div>

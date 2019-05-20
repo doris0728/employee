@@ -21,11 +21,10 @@ const TABLE_NAME = 'ClassDay';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
 
-function createData(class_id, class_day, class_start_time, class_end_time) {
+function createData(class_id, class_day) {
 
-  return { class_id, class_day, class_start_time, class_end_time };
+  return { class_id, class_day};
 }
-
 // function createData(class_time) {
 //   class_time = class_day + class_start_time + ' - ' +class_end_time; 
 //   return { class_time };
@@ -100,7 +99,8 @@ const styles = theme => ({
     fontSize: 14,
     fontWeight: 'bold',
     marginTop: 11,
-    marginLeft: 25
+    marginLeft: 25,
+    letterSpacing: 2,
   },
   divclass: {
     //backgroundColor:'red',
@@ -115,6 +115,8 @@ class NativeSelects extends React.Component {
     name: '王映心',
     labelWidth: 0,
     ClassData: [],
+    dataInit: [],
+    data:[],
   };
 
   componentDidMount() {
@@ -134,12 +136,15 @@ class NativeSelects extends React.Component {
       const class_end_time = this.state.records.map((record, index) => record.fields['class_end_time']);
 
       for (var index = 0; index < class_id.length; index++) {
-        temp.push(createData(class_id[index], class_day[index], class_start_time[index], class_end_time[index]));
+        // temp.push(createData(class_id[index], class_day[index], class_start_time[index], class_end_time[index]));
+        temp.push(createData(class_id[index], class_day[index] + class_start_time[index] + '-' + class_end_time[index]));
       }
       // this.setState({
       //   date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
       // });
-      this.setState({ ClassData: temp });
+      this.setState({ ClassData : temp });
+      this.setState({ dataInit : temp });
+      this.setState({ data : temp });
       fetchNextPage();
     }
     );
@@ -148,12 +153,31 @@ class NativeSelects extends React.Component {
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+
+    //for select
+    console.log("In handleChange");
+
+    let temp = [];
+    var count = this.state.dataInit.length;
+    console.log(event.target.value);
+
+    for (var index = 0; index < count; index++) {
+      if (this.state.dataInit[index].class_id == event.target.value) {
+        temp.push(this.state.dataInit[index]);
+        //console.log(temp);
+      }
+    }
+    this.setState({ data : temp });
+    if (event.target.value == "1") {
+      this.setState({ rows: this.state.dataInit });
+    }
+
   };
 
   render() {
     const { classes } = this.props;
 
-    const ClassCard = ({ class_id, class_day, class_start_time, class_end_time }) => (
+    const ClassCard = ({ class_id, class_day }) => (
       <NavLink style={{ textDecoration: 'none', color: '#818181' }} activeClassName='active' to='/teach/classdetail'>
         <Card className={classes.card}>
           <div>
@@ -164,12 +188,12 @@ class NativeSelects extends React.Component {
                 </div>
                 <div>
                   <CardContent><div>
-                      <Typography className={classes.textdetail}>{class_day}</Typography></div>
-                      </CardContent>
+                    <Typography className={classes.textdetail}>{class_day}</Typography></div>
+                  </CardContent>
                 </div>
                 <div>
                   <CardContent><div>
-                      <Typography className={classes.textdetail}>台北校區 11樓</Typography></div>
+                    <Typography className={classes.textdetail}>台北校區 11樓</Typography></div>
                   </CardContent>
                 </div>
               </div>
@@ -207,10 +231,16 @@ class NativeSelects extends React.Component {
                   />
                 }
               >
-                <option value="0" style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>全部</option>
-                <option value="1" style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>古亭校區</option>
-                <option value="2" style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>台北校區</option>
-                <option value="3" style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>板橋校區</option>
+                {/* <option value="" /> */}
+                <option value="1" style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>所有校區</option>
+                {/* <option value="" /> */}
+                {/* <option value="" /> */}
+                {/* {(this.state.ClassData)
+                  .map((n, index) => {
+                    return (
+                      <option value={n} style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>{n}</option>
+                    );
+                  })} */}
               </Select>
             </FormControl>
 
@@ -256,9 +286,7 @@ class NativeSelects extends React.Component {
     );
   }
 }
-
 NativeSelects.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(styles)(NativeSelects);

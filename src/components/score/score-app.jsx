@@ -252,8 +252,6 @@ class EnhancedTable extends React.Component {
             this.setState({records});
             console.log(records);
             const class_id = this.state.records.map((record, index) => record.fields['class_id']);
-
-
             const test_date = this.state.records.map((record, index) => record.fields['test_date']);
             const test_score = this.state.records.map((record, index) => record.fields['test_score']);
             const test_rank = this.state.records.map((record, index) => record.fields['test_rank']);
