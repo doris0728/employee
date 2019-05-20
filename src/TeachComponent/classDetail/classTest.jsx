@@ -79,7 +79,7 @@ class SimpleTable extends React.Component {
   componentDidMount() {
 
     table.select({
-      //filterByFormula: 'AND(class_id = 數學A班)',
+      filterByFormula: 'AND(class_id = "數學A班")',
       view: "Grid view"
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });
@@ -89,7 +89,7 @@ class SimpleTable extends React.Component {
       const test_name = this.state.records.map((record, index) => record.fields['test_name']);
       const test_score = this.state.records.map((record, index) => record.fields['test_score'])
       var count = class_id.length;
-      //var temp = [];
+      var temp = [];
       var temp2 = [];
       var temp3 = [];
       // for (var index = 0; index < count; index++) {

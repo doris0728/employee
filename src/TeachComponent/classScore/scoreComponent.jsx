@@ -33,7 +33,7 @@ const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWI
 const table = base(TABLE_NAME);
 
 let id = 0;
-function createData(date, range, averagescore, button) {
+function createData(date, range, average, button) {
   id += 1;
   button=<NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
   <Button variant="contained"
@@ -41,7 +41,7 @@ function createData(date, range, averagescore, button) {
   backgroundColor:'#FFBF5F',color:'white'}}>
   答題分析 ></Button>
   </NavLink>
-  return { id, date, range, averagescore, button };
+  return { id, date, range, average, button };
 }
 
 const rows = [
@@ -201,25 +201,26 @@ class EnhancedTable extends React.Component {
     });
 
     table.select({
-      //filterByFormula: 'AND(class_id = 數學A班)',
+      filterByFormula: 'AND(class_id = "數學A班")',
       view: "Grid view"
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });
       console.log(records);
+      const student_id = this.state.records.map((record, index) => record.fields['student_id'])
       const class_id = this.state.records.map((record, index) => record.fields['class_id']);
       const test_date = this.state.records.map((record, index) => record.fields['test_date']);
       const test_name = this.state.records.map((record, index) => record.fields['test_name']);
-      const test_score = this.state.records.map((record, index) => record.fields['test_score'])
+      var test_score = this.state.records.map((record, index) => record.fields['test_score'])
       var count = class_id.length;
       var temp = [];
       var temp2 = [];
-      var temp3 = [];
+      //var temp3 = [];
       var temp4 = [];
-      var total = [];
+
+      //分月份
       for (var index = 0; index < count; index++) {
         temp.push(test_date[index].split("-")[1]);
       }
-
       var classResult = temp.filter(function (element, index, arr) {
         return arr.indexOf(element) === index;
       });
@@ -228,14 +229,50 @@ class EnhancedTable extends React.Component {
         temp2.push(classResult[index]);
       }
 
-      //table
-      for (var index = 0; index < test_date.length; index++) {
-        temp3.push(createData(test_date[index], test_name[index], test_score[index]));
+      //分考卷名稱
+      for (var index = 0 ; index < count; index++){
+        temp4.push(test_name[index]);
       }
-      this.setState({ rows: temp3 });
-      this.setState({ dataInit: temp3 })
+      var testName = temp4.filter(function (element, index, arr){
+        return arr.indexOf(element) === index;
+      });
+      console.log(testName);
+      for (var index = 0 ; index < testName.length; index++){
+        console.log(testName[index]);
+        var total = 0;
+        var average;
+        var num = 0;
+        for (var x = 0 ; x < class_id.length ; x++){
+          if (testName[index] == test_name[x]){
+            if(test_score[x]<=100){
+            console.log(test_name[x]);
+            console.log(test_score[x]);
+            console.log(x,"x");
+            total += test_score[x];
+            num++;
+          }
+          }
+        }
+          console.log(total+"total");
+          console.log(num);
+          average = total / num;
+          //console.log(average);
+        //console.log(total);
+        temp4.push(createData(test_date[index],testName[index],average));
+        console.log(testName[index],total,average);
+      }
 
+      //table
+      // var total = 0;
+      // for (var index = 0; index < test_date.length; index++) {
+      //   // total += testscore[index]
+      //   temp3.push(createData(test_date[index], test_name[index],test_score[index] ));
+      // }
+      
+      this.setState({ rows: temp4 }); //原本是temp3
+      this.setState({ dataInit: temp4 }); //原本是temp3
       this.setState({ classData: temp2 });
+      //this.setState({ splitName: temp4 });
       fetchNextPage();
     }
     );
@@ -358,7 +395,7 @@ class EnhancedTable extends React.Component {
                     <TableCell align="center" style={{
                       color: '#969696', fontFamily: "Microsoft JhengHei",
                       letterSpacing: 2, fontSize: 15
-                    }}>{row.averagescore}</TableCell>
+                    }}>{row.average}</TableCell>
                     <TableCell align="center" style={{
                       color: '#969696', fontFamily: "Microsoft JhengHei",
                       letterSpacing: 2, fontSize: 15
