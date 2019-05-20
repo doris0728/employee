@@ -36,6 +36,7 @@ import IndexComponent from './index/appComponent';
 import Reserve2All from './reserve2/reserveAll';
 import Reserve3 from './reserveList/reserve3All';
 import MyPage from './studentpage/studentpage';
+import LatestNews from './latestnews/news'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Airtable from 'airtable';
 
@@ -262,6 +263,7 @@ class MiniDrawer extends React.Component {
           </ListItem>
         </NavLink>
 
+        <NavLink activeClassName='active' to='/bar/latestnews' style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon  >
             <LatestnewsIcon />
@@ -271,7 +273,7 @@ class MiniDrawer extends React.Component {
           </Typography> */}
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
-        </ListItem>
+        </ListItem></NavLink>
 
         <NavLink activeClassName='active' to='/bar/score' style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
@@ -352,6 +354,7 @@ class MiniDrawer extends React.Component {
           <Route path="/bar/reserve3" render={(props) => <Reserve3 {...props} UserId={this.state.studentID}/>}/>
           {/* <Route path="/bar/mypage" component={MyPage}/> */}
           <Route path="/bar/mypage" render={(props) => <MyPage {...props} UserId={this.state.studentID} />}/>
+          <Route path="/bar/latestnews" component={LatestNews}/>
         </div>
         </MuiThemeProvider>
       </div>

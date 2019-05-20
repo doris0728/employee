@@ -89,12 +89,12 @@ class SimpleTable extends React.Component {
       const test_name = this.state.records.map((record, index) => record.fields['test_name']);
       const test_score = this.state.records.map((record, index) => record.fields['test_score'])
       var count = class_id.length;
-      var temp = [];
+      //var temp = [];
       var temp2 = [];
       var temp3 = [];
-      for (var index = 0; index < count; index++) {
-        temp.push(test_date[index].split("-")[1]);
-      }
+      // for (var index = 0; index < count; index++) {
+      //   temp.push(test_date[index].split("-")[1]);
+      // }
 
       var classResult = temp.filter(function (element, index, arr) {
         return arr.indexOf(element) === index;
