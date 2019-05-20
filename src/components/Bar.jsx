@@ -27,6 +27,7 @@ import FaceIcon from '@material-ui/icons/FaceRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Head from './head.jsx';
 import Logowhite from './image/goodmorningwhite.png';
+import Latestnews from './latestnews/news';
 
 import ScoreComponent from './score/score-app';
 //import ScoreComponent from './score/scoreComponent';
@@ -227,17 +228,15 @@ class MiniDrawer extends React.Component {
             letterSpacing:4,}}>首頁</a></ListItemText>
           </ListItem>
         </NavLink>
-
-        <ListItem button>
-          <ListItemIcon  >
-            <LatestnewsIcon />
-          </ListItemIcon>
-          {/* <Typography>
-            最新消息
-          </Typography> */}
-          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>最新消息</a></ListItemText>
-        </ListItem>
+        <NavLink activeClassName="active" to="/latestnews" style={{textDecoration:'none'}}>
+          < ListItem button>
+            <ListItemIcon  >
+              <LatestnewsIcon />
+            </ListItemIcon>
+            <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+              letterSpacing:4,}}>最新消息</a></ListItemText>
+          </ListItem>
+        </NavLink>
 
         <NavLink activeClassName='active' to='/score' style={{textDecoration:'none'}}>
         <ListItem button>
@@ -303,6 +302,7 @@ class MiniDrawer extends React.Component {
         {/* 插入components */}
         <div>
           <Route exact path="/bar" component={IndexComponent}/>
+          <Route path="/latestnews" component={Latestnews}/>
           <Route path="/attend" component={AttendComponent} />
           <Route path="/score" component={ScoreComponent} />
           <Route path="/reserve" component={ReserveComponent}/>
