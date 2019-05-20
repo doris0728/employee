@@ -35,6 +35,19 @@ import TestAnalysis from './testAnalysis/testanalysisComponent'
 import TeachRecord from './teachRecord/recordComponent'
 import ChangePasswdIcon from '@material-ui/icons/LockRounded'
 import Airtable from 'airtable';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import LatestNews from './latestnews/news'
+import {fetchPostTeacher} from '../api';
+
+function sleep (time){
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 const theme = createMuiTheme({
   typography: {
@@ -123,7 +136,9 @@ class MiniDrawer extends React.Component {
   state = {
     open: true, 
     teacherName:'',
-    teacherEmail:'',
+    //teacherEmail:'',
+    mailopen: false,
+    passwdopen: false,
   };
 
   handleDrawerOpen = () => {
@@ -137,6 +152,37 @@ class MiniDrawer extends React.Component {
   constuctor() {
     this.indexbutton = this.indexbutton.bind(this);
   }
+
+  //change email
+  mailhandleClickOpen = () => {
+    this.setState({ mailopen: true });
+    console.log("click")
+  };
+
+  mailhandleClose = () => {
+    this.setState({ mailopen: false });
+  };
+
+  handleSubmit = (e)=> {
+    e.preventDefault()
+    let data = {fields:{teacher_email:{}}};
+    data.fields.teacher_email = this.state.teacher_email;
+    fetchPostTeacher(data);
+    this.setState({ open: false });
+    sleep(500).then(() => {
+      window.location.reload();
+    })
+  };
+  //change email end
+
+  //change password
+  passwdhandleClickOpen = () => {
+    this.setState({ passwdopen: true });
+  };
+  passwdhandleClose = () => {
+    this.setState({ passwdopen: false });
+  };
+  //change password end
 
   componentDidMount(){
     //for teacher name
@@ -166,7 +212,7 @@ class MiniDrawer extends React.Component {
       console.log("SelectClass Hello");
       console.log(teacher_email);
       
-      this.setState({ teacherEmail : temp });
+      this.setState({ teacher_email : temp });
     }).catch(err => {
       // Error 🙁
     });
@@ -230,7 +276,7 @@ class MiniDrawer extends React.Component {
           {this.state.teacherName}
           </Typography>
           <Typography style={{fontSize:12,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:1,}}>
-          {this.state.teacherEmail}
+          {this.state.teacher_email}
           </Typography>
           </div>
           
@@ -252,25 +298,26 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none',color:'#818181'}}>
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
               </ListItemIcon>
             <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>我的班級</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>我的班級</a></ListItemText>
           </ListItem>
         </NavLink>
 
+        <NavLink activeClassName="active" to="/teach/latestnews" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon  >
             <LatestnewsIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>最新消息</a></ListItemText>
-        </ListItem>
+            letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
+        </ListItem></NavLink>
 
-        <NavLink activeClassName='active' to='/Tclass'>
+        <NavLink activeClassName='active' to='/teach/classdetail'>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
@@ -279,7 +326,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/classscore'>
+        <NavLink activeClassName='active' to='/teach/classscore'>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
@@ -288,7 +335,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/teachrecord">
+        <NavLink activeClassName="active" to="/teach/teachrecord">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
@@ -297,7 +344,7 @@ class MiniDrawer extends React.Component {
         </ListItem>
         </NavLink>
         
-        <NavLink activeClassName="active" to="/analysis">
+        <NavLink activeClassName="active" to="/teach/analysis">
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
@@ -319,39 +366,108 @@ class MiniDrawer extends React.Component {
           </List> */}
 
         <br></br>
-        <ListItem button>
+        
+        {/* 更改帳號 */}
+        <ListItem button variant="contained" onClick={this.mailhandleClickOpen}>
           <ListItemIcon>
-          <FaceIcon />
+            <FaceIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>更改帳號</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>更改帳號</a></ListItemText>
         </ListItem>
-        <ListItem button>
+
+        <Dialog open={this.state.mailopen} onClose={this.mailhandleClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <a style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",
+              fontSize:25}}>更改帳號</a>
+              </DialogTitle>
+
+          {/* <DialogContent>
+            <DialogContentText>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>密碼</a>
+            </DialogContentText>
+            <TextField style={{marginTop: 10, width: 300}} autoFocus margin="dense" id="passwd" label="請輸入密碼"
+              type="password" fullWidth variant="outlined"/>
+          </DialogContent> */}
+
+          <DialogContent>
+            <DialogContentText>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>以後可以用此信箱登入</a>
+            </DialogContentText>
+            <TextField style={{width: 300}} utoFocus margin="dense" id="email" label="請輸入新帳號"
+              type="email" fullWidth variant="outlined"/>
+          </DialogContent>
+          
+          <DialogActions>
+            <Button onClick={this.mailhandleClose} color="primary">
+              取消 </Button>
+            <Button onClick={this.mailhandleSubmit} color="primary">
+              確認 </Button>
+          </DialogActions>
+        </Dialog>
+        {/* 更改帳號結束 */}
+
+        {/* 更改密碼 */}
+        <ListItem button onClick={this.passwdhandleClickOpen}>
           <ListItemIcon>
             <ChangePasswdIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>更改密碼</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>更改密碼</a></ListItemText>
         </ListItem>
+        <Dialog open={this.state.passwdopen} onClose={this.passwdhandleClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <a style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",
+              fontSize:25}}>更改密碼</a>
+              </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>舊密碼</a>
+            </DialogContentText>
+            <TextField style={{marginTop: 10, width: 300}} autoFocus margin="dense" id="passwd" label="請輸入舊密碼"
+              type="password" fullWidth variant="outlined"/>
+          </DialogContent>
+
+          <DialogContent>
+            <DialogContentText>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>更改密碼</a>
+            </DialogContentText>
+            <TextField style={{width: 300}} margin="dense" id="passwd" label="請輸入新密碼"
+              type="passwdnew" fullWidth variant="outlined"/>
+          </DialogContent>
+          <DialogContent>
+            <TextField style={{width: 300}} margin="dense" id="passwd3" label="再次輸入新密碼"
+              type="password" fullWidth variant="outlined"/>
+          </DialogContent>
+          
+          <DialogActions>
+            <Button onClick={this.passwdhandleClose} color="primary">
+              取消 </Button>
+            <Button onClick={this.passwdhandleClose} color="primary">
+              確認 </Button>
+          </DialogActions>
+        </Dialog>
+        {/* 更改密碼結束 */}
+
           <ListItem button>
           <ListItemIcon>
             <ExitIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>登出</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>登出</a></ListItemText>
         </ListItem>
+        
         </Drawer>
 
         {/* 插入components */}
         <div>
-        <NavLink activeClassName="active" to="/teach" style={{textDecoration:'none'}}>
-        <button>測試</button>
-        </NavLink>
           <Route exact path="/teach" component={myclassComponent}/>
-          <Route path="/Tclass" component={ClassDetail}/>
-          <Route path="/classScore" component={ClassScore}/>
-          <Route path="/analysis" component={TestAnalysis}/>
-          <Route path="/teachrecord" component={TeachRecord}/>
+          <Route path="/teach/classdetail" component={ClassDetail}/>
+          <Route path="/teach/classScore" component={ClassScore}/>
+          <Route path="/teach/analysis" component={TestAnalysis}/>
+          <Route path="/teach/teachrecord" component={TeachRecord}/>
+          <Route path="/teach/latestnews" component={LatestNews}/>
         </div>
         </MuiThemeProvider>
       </div>

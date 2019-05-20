@@ -34,10 +34,16 @@ import ScoreComponent from './score/score-app';
 import AttendComponent from './attend/attendComponent';
 import ReserveComponent from './reserve/reserveComponent';
 import IndexComponent from './index/appComponent';
-import Reserve2 from './reserve2/reserveComponent2';
-import Reserve3 from './reserveList/reserveListComponent';
+import Reserve2All from './reserve2/reserveAll';
+import Reserve3 from './reserveList/reserve3All';
 import MyPage from './studentpage/studentpage';
+import LatestNews from './latestnews/news'
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import Airtable from 'airtable';
+
+const TABLE_NAME = 'Student';
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
 
 const theme = createMuiTheme({
   typography: {
@@ -125,6 +131,8 @@ const styles = theme => ({
 class MiniDrawer extends React.Component {
   state = {
     open: false, 
+    studentName:'',
+    studentID:'',
   };
 
   handleDrawerOpen = () => {
@@ -139,7 +147,36 @@ class MiniDrawer extends React.Component {
     this.indexbutton = this.indexbutton.bind(this);
   }
 
+
+  componentDidMount(){
+    //for student name
+     const fileterSentence = 'AND(student_email = ' + this.props.history.location.state + ')'
+
+    table.select({
+      //filterByFormula:('{student_email}=\'fabienne.yang@mail.com\''),
+      //filterByFormula:'AND(student_email =\'fabienne.yang@mail.com\')',
+      //filterByFormula:'AND(student_email =${'+this.props.history.location.state+'})',
+      //filterByFormula: fileterSentence,
+      view: "Grid view"
+    }).eachPage((records, fetchNextPage) => {
+      this.setState({ records });
+      const student_name = this.state.records.map((record, index) => record.fields['student_name']);
+      const student_email = this.state.records.map((record, index) => record.fields['student_email']);
+      const student_id = this.state.records.map((record, index) => record.fields['student_id']);
+
+      for(var index = 0; index <student_email.length; index++) {
+        if(student_email[index] == this.props.history.location.state){
+          this.setState({ studentName : student_name[index] });
+          this.setState({ studentID : student_id[index] });
+        }
+      }
+    }
+    );
+  }
+
+
   render() {
+    //console.log(this.props.history.location.state);
     const { classes, theme } = this.props;
   
     return (
@@ -188,16 +225,15 @@ class MiniDrawer extends React.Component {
           open={this.state.open}
         >
           <div className={classes.toolbar}>
-          <Head/>
+          <Head UserId={this.state.studentID}/>
           
           <div>
           <Typography  
             style={{fontSize:15,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:2,}}>
-            王映心
+            {this.state.studentName}
           </Typography>
-
           <Typography style={{fontSize:12,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:2,}}>
-            #405401279    
+            #{this.state.studentID}   
           </Typography>
           </div>
 
@@ -219,62 +255,65 @@ class MiniDrawer extends React.Component {
 
         <br></br>
         
-        <NavLink activeClassName="active" to="/bar" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/bar" style={{textDecoration:'none',color:'#818181'}}>
           <ListItem button>
               <ListItemIcon>
                   <GlobeIcon />
               </ListItemIcon>
               <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>首頁</a></ListItemText>
-          </ListItem>
-        </NavLink>
-        <NavLink activeClassName="active" to="/latestnews" style={{textDecoration:'none'}}>
-          < ListItem button>
-            <ListItemIcon  >
-              <LatestnewsIcon />
-            </ListItemIcon>
-            <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-              letterSpacing:4,}}>最新消息</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>首頁</a></ListItemText>
           </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/score' style={{textDecoration:'none'}}>
+        <NavLink activeClassName='active' to='/bar/latestnews' style={{textDecoration:'none',color:'#818181'}}>
+        <ListItem button>
+          <ListItemIcon  >
+            <LatestnewsIcon />
+          </ListItemIcon>
+          {/* <Typography>
+            最新消息
+          </Typography> */}
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
+        </ListItem></NavLink>
+
+        <NavLink activeClassName='active' to='/bar/score' style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <ScoreIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>成績查詢</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>成績查詢</a></ListItemText>
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName='active' to='/attend' style={{textDecoration:'none'}}>
+        <NavLink activeClassName='active' to='/bar/attend' style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <AssignIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>出勤查詢</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>出勤查詢</a></ListItemText>
         </ListItem>
         </NavLink>
 
-        <NavLink activeClassName="active" to="/reserve" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/bar/reserve" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>補課申請</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>補課申請</a></ListItemText>
         </ListItem>
         </NavLink>
         
-        <NavLink activeClassName="active" to="/mypage" style={{textDecoration:'none'}}>
+        <NavLink activeClassName="active" to="/bar/mypage" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon>
             <FaceIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
-            letterSpacing:4,}}>我的頁面</a></ListItemText>
+            letterSpacing:4,color:'#6C6C6C'}}>我的頁面</a></ListItemText>
         </ListItem>
         </NavLink>
 
@@ -291,24 +330,35 @@ class MiniDrawer extends React.Component {
           </List> */}
 
         <br></br>
+        <NavLink activeClassName="active" to="/" style={{textDecoration:'none',color:'#818181'}}>
           <ListItem button>
           <ListItemIcon>
             <ExitIcon />
           </ListItemIcon>
-          <ListItemText inset primary="Log Out" />
+          <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
+            letterSpacing:4,color:'#6C6C6C'}}>登出</a></ListItemText>
         </ListItem>
+        </NavLink>
         </Drawer>
 
         {/* 插入components */}
         <div>
-          <Route exact path="/bar" component={IndexComponent}/>
-          <Route path="/latestnews" component={Latestnews}/>
-          <Route path="/attend" component={AttendComponent} />
-          <Route path="/score" component={ScoreComponent} />
-          <Route path="/reserve" component={ReserveComponent}/>
-          <Route path="/reserve2" component={Reserve2}/>
-          <Route path="/reserve3" component={Reserve3}/>
-          <Route path="/mypage" component={MyPage}/>
+
+          {/* <Route exact path="/bar" component={IndexComponent}/> */}
+          <Route exact path="/bar" render={(props) => <IndexComponent {...props} UserId={this.state.studentID} />}/>
+          {/* <Route path="/bar/attend" component={AttendComponent} /> */}
+          <Route path="/bar/attend" render={(props) => <AttendComponent {...props} UserId={this.state.studentID} />} />
+          {/* <Route path="/bar/score" component={ScoreComponent} /> */}
+          <Route path="/bar/score" render={(props) => <ScoreComponent {...props} UserId={this.state.studentID}/>}/>
+          <Route path="/bar/reserve" component={ReserveComponent}/>
+          {/* <Route path="/bar/reserve2" component={Reserve2All}/> */}
+          <Route path="/bar/reserve2" render={(props) => <Reserve2All {...props} UserId={this.state.studentID}/>}/>
+          {/* <Route path="/bar/reserve3" component={Reserve3}/> */}
+          <Route path="/bar/reserve3" render={(props) => <Reserve3 {...props} UserId={this.state.studentID}/>}/>
+          {/* <Route path="/bar/mypage" component={MyPage}/> */}
+          <Route path="/bar/mypage" render={(props) => <MyPage {...props} UserId={this.state.studentID} />}/>
+          <Route path="/bar/latestnews" component={LatestNews}/>
+
         </div>
         </MuiThemeProvider>
       </div>

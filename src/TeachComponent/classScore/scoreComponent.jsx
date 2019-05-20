@@ -26,52 +26,41 @@ import Select from '@material-ui/core/Select';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import Airtable from 'airtable';
+
+const TABLE_NAME = 'TestScore';
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
 
 let id = 0;
 function createData(date, range, averagescore, button) {
   id += 1;
-  return { id, date, range, averagescore, button};
+  button=<NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
+  <Button variant="contained"
+  style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
+  backgroundColor:'#FFBF5F',color:'white'}}>
+  答題分析 ></Button>
+  </NavLink>
+  return { id, date, range, averagescore, button };
 }
-const rows = [
-    createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),
-    createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),createData('10月7日', '英文講義CH1', 87, 
-    <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/analysis'>
-    <Button variant="contained"
-    style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-    backgroundColor:'#FFBF5F',color:'white'}}>
-    答題分析 ></Button>
-    </NavLink>
-    ),
-  ];
 
+const rows = [
+  // createData('10月7日', '英文講義CH1', 87, 
+  // <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
+  // <Button variant="contained"
+  // style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
+  // backgroundColor:'#FFBF5F',color:'white'}}>
+  // 答題分析 ></Button>
+  // </NavLink>
+  // ),
+];
+
+let temp = [];
+function caculateMonth(rawDate) {
+  var Date = rawDate + "月";
+
+  return { rawDate, Date };
+}
 
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
@@ -79,8 +68,8 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { order, orderBy} = this.props;
-    
+    const { order, orderBy } = this.props;
+
 
     return (
       <TableHead>
@@ -92,8 +81,10 @@ class EnhancedTableHead extends React.Component {
                 align={row.numeric ? 'center' : 'center'}
                 padding={row.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === row.id ? order : false}
-                style={{fontWeight: "bold",color:'#969696',fontFamily: "Microsoft JhengHei",
-                letterSpacing:4,fontSize:15}}
+                style={{
+                  fontWeight: "bold", color: '#969696', fontFamily: "Microsoft JhengHei",
+                  letterSpacing: 4, fontSize: 15
+                }}
               >
                 <Tooltip
                   title="Sort"
@@ -121,16 +112,16 @@ class EnhancedTableHead extends React.Component {
 
 const styles = theme => ({
   root: {
-    width:820,
+    width: 820,
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
-    marginLeft:100,
-    marginRight:70,
-    marginBottom:20,
+    marginLeft: 100,
+    marginRight: 70,
+    marginBottom: 20,
   },
   table: {
     //width: 1020,
-    minWidth:400,
+    minWidth: 400,
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -142,37 +133,37 @@ const styles = theme => ({
     //marginLeft:34,
     //marginTop:20,
     //height:'50px',
-    width:1020
+    width: 1020
   },
-  SelectTable:{
+  SelectTable: {
     //marginTop:'3vh',
-    align:'center',
-    width:'100%',
+    align: 'center',
+    width: '100%',
   },
   formControl: {
     margin: 5,
     minWidth: 200,
-    maxHeight:50,
-    marginTop:20,
-    marginLeft:100,
+    maxHeight: 50,
+    marginTop: 20,
+    marginLeft: 100,
   },
   selectEmpty: {
-   // marginTop: theme.spacing.unit * 2,
+    // marginTop: theme.spacing.unit * 2,
   },
-  text:{
+  text: {
     //marginLeft:35,
-    width:'100%',
-    marginBottom:15,
-    fontSize:20,
+    width: '100%',
+    marginBottom: 15,
+    fontSize: 20,
     fontWeight: "bold",
-    color:'#969696',
+    color: '#969696',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:4,
+    letterSpacing: 4,
   },
-  textRight:{
-    fontSize:13,
-    paddingLeft:'71%',
-    color:'#FFBF5F',
+  textRight: {
+    fontSize: 13,
+    paddingLeft: '71%',
+    color: '#FFBF5F',
   }
 });
 
@@ -187,28 +178,90 @@ class EnhancedTable extends React.Component {
     //下面是select跟title的
     age: '',
     classname: '數學A班',
+    classData: [],
+    dataInit: [],
+    rows: [],
   };
 
-//   handleRequestSort = (event, property) => {
-//     const orderBy = property;
-//     let order = 'desc';
+  //   handleRequestSort = (event, property) => {
+  //     const orderBy = property;
+  //     let order = 'desc';
 
-//     if (this.state.orderBy === property && this.state.order === 'desc') {
-//       order = 'asc';
-//     }
+  //     if (this.state.orderBy === property && this.state.order === 'desc') {
+  //       order = 'asc';
+  //     }
 
-//     this.setState({ order, orderBy });
-//   };
+  //     this.setState({ order, orderBy });
+  //   };
 
   //select start
   componentDidMount() {
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     });
+
+    table.select({
+      //filterByFormula: 'AND(class_id = 數學A班)',
+      view: "Grid view"
+    }).eachPage((records, fetchNextPage) => {
+      this.setState({ records });
+      console.log(records);
+      const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+      const test_date = this.state.records.map((record, index) => record.fields['test_date']);
+      const test_name = this.state.records.map((record, index) => record.fields['test_name']);
+      const test_score = this.state.records.map((record, index) => record.fields['test_score'])
+      var count = class_id.length;
+      var temp = [];
+      var temp2 = [];
+      var temp3 = [];
+      var temp4 = [];
+      var total = [];
+      for (var index = 0; index < count; index++) {
+        temp.push(test_date[index].split("-")[1]);
+      }
+
+      var classResult = temp.filter(function (element, index, arr) {
+        return arr.indexOf(element) === index;
+      });
+      console.log(classResult);
+      for (var index = 0; index < classResult.length; index++) {
+        temp2.push(classResult[index]);
+      }
+
+      //table
+      for (var index = 0; index < test_date.length; index++) {
+        temp3.push(createData(test_date[index], test_name[index], test_score[index]));
+      }
+      this.setState({ rows: temp3 });
+      this.setState({ dataInit: temp3 })
+
+      this.setState({ classData: temp2 });
+      fetchNextPage();
+    }
+    );
+
   }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+
+    //for select
+    console.log("In handleChange");
+
+    let temp = [];
+    var count = this.state.dataInit.length;
+    console.log(event.target.value);
+
+    for (var index = 0; index < count; index++) {
+      var month = this.state.dataInit[index].date.split("-")[1];
+      if (month == event.target.value) {
+        temp.push(this.state.dataInit[index]);
+      }
+    }
+    this.setState({ rows: temp });
+    if (event.target.value == "1") {
+      this.setState({ rows: this.state.dataInit });
+    }
   };
   //select end
 
@@ -217,87 +270,107 @@ class EnhancedTable extends React.Component {
     const { data, order, orderBy } = this.state;
 
     return (
-    <div style={{marginTop:100}}>
-    {/* 下面是select跟title */}
-    <div className={classes.SelectRoot}>
-      
-      <div className={classes.SelectTable}>
-          <Typography class={classes.text} nowrap={true}>
-            <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.classname}</a><a>的成績</a>
-            <a class={classes.textRight}>107學年</a>
-          </Typography>
-     
-      
-      <Divider variant="middle"/>
-      <FormControl variant="outlined" className={classes.formControl}>
-      
-        <InputLabel 
-          ref={ref => {
-            this.InputLabelRef = ref;
-          }}
-          htmlFor="outlined-age-native-simple"
-          style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
-        >
-          選擇月份
-        </InputLabel>
-        <Select
-          native
-          value={this.state.age}
-          onChange={this.handleChange('age')}
-          input={
-            <OutlinedInput
-              name="Age"
-              labelWidth={this.state.labelWidth}
-              id="outlined-age-native-simple"
-            />
-          }
-        >
-          <option value="" />
-          <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
-          <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>二月</option>
-          <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>三月</option>
-        </Select>
-      </FormControl>
-      </div>
-    </div>
-    {/* select跟title結束 */}
+      <div style={{ marginTop: 100 }}>
+        {/* 下面是select跟title */}
+        <div className={classes.SelectRoot}>
 
-    {/* 下面是table */}
-      <Paper className={classes.root}>
-        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
-        <div className={classes.tableWrapper}>
-        <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}>日期</TableCell>
-            <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}>考試範圍</TableCell>
-            <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}>平均分數</TableCell>
-            <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:4,fontSize:15,fontWeight: "bold"}}></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:2,fontSize:15}}>{row.date}</TableCell>
-              <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:2,fontSize:15}}>{row.range}</TableCell>
-              <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:2,fontSize:15}}>{row.averagescore}</TableCell>
-              <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                      letterSpacing:2,fontSize:15}}>{row.button}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          <div className={classes.SelectTable}>
+            <Typography class={classes.text} nowrap={true}>
+              <a style={{ color: '#FFBF5F', marginLeft: 35 }}>{this.state.classname}</a><a>的成績</a>
+              <a class={classes.textRight}>107學年</a>
+            </Typography>
+
+
+            <Divider variant="middle" />
+            <FormControl variant="outlined" className={classes.formControl}>
+
+              <InputLabel
+                ref={ref => {
+                  this.InputLabelRef = ref;
+                }}
+                htmlFor="outlined-age-native-simple"
+                style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}
+              >
+                選擇月份
+        </InputLabel>
+              <Select
+                native
+                value={this.state.age}
+                onChange={this.handleChange('age')}
+                input={
+                  <OutlinedInput
+                    name="Age"
+                    labelWidth={this.state.labelWidth}
+                    id="outlined-age-native-simple"
+                  />
+                }
+              >
+                <option value="" />
+                <option value="1" style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>所有月份</option>
+                {(this.state.classData)
+                  .map((row, index) => {
+                    return (
+                      <option value={row} style={{ color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontWeight: "bold", }}>{row}</option>
+                    );
+                  })}
+              </Select>
+            </FormControl>
+          </div>
         </div>
-      </Paper>
-      {/* table結束 */}
-    </div>
+        {/* select跟title結束 */}
+
+        {/* 下面是table */}
+        <Paper className={classes.root}>
+          {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" style={{
+                    color: '#969696', fontFamily: "Microsoft JhengHei",
+                    letterSpacing: 4, fontSize: 15, fontWeight: "bold"
+                  }}>日期</TableCell>
+                  <TableCell align="center" style={{
+                    color: '#969696', fontFamily: "Microsoft JhengHei",
+                    letterSpacing: 4, fontSize: 15, fontWeight: "bold"
+                  }}>考試範圍</TableCell>
+                  <TableCell align="center" style={{
+                    color: '#969696', fontFamily: "Microsoft JhengHei",
+                    letterSpacing: 4, fontSize: 15, fontWeight: "bold"
+                  }}>平均分數</TableCell>
+                  <TableCell align="center" style={{
+                    color: '#969696', fontFamily: "Microsoft JhengHei",
+                    letterSpacing: 4, fontSize: 15, fontWeight: "bold"
+                  }}></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.state.rows.map(row => (
+                  <TableRow key={row.id}>
+                    <TableCell align="center" style={{
+                      color: '#969696', fontFamily: "Microsoft JhengHei",
+                      letterSpacing: 2, fontSize: 15
+                    }}>{row.date}</TableCell>
+                    <TableCell align="center" style={{
+                      color: '#969696', fontFamily: "Microsoft JhengHei",
+                      letterSpacing: 2, fontSize: 15
+                    }}>{row.range}</TableCell>
+                    <TableCell align="center" style={{
+                      color: '#969696', fontFamily: "Microsoft JhengHei",
+                      letterSpacing: 2, fontSize: 15
+                    }}>{row.averagescore}</TableCell>
+                    <TableCell align="center" style={{
+                      color: '#969696', fontFamily: "Microsoft JhengHei",
+                      letterSpacing: 2, fontSize: 15
+                    }}>{row.button}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </Paper>
+        {/* table結束 */}
+      </div>
     );
   }
 }

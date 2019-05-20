@@ -106,10 +106,13 @@ class ImgMediaCard extends React.Component {
 
   componentDidMount() {
     //https://chinarajames.com/airtable-api-linked-records/
-
+    //const filterSentence = 'OR(student_id=' + this.props.UserId + ')';
+    const filterSentence = 'OR(FIND("' + this.props.UserId + '", student_id) > 0)' ;
+    console.log(filterSentence);
     //classDay
     tableD.select({
       view: "Grid view",
+      filterByFormula: filterSentence
       //maxRecords: 1
       }).eachPage((records, fetchNextPage) => {
         this.setState({records});

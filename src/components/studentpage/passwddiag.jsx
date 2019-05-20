@@ -33,60 +33,30 @@ export default class FormDialog extends React.Component {
           <Typography style={{fontFamily: "Microsoft JhengHei", 
           color:'white',fontSize:13,fontWeight: "bold", color:'white'}}>更改</Typography>
         </Button>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
+        <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title" >
           <DialogTitle id="form-dialog-title">
           <a style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",
             fontSize:25}}>更改密碼</a>
               </DialogTitle>
           <DialogContent>
             <DialogContentText>
-            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:4
-            }}>目前密碼</a>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:4 }}>目前密碼</a>
             </DialogContentText>
-            <TextField
-              style={{marginTop: 10, width: 300}}
-              autoFocus
-              margin="dense"
-              id="passwd1"
-              label="舊密碼"
-              type="password"
-              fullWidth
-              variant="outlined"
-            />
+            <TextField style={{marginTop: 10, width: 300}} autoFocus margin="dense" id="passwd1"
+              label="舊密碼" type="password" fullWidth variant="outlined" />
           </DialogContent>
 
           <DialogContent>
             <DialogContentText>
-            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:4
-            }}>新密碼</a>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:4 }}>新密碼</a>
             </DialogContentText>
-            <TextField
-              style={{width: 300}}
-              autoFocus
-              margin="dense"
-              id="passwd2"
-              label="請輸入新密碼"
-              type="password"
-              fullWidth
-              variant="outlined"
-            />
+            <TextField style={{width: 300}} margin="dense" id="passwd2" label="請輸入新密碼"
+              type="password" fullWidth variant="outlined"/>
           </DialogContent>
 
           <DialogContent>
-            <TextField
-              style={{width: 300}}
-              autoFocus
-              margin="dense"
-              id="passwd3"
-              label="再次輸入新密碼"
-              type="password"
-              fullWidth
-              variant="outlined"
-            />
+            <TextField style={{width: 300}} margin="dense" id="passwd3" label="再次輸入新密碼"
+              type="password" fullWidth variant="outlined"/>
           </DialogContent>
           
           <DialogActions>

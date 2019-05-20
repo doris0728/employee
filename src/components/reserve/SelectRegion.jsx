@@ -19,6 +19,7 @@ import { Input } from 'semantic-ui-react';
 import { green } from '@material-ui/core/colors';
 //import DateRangePicker from 'react-daterange-picker';
 //import moment from 'moment-range';
+import DatePicker from './DatePicker'
 
 const styles = theme => ({
   root: {
@@ -62,22 +63,10 @@ const styles = theme => ({
   },
 
   date:{
-    marginLeft:65,
+    marginLeft:70,
     marginTop:20,
-    display: 'flex',
-  },
-  datepicker:{
-    backgroundcolor: '#5A3DAA',
-    height: 300,
-  },
-  choosedate:{
-    color: '#5A3DAA',
-    fontFamily:"Microsoft JhengHei",
-    letterSpacing:4,
-    fontWeight: "bold",
-    marginRight: 30,
-  },
-
+    display:'flex'
+  }
 
 });
 
@@ -147,12 +136,10 @@ class NativeSelects extends React.Component {
         </FormControl>
         </div>
         <div className={classes.date}>
-        <div>
-        <Typography className={classes.choosedate}>選擇日期</Typography>
-        </div>
-        <div>
+        {/* <MultipleDatePicker onSubmit={dates => console.log('selected date', dates)} className={classes.datepicker}>
+        </MultipleDatePicker> */}
+        <Typography style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>選擇時間</Typography>
         <DatePicker/>
-       </div>
         </div>
       </div>
     );

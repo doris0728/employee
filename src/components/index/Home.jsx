@@ -128,25 +128,43 @@ const styles = {
   flexwrap: 'nowrap',
   },
 };
-
-function ImgMediaCard(props) {
-  const { classes } = props;
-  return (
-    <div>
-      <div className={classes.wrap}>
-        <div>
-          <TestCard/>
-          <HomeworkCard/>
+class ImgMediaCard extends React.Component {
+  render() {
+    const { classes } = this.props;
+    //console.log(this.props.UserId);
+    return (
+      <div>
+        <div className={classes.wrap}>
+          <div>
+            <TestCard UserId={this.props.UserId}/>
+            <HomeworkCard UserId={this.props.UserId}/>
+          </div>
+          <div>
+            <AlertCard UserId={this.props.UserId}/>
+          </div>   
         </div>
-        <div>
-          <AlertCard/>
-        </div>   
-        
-      </div>
-           
-    </div>
-  );
+ </div>
+    );
+
+  }
 }
+// function ImgMediaCard(props) {
+//   const { classes } = props;
+//   return (
+//     <div>
+//       <div className={classes.wrap}>
+//         <div>
+//           <TestCard/>
+//           <HomeworkCard/>
+//         </div>
+//         <div>
+//           <AlertCard/>
+//         </div>   
+//       </div>
+           
+//     </div>
+//   );
+// }
 
 ImgMediaCard.propTypes = {
   classes: PropTypes.object.isRequired,
