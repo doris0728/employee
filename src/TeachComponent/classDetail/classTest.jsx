@@ -21,7 +21,7 @@ const table = base(TABLE_NAME);
 
 
 const styles = theme => ({
-  paper: {
+  score_paper: {
     width:570,
     marginTop:40,
     overflowX: 'auto',
@@ -29,7 +29,7 @@ const styles = theme => ({
     //marginRight:'5vw',
     marginBottom:20,
   },
-  root: {
+  score_root: {
     width:500,
     marginTop:15,
     overflowX: 'auto',
@@ -37,10 +37,10 @@ const styles = theme => ({
     //marginRight:'5vw',
     marginBottom:30,
   },
-  table: {
+  score_table: {
     minWidth:300,
   },
-  button:{
+  score_button:{
     textDecoration:'none',
     // boxShadow:'none',
     // textShadow:'none',
@@ -48,7 +48,7 @@ const styles = theme => ({
     // outline:'none',
 
   }, 
-  title:{
+  score_title:{
     display:'flex'
   }
 });
@@ -124,16 +124,16 @@ class SimpleTable extends React.Component {
 
 
   return (
-    <Paper className={classes.paper}>
-    <div className={classes.title}>
+    <Paper className={classes.score_paper}>
+    <div className={classes.score_title}>
     <Typography style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontSize:18,
     fontWeight:'bold',marginLeft:32,marginTop:15}}>考試平均</Typography>
     <NavLink style={{textDecoration:'none',color:'#818181'}} activeClassName='active' to='/teach/classScore'>
       <IconButton style={{marginLeft:400}}><Button/></IconButton></NavLink>
       </div>
-    <Paper className={classes.root}>
+    <Paper className={classes.score_root}>
     
-      <Table className={classes.table}>
+      <Table className={classes.score_table}>
         <TableHead>
           <TableRow>
             <TableCell align="center" style={{color:'#969696',fontFamily: "Microsoft JhengHei",
