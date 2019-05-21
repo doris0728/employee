@@ -27,6 +27,8 @@ const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWI
 const table = base(TABLE_NAME);
 const score_TABLE_NAME = 'TestScore';
 const score_table = base(score_TABLE_NAME);
+const record_TABLE_NAME = 'Schedule';
+const record_table = base(record_TABLE_NAME);
 
 //class name
 function createData(class_id, class_time) {
@@ -39,6 +41,12 @@ let id = 0;
 function ScoreData(date, range, averagescore) {
     id += 1;
     return { id, date, range, averagescore };
+}
+
+//class record
+function RecordData(schedule1, schedule2) {
+
+    return { schedule1, schedule2 };
 }
 
 const styles = {
@@ -122,6 +130,45 @@ const styles = {
     },
     score_title: {
         display: 'flex'
+    },
+    record_paper: {
+        width: 270,
+        height: 343,
+        marginTop: 40,
+        overflowX: 'auto',
+        //marginLeft:100,
+        //marginRight:'5vw',
+        marginBottom: 20,
+    },
+    record_root: {
+        width: 200,
+        marginTop: 25,
+        height: 230,
+        overflowX: 'auto',
+        marginLeft: 35,
+        //marginRight:'5vw',
+        //marginBottom:30,
+    },
+    record_table: {
+        minWidth: 300,
+    },
+    record_button: {
+        textDecoration: 'none',
+        // boxShadow:'none',
+        // textShadow:'none',
+        // border:'none',
+        // outline:'none',
+
+    },
+    record_title: {
+        display: 'flex'
+    },
+    recordText: {
+        color: '#5A3DAA',
+        fontFamily: "Microsoft JhengHei",
+        letterSpacing: 2,
+        fontWeight: 'bold',
+        textAlign: 'center',
     }
 };
 
@@ -134,11 +181,17 @@ class classCard extends React.Component {
         score_classData: [],
         score_dataInit: [],
         score_rows: [],
+        //record
+        record_ClassData: [],
+        record_dataInit: [],
+        schedule_real: [],
+        schedule1: [],
     };
 
     componentDidMount() {
-
+        //const filterSentence = 'AND(class_id =' + this.props.location.myClassProps + ')';
         table.select({
+            //filterByFormula: filterSentence,
             filterByFormula: 'AND(class_id = "國文C班")',
             view: "Grid view",
         }).eachPage((records, fetchNextPage) => {
@@ -209,6 +262,30 @@ class classCard extends React.Component {
         }
         );
         ///score end
+        //record
+        record_table.select({
+            filterByFormula: 'AND(class_id = "國文C班")',
+            view: "Grid view",
+        }).eachPage((records, fetchNextPage) => {
+            this.setState({ records });
+            var temp = [];
+            console.log(records);
+            const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+            const schedule_real = this.state.records.map((record, index) => record.fields['schedule_real']);
+
+            for (var index = 0; index < class_id.length; index++) {
+                //temp.push(createData(class_id[index], class_day[index], class_start_time[index], class_end_time[index]));
+                //temp.push(createData(schedule_real[index].split("=")[0]));
+            }
+            this.setState({ record_ClassData: temp });
+            this.setState({ record_dataInit: temp });
+            this.setState({ schedule1: schedule_real[0].split(" ")[0] });
+            this.setState({ schedule2: schedule_real[0].split(" ")[1] });
+            //this.setState({ class_time : temp2});
+            fetchNextPage();
+        }
+        );
+        //record end
     }
 
     render() {
@@ -223,6 +300,7 @@ class classCard extends React.Component {
                                 <div className={classes.divclass}>
                                     <CardContent><Typography className={classes.text}>
                                         {this.state.class_id}
+                                        
                                     </Typography></CardContent>
                                 </div>
                                 <div>
@@ -304,7 +382,35 @@ class classCard extends React.Component {
                             </Table>
                         </Paper>
                     </Paper>
+
+                    <div style={{marginLeft:30}}> {/*record*/}
+                    <Paper className={classes.record_paper}>
+                        <div className={classes.record_title}>
+                            <Typography style={{
+                                color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontSize: 18,
+                                fontWeight: 'bold', marginLeft: 32, marginTop: 15
+                            }}>上週教學進度</Typography>
+                            <NavLink style={{ textDecoration: 'none', color: '#818181' }} activeClassName='active' to='/teach/teachrecord'>
+                                <IconButton style={{ marginLeft: 55 }}><Button /></IconButton>
+                            </NavLink>
+                        </div>
+                        <Paper className={classes.record_root}>
+                            <div>
+                                <Typography className={classes.recordText} style={{ fontSize: 21, marginTop: 15, marginTop: 55, marginBottom: 55 }}>
+                                    {/* 數學講義(一) */}
+                                    {this.state.schedule1}</Typography>
+                            </div>
+                            <Divider variant="middle" />
+                            <Typography className={classes.recordText} style={{ fontSize: 18, marginTop: 40, marginTop: 25 }}>
+                                {/* p.50~80 */}
+                                {this.state.schedule2}
+                            </Typography>
+                        </Paper>
+                    </Paper>
+                </div>
                 </div> {/*score and record end*/}
+
+                
             </div>
             //   最外面的div
         );
