@@ -9,13 +9,62 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { FormControl, FormHelperText, Divider, Typography } from '@material-ui/core';
-import { fetchPostStudent } from '../../api';
+import { fetchUpdateStudentEmail,fetchUpdateAccountEmail } from '../../api';
+import SelectInput from '@material-ui/core/Select/SelectInput';
+
+import Airtable from 'airtable';
+
+const TABLE_NAME = 'Student';
+const ACCOUNT_TABLE_NAME = 'Account';
+const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
+const accountTable = base(ACCOUNT_TABLE_NAME);
+
+function sleep (time){
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 export default class FormDialog extends React.Component {
   state = {
     open: false,
     student_email:'',
+    record_id:'',
+    account_record_id:'',
   };
+  componentDidMount(){
+    const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+    table.select({
+      filterByFormula: filterSentence,
+      view: "Grid view",
+      maxRecords: 1
+      }).eachPage((records, fetchNextPage) => {
+        this.setState({records});
+
+        const student_email = this.state.records.map((record, index) => record.fields['student_email']);
+        const record_id = this.state.records.map((record, index) => record.id.id);
+
+        //for account table
+        accountTable.select({
+          filterByFormula: 'AND(account_id="' + student_email[0] + '")',
+          view: "Grid view",
+          maxRecords: 1
+          }).eachPage((records, fetchNextPage) => {
+            this.setState({records});
+            const account_record_id = this.state.records.map((record, index) => record.id.id);
+    
+            this.setState({ student_email : student_email, record_id : record_id[0], account_record_id : account_record_id[0]});
+            fetchNextPage(); 
+          }
+        );
+
+
+
+        //this.setState({ student_email : student_email, record_id : record_id[0]});
+          
+        fetchNextPage(); 
+      }
+    );
+  }
   
 
   handleClickOpen = () => {
@@ -33,11 +82,21 @@ export default class FormDialog extends React.Component {
 
   handleSubmit = (e)=> {
     e.preventDefault()
-    let data = {fields:{student_email:{}}};
-    data.fields.student_email = this.state.student_email;
 
-    fetchPostStudent(data);
+
+    let data = {fields:{student_email:{}}};
+    let dataAccount = {fields:{account_id:{}}};
+
+    console.log(this.state.account_record_id);
+    //data.fields.student_id = this.props.UserId;
+    data.fields.student_email = this.state.student_email;
+    dataAccount.fields.account_id = this.state.student_email;
+    fetchUpdateStudentEmail(data,this.state.record_id);
+    fetchUpdateAccountEmail(dataAccount,this.state.account_record_id);
     this.setState({ open: false });
+    // sleep(500).then(() => {
+    //   window.location.reload();
+    // })
   };
 
   render() {

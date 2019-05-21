@@ -29,8 +29,9 @@ import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Logowhite from './image/goodmorningwhite.png';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import myclassComponent from './myclass/myclassAll'
-import ClassDetail from './classDetail/classDetailComponent'
+import ClassDetail from './classDetail/classDetailAll'
 import ClassScore from './classScore/scoreComponent'
+//import ClassScore from './classScore/scoreGimy'
 import TestAnalysis from './testAnalysis/testanalysisComponent'
 import TeachRecord from './teachRecord/recordComponent'
 import ChangePasswdIcon from '@material-ui/icons/LockRounded'
@@ -42,6 +43,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import LatestNews from './latestnews/news'
+import {fetchPostTeacher} from '../api';
+
+function sleep (time){
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 const theme = createMuiTheme({
   typography: {
@@ -130,7 +137,7 @@ class MiniDrawer extends React.Component {
   state = {
     open: true, 
     teacherName:'',
-    teacherEmail:'',
+    //teacherEmail:'',
     mailopen: false,
     passwdopen: false,
   };
@@ -156,13 +163,23 @@ class MiniDrawer extends React.Component {
   mailhandleClose = () => {
     this.setState({ mailopen: false });
   };
+
+  handleSubmit = (e)=> {
+    e.preventDefault()
+    let data = {fields:{teacher_email:{}}};
+    data.fields.teacher_email = this.state.teacher_email;
+    fetchPostTeacher(data);
+    this.setState({ open: false });
+    sleep(500).then(() => {
+      window.location.reload();
+    })
+  };
   //change email end
 
   //change password
   passwdhandleClickOpen = () => {
     this.setState({ passwdopen: true });
   };
-
   passwdhandleClose = () => {
     this.setState({ passwdopen: false });
   };
@@ -196,7 +213,7 @@ class MiniDrawer extends React.Component {
       console.log("SelectClass Hello");
       console.log(teacher_email);
       
-      this.setState({ teacherEmail : temp });
+      this.setState({ teacher_email : temp });
     }).catch(err => {
       // Error 🙁
     });
@@ -260,7 +277,7 @@ class MiniDrawer extends React.Component {
           {this.state.teacherName}
           </Typography>
           <Typography style={{fontSize:12,fontWeight: "bold",fontFamily: "Microsoft JhengHei",letterSpacing:1,}}>
-          {this.state.teacherEmail}
+          {this.state.teacher_email}
           </Typography>
           </div>
           
@@ -292,53 +309,18 @@ class MiniDrawer extends React.Component {
           </ListItem>
         </NavLink>
 
+        <NavLink activeClassName="active" to="/teach/latestnews" style={{textDecoration:'none',color:'#818181'}}>
         <ListItem button>
           <ListItemIcon  >
             <LatestnewsIcon />
           </ListItemIcon>
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
-        </ListItem>
-
-        <NavLink activeClassName='active' to='/Tclass'>
-        <ListItem button>
-          <ListItemIcon>
-            <ScoreIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="班級頁面" />
-        </ListItem>
-        </NavLink>
-
-        <NavLink activeClassName='active' to='/classscore'>
-        <ListItem button>
-          <ListItemIcon>
-            <AssignIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="班級成績" />
-        </ListItem>
-        </NavLink>
-
-        <NavLink activeClassName="active" to="/teachrecord">
-        <ListItem button>
-          <ListItemIcon>
-            <EventIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="教學進度" />
-        </ListItem>
-        </NavLink>
-        
-        <NavLink activeClassName="active" to="/analysis">
-        <ListItem button>
-          <ListItemIcon>
-            <EventIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="考試分析" />
-        </ListItem>
-        </NavLink>
+        </ListItem></NavLink>
 
         <br></br>
 
-          <Divider />
+          <Divider style={{marginTop:200}}/>
           {/* <List>
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
               <ListItem button key={text}>
@@ -365,17 +347,17 @@ class MiniDrawer extends React.Component {
               fontSize:25}}>更改帳號</a>
               </DialogTitle>
 
-          <DialogContent>
+          {/* <DialogContent>
             <DialogContentText>
             <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>密碼</a>
             </DialogContentText>
             <TextField style={{marginTop: 10, width: 300}} autoFocus margin="dense" id="passwd" label="請輸入密碼"
               type="password" fullWidth variant="outlined"/>
-          </DialogContent>
+          </DialogContent> */}
 
           <DialogContent>
             <DialogContentText>
-            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>新帳號</a>
+            <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>以後可以用此信箱登入</a>
             </DialogContentText>
             <TextField style={{width: 300}} utoFocus margin="dense" id="email" label="請輸入新帳號"
               type="email" fullWidth variant="outlined"/>
@@ -384,7 +366,7 @@ class MiniDrawer extends React.Component {
           <DialogActions>
             <Button onClick={this.mailhandleClose} color="primary">
               取消 </Button>
-            <Button onClick={this.mailhandleClose} color="primary">
+            <Button onClick={this.mailhandleSubmit} color="primary">
               確認 </Button>
           </DialogActions>
         </Dialog>
@@ -416,12 +398,11 @@ class MiniDrawer extends React.Component {
             <DialogContentText>
             <a style={{fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold"}}>更改密碼</a>
             </DialogContentText>
-            <TextField style={{width: 300}} utoFocus margin="dense" id="passwd" label="請輸入新密碼"
+            <TextField style={{width: 300}} margin="dense" id="passwd" label="請輸入新密碼"
               type="passwdnew" fullWidth variant="outlined"/>
           </DialogContent>
-
           <DialogContent>
-            <TextField style={{width: 300}} utoFocus margin="dense" id="passwd3" label="再次輸入新密碼"
+            <TextField style={{width: 300}} margin="dense" id="passwd3" label="再次輸入新密碼"
               type="password" fullWidth variant="outlined"/>
           </DialogContent>
           
@@ -441,15 +422,17 @@ class MiniDrawer extends React.Component {
           <ListItemText><a style={{fontSize:16,fontWeight: "bold",fontFamily: "Microsoft JhengHei",
             letterSpacing:4,color:'#6C6C6C'}}>登出</a></ListItemText>
         </ListItem>
+        
         </Drawer>
 
         {/* 插入components */}
         <div>
           <Route exact path="/teach" component={myclassComponent}/>
-          <Route path="/classdetail" component={ClassDetail}/>
-          <Route path="/classScore" component={ClassScore}/>
-          <Route path="/analysis" component={TestAnalysis}/>
-          <Route path="/teachrecord" component={TeachRecord}/>
+          <Route path="/teach/classdetail" component={ClassDetail}/>
+          <Route path="/teach/classScore" component={ClassScore}/>
+          <Route path="/teach/analysis" component={TestAnalysis}/>
+          <Route path="/teach/teachrecord" component={TeachRecord}/>
+          <Route path="/teach/latestnews" component={LatestNews}/>
         </div>
         </MuiThemeProvider>
       </div>

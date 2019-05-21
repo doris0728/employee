@@ -186,10 +186,11 @@ class OutlinedTextFields extends React.Component {
                     console.log("enter");
                     this.setState({enter: true});
                     if(this.state.userData[index].account_role == 'teacher'){
-                        this.props.history.replace('/teach')
+                        this.props.history.replace('/teach',this.state.account)
+
                     }
                     else{
-                        this.props.history.replace('/bar')
+                      this.props.history.replace('/bar',this.state.account)
                     }
                     
             } else {

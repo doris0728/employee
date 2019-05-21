@@ -144,15 +144,15 @@ class ImgMediaCard extends React.Component {
     stu_email: '',
 
   };
-  componentDidMount() {
+  componentDidMount(){
+    const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
     table.select({
-      filterByFormula: 'AND(student_id = 405401152)',
+      filterByFormula: filterSentence,
       view: "Grid view",
-      maxRecords: 1
+      //maxRecords: 1
       }).eachPage((records, fetchNextPage) => {
         this.setState({records});
 
-        //const class_id = this.state.records.map((record, index) => record.fields['class_id']);
         const student_name = this.state.records.map((record, index) => record.fields['student_name']);
         const student_id = this.state.records.map((record, index) => record.fields['student_id']);
         const student_school = this.state.records.map((record, index) => record.fields['student_school']);
@@ -160,27 +160,14 @@ class ImgMediaCard extends React.Component {
         const student_phone = this.state.records.map((record, index) => record.fields['student_phone']);
         const student_email = this.state.records.map((record, index) => record.fields['student_email']);
         const student_img = this.state.records.map((record, index) => record.fields['student_img'][0].url); 
-        // var count = class_id.length;
-        // var temp=[];
-        // var temp2=[];
-        // for(var index = 0; index < count; index++) {
-        //   temp.push(class_id[index]);
-        // }
 
-        // var classResult = temp.filter(function(element, index, arr){
-        //   return arr.indexOf(element) === index;
-        // });
-        // console.log(classResult);
-        // for(var index = 0; index < classResult.length; index++){
-        //   temp2.push(classResult[index]);
-        // }
 
         this.setState({ stu_id : student_id, stu_name : student_name, stu_img : student_img 
         ,stu_school : student_school , stu_grade : student_grade, stu_email : student_email, stu_phone : student_phone});
-        //this.setState({ stu_id : student_id });
+          
         fetchNextPage(); 
       }
-      );
+    );
   }
 
   render(props){
@@ -210,7 +197,7 @@ class ImgMediaCard extends React.Component {
         <div className={classes.div1}>
           <Typography align="left" className={classes.schoolcss}>學生信箱</Typography>
           <div>
-            <Emaildiag/>
+            <Emaildiag UserId={this.props.UserId}/>
           </div>
         </div>
   

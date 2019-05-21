@@ -28,7 +28,11 @@ import RightIcon from '@material-ui/icons/DoneRounded';
 import FailIcon from '@material-ui/icons/CloseRounded';
 import Airtable from 'airtable';
 
+const TABLE_NAME = 'Attend';
+const STU_TABLE_NAME = 'Student';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
+const table = base(TABLE_NAME);
+const studentTable = base(STU_TABLE_NAME);
 
 //for select
 let temp = [];
@@ -193,7 +197,7 @@ const styles = theme => ({
     minWidth: 200,
     maxHeight:50,
     marginTop:20,
-    marginLeft:35,
+    marginLeft:65,
   },
   selectEmpty: {
    // marginTop: theme.spacing.unit * 2,
@@ -229,8 +233,7 @@ class EnhancedTable extends React.Component {
         // createData( '10月7日','數學B班', 16.0, <FailIcon style={{color:'red'}}/>),
         // createData('10月7日','數學B班', 6.0, <FailIcon style={{color:'red'}}/>),
         // createData('10月7日','數學B班', 16.0, <RightIcon style={{color:'green'}}/>),
-        // createData('10月7日','數學B班',3.2, <RightIcon style={{color:'green'}}/>),
-      
+        // createData('10月7日','數學B班',3.2, <RightIcon style={{color:'green'}}/>),     
     ],
     dataInit: [],
     //下面是select跟title的
@@ -255,45 +258,54 @@ class EnhancedTable extends React.Component {
   componentDidMount() {
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-    });
-
-    
-    base('Attend').select({view: 'Grid view'})
-    .eachPage(
-      (records, fetchNextPage) => {
+    });    
+    const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+    //for select
+    table.select({
+        filterByFormula: filterSentence,
+        view: "Grid view"
+        }).eachPage((records, fetchNextPage) => {
+          this.setState({records});
+          const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
+          const attend_time = this.state.records.map((record, index) => record.fields['attend_time']);
+          const attend_hw = this.state.records.map((record, index) => record.fields['attend_hw']);
+          const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+          console.log(attend_date);
+  
+          var count = attend_date.length;
+          var temp=[];
+          var temp2=[];
+          var temp3=[];
+          for(var index = 0; index < count; index++) {
+            temp3.push(attend_date[index].split("-")[1]);
+            temp2.push(createData(attend_date[index],class_id[index],attend_time[index],attend_hw[index]));
+            
+          }
+          var dateResult = temp3.filter(function(element, index, arr){
+            return arr.indexOf(element) === index;
+          });
+          for(var index = 0; index < dateResult.length; index++){
+            temp.push(caculateMounth(dateResult[index]));
+          }
+  
+          this.setState({ mounth : temp });
+          this.setState({ data : temp2 });
+          this.setState({ dataInit : temp2 });
+  
+          fetchNextPage();
+        }
+        );
+    //for studnet name
+    studentTable.select({
+      filterByFormula: filterSentence,
+      view: "Grid view"
+      }).eachPage((records, fetchNextPage) => {
         this.setState({records});
-        console.log(records);
-        const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
-        const attend_time = this.state.records.map((record, index) => record.fields['attend_time']);
-        const attend_hw = this.state.records.map((record, index) => record.fields['attend_hw']);
-        const class_id = this.state.records.map((record, index) => record.fields['class_id']);
-        console.log(attend_date);
-
-        var count = attend_date.length;
-        var temp=[];
-        var temp2=[];
-        var temp3=[];
-        for(var index = 0; index < count; index++) {
-          //temp.push(caculateMounth(attend_date[index]));
-          temp3.push(attend_date[index].split("-")[1]);
-          temp2.push(createData(attend_date[index],class_id[index],attend_time[index],attend_hw[index]));
-          
-        }
-        var dateResult = temp3.filter(function(element, index, arr){
-          return arr.indexOf(element) === index;
-        });
-        for(var index = 0; index < dateResult.length; index++){
-          temp.push(caculateMounth(dateResult[index]));
-        }
-
-        this.setState({ mounth : temp });
-        this.setState({ data : temp2 });
-        this.setState({ dataInit : temp2 });
-
-        fetchNextPage();
+        const student_name = this.state.records.map((record, index) => record.fields['student_name']);
+        this.setState({ name : student_name[0] });
+        fetchNextPage(); 
       }
-    );
-
+      );
   }
 
   handleChange = name => event => {
@@ -364,7 +376,7 @@ class EnhancedTable extends React.Component {
           {(this.state.mounth)
                 .map((n,index) => {
                   return (
-                    <option value={n.rawDate} style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>{n.Date}</option>
+                    <option value={n.rawDate} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>{n.Date}</option>
                   );
                 })}
           {/* <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
