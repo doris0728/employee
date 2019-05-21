@@ -181,7 +181,7 @@ class EnhancedTable extends React.Component {
     selected: [],
     //下面是select跟title的
     age: '',
-    classname: '數學A班',
+    classname: '國文C班',
     classData: [],
     dataInit: [],
     rows: [],
@@ -205,7 +205,7 @@ class EnhancedTable extends React.Component {
     });
 
     table.select({
-      filterByFormula: 'AND(class_id = "數學A班")',
+      filterByFormula: 'AND(class_id = "國文C班")',
       view: "Grid view"
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });

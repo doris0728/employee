@@ -38,9 +38,9 @@ function createData(class_id, class_time) {
 
 //class score
 let id = 0;
-function ScoreData(date, range, averagescore) {
+function ScoreData(date, range, average) {
     id += 1;
-    return { id, date, range, averagescore };
+    return { id, date, range, average };
 }
 
 //class record
@@ -238,24 +238,67 @@ class classCard extends React.Component {
             var temp = [];
             var temp2 = [];
             var temp3 = [];
+            var split_testName = [];
+            var split_date = [];
+            var temp4 = [];
             // for (var index = 0; index < count; index++) {
             //   temp.push(test_date[index].split("-")[1]);
             // }
 
-            var classResult = temp.filter(function (element, index, arr) {
+            //分考卷名稱
+            for (var index = 0; index < count; index++) {
+                split_testName.push(test_name[index]);
+            }
+            var testName = split_testName.filter(function (element, index, arr) {
                 return arr.indexOf(element) === index;
             });
-            console.log(classResult);
-            for (var index = 0; index < classResult.length; index++) {
-                temp2.push(classResult[index]);
+            //分日期
+            for (var index = 0; index < count; index++) {
+                split_date.push(test_date[index]);
             }
+            var testDate = split_date.filter(function (element, index, arr) {
+                return arr.indexOf(element) === index;
+            });
+            //
+            for (var index = 0 ; index < testName.length; index++){
+                console.log(testName[index]);
+                var total = 0;
+                var average;
+                var num = 0;
+                for (var x = 0 ; x < class_id.length ; x++){
+                  if (testName[index] == test_name[x]){
+                    if(test_score[x]<=100){
+                    console.log(test_name[x]);
+                    console.log(test_score[x]);
+                    console.log(x,"x");
+                    total += test_score[x];
+                    num++;
+                  }
+                  }
+                }
+                  console.log(total+"total");
+                  console.log(num);
+                  average = total / num;
+                  //console.log(average);
+                //console.log(total);
+                temp4.push( ScoreData(testDate[index],testName[index],average));
+                console.log(testName[index],total,average);
+              }
+            //
+            // var classResult = temp.filter(function (element, index, arr) {
+            //     return arr.indexOf(element) === index;
+            // });
+            // console.log(classResult);
+            // for (var index = 0; index < classResult.length; index++) {
+            //     temp2.push(classResult[index]);
+            // }
 
-            //table
-            for (var index = 0; index < 4; index++) {
-                temp3.push(ScoreData(test_date[index], test_name[index], test_score[index]));
-            }
-            this.setState({ score_rows: temp3 });
-            this.setState({ score_dataInit: temp3 })
+            // //table
+            // for (var index = 0; index < 4; index++) {
+            //     temp3.push(ScoreData(test_date[index], test_name[index], test_score[index]));
+            // }
+            this.setState({ score_rows: temp4 });
+            this.setState({ score_dataInit: temp4 })
 
             this.setState({ score_classData: temp2 });
             fetchNextPage();
@@ -300,7 +343,7 @@ class classCard extends React.Component {
                                 <div className={classes.divclass}>
                                     <CardContent><Typography className={classes.text}>
                                         {this.state.class_id}
-                                        
+
                                     </Typography></CardContent>
                                 </div>
                                 <div>
@@ -375,7 +418,7 @@ class classCard extends React.Component {
                                             <TableCell align="center" style={{
                                                 color: '#5A3DAA', fontFamily: "Microsoft JhengHei",
                                                 fontSize: 15, fontWeight: "bold"
-                                            }}>{row.averagescore}</TableCell>
+                                            }}>{row.average}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -383,34 +426,34 @@ class classCard extends React.Component {
                         </Paper>
                     </Paper>
 
-                    <div style={{marginLeft:30}}> {/*record*/}
-                    <Paper className={classes.record_paper}>
-                        <div className={classes.record_title}>
-                            <Typography style={{
-                                color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontSize: 18,
-                                fontWeight: 'bold', marginLeft: 32, marginTop: 15
-                            }}>上週教學進度</Typography>
-                            <NavLink style={{ textDecoration: 'none', color: '#818181' }} activeClassName='active' to='/teach/teachrecord'>
-                                <IconButton style={{ marginLeft: 55 }}><Button /></IconButton>
-                            </NavLink>
-                        </div>
-                        <Paper className={classes.record_root}>
-                            <div>
-                                <Typography className={classes.recordText} style={{ fontSize: 21, marginTop: 15, marginTop: 55, marginBottom: 55 }}>
-                                    {/* 數學講義(一) */}
-                                    {this.state.schedule1}</Typography>
+                    <div style={{ marginLeft: 30 }}> {/*record*/}
+                        <Paper className={classes.record_paper}>
+                            <div className={classes.record_title}>
+                                <Typography style={{
+                                    color: '#969696', fontFamily: "Microsoft JhengHei", letterSpacing: 4, fontSize: 18,
+                                    fontWeight: 'bold', marginLeft: 32, marginTop: 15
+                                }}>上週教學進度</Typography>
+                                <NavLink style={{ textDecoration: 'none', color: '#818181' }} activeClassName='active' to='/teach/teachrecord'>
+                                    <IconButton style={{ marginLeft: 55 }}><Button /></IconButton>
+                                </NavLink>
                             </div>
-                            <Divider variant="middle" />
-                            <Typography className={classes.recordText} style={{ fontSize: 18, marginTop: 40, marginTop: 25 }}>
-                                {/* p.50~80 */}
-                                {this.state.schedule2}
-                            </Typography>
+                            <Paper className={classes.record_root}>
+                                <div>
+                                    <Typography className={classes.recordText} style={{ fontSize: 21, marginTop: 15, marginTop: 55, marginBottom: 55 }}>
+                                        {/* 數學講義(一) */}
+                                        {this.state.schedule1}</Typography>
+                                </div>
+                                <Divider variant="middle" />
+                                <Typography className={classes.recordText} style={{ fontSize: 18, marginTop: 40, marginTop: 25 }}>
+                                    {/* p.50~80 */}
+                                    {this.state.schedule2}
+                                </Typography>
+                            </Paper>
                         </Paper>
-                    </Paper>
-                </div>
+                    </div>
                 </div> {/*score and record end*/}
 
-                
+
             </div>
             //   最外面的div
         );
