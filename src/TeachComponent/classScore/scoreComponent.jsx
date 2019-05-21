@@ -35,6 +35,7 @@ const table = base(TABLE_NAME);
 let id = 0;
 function createData(date, range, average, button) {
   id += 1;
+  console.log(id+'id');
   button=<NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
   <Button variant="contained"
   style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
@@ -44,16 +45,16 @@ function createData(date, range, average, button) {
   return { id, date, range, average, button };
 }
 
-const rows = [
-  // createData('10月7日', '英文講義CH1', 87, 
-  // <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
-  // <Button variant="contained"
-  // style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
-  // backgroundColor:'#FFBF5F',color:'white'}}>
-  // 答題分析 ></Button>
-  // </NavLink>
-  // ),
-];
+// const rows = [
+//   // createData('10月7日', '英文講義CH1', 87, 
+//   // <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
+//   // <Button variant="contained"
+//   // style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
+//   // backgroundColor:'#FFBF5F',color:'white'}}>
+//   // 答題分析 ></Button>
+//   // </NavLink>
+//   // ),
+// ];
 
 let temp = [];
 function caculateMonth(rawDate) {
@@ -62,52 +63,55 @@ function caculateMonth(rawDate) {
   return { rawDate, Date };
 }
 
-class EnhancedTableHead extends React.Component {
-  createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
-  };
+// class EnhancedTableHead extends React.Component {
+//   createSortHandler = property => event => {
+//     this.props.onRequestSort(event, property);
+//   };
 
-  render() {
-    const { order, orderBy } = this.props;
+//   render() {
+//     const { order, orderBy } = this.props;
+//     // this.state={
+//     //   rows:[],
+//     // }
 
 
-    return (
-      <TableHead>
-        <TableRow>
-          {rows.map(
-            row => (
-              <TableCell
-                key={row.id}
-                align={row.numeric ? 'center' : 'center'}
-                padding={row.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === row.id ? order : false}
-                style={{
-                  fontWeight: "bold", color: '#969696', fontFamily: "Microsoft JhengHei",
-                  letterSpacing: 4, fontSize: 15
-                }}
-              >
-                <Tooltip
-                  title="Sort"
-                  placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
-                >
-                  <TableSortLabel
-                    active={orderBy === row.id}
-                    direction={order}
-                    onClick={this.createSortHandler(row.id)}
-                  >
-                    {row.label}
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-            ),
-            this,
-          )}
-        </TableRow>
-      </TableHead>
-    );
-  }
-}
+//     return (
+//       <TableHead>
+//         <TableRow>
+//           {rows.map(
+//             row => (
+//               <TableCell
+//                 key={row.id}
+//                 align={row.numeric ? 'center' : 'center'}
+//                 padding={row.disablePadding ? 'none' : 'default'}
+//                 sortDirection={orderBy === row.id ? order : false}
+//                 style={{
+//                   fontWeight: "bold", color: '#969696', fontFamily: "Microsoft JhengHei",
+//                   letterSpacing: 4, fontSize: 15
+//                 }}
+//               >
+//                 <Tooltip
+//                   title="Sort"
+//                   placement={row.numeric ? 'bottom-end' : 'bottom-start'}
+//                   enterDelay={300}
+//                 >
+//                   <TableSortLabel
+//                     active={orderBy === row.id}
+//                     direction={order}
+//                     onClick={this.createSortHandler(row.id)}
+//                   >
+//                     {row.label}
+//                   </TableSortLabel>
+//                 </Tooltip>
+//               </TableCell>
+//             ),
+//             this,
+//           )}
+//         </TableRow>
+//       </TableHead>
+//     );
+//   }
+// }
 
 
 const styles = theme => ({
@@ -206,7 +210,7 @@ class EnhancedTable extends React.Component {
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });
       console.log(records);
-      const student_id = this.state.records.map((record, index) => record.fields['student_id'])
+      //const student_id = this.state.records.map((record, index) => record.fields['student_id'])
       const class_id = this.state.records.map((record, index) => record.fields['class_id']);
       const test_date = this.state.records.map((record, index) => record.fields['test_date']);
       const test_name = this.state.records.map((record, index) => record.fields['test_name']);
@@ -214,8 +218,9 @@ class EnhancedTable extends React.Component {
       var count = class_id.length;
       var temp = [];
       var temp2 = [];
-      //var temp3 = [];
+      var temp3 = [];
       var temp4 = [];
+      var temp5 = [];
 
       //分月份
       for (var index = 0; index < count; index++) {
@@ -231,9 +236,16 @@ class EnhancedTable extends React.Component {
 
       //分考卷名稱
       for (var index = 0 ; index < count; index++){
-        temp4.push(test_name[index]);
+        temp3.push(test_name[index]);
       }
-      var testName = temp4.filter(function (element, index, arr){
+      var testName = temp3.filter(function (element, index, arr){
+        return arr.indexOf(element) === index;
+      });
+      //分日期
+      for (var index = 0 ; index < count; index++){
+        temp5.push(test_date[index]);
+      }
+      var testDate = temp5.filter(function (element, index, arr){
         return arr.indexOf(element) === index;
       });
       console.log(testName);
@@ -258,7 +270,7 @@ class EnhancedTable extends React.Component {
           average = total / num;
           //console.log(average);
         //console.log(total);
-        temp4.push(createData(test_date[index],testName[index],average));
+        temp4.push(createData(testDate[index],testName[index],average));
         console.log(testName[index],total,average);
       }
 

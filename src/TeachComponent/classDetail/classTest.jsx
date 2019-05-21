@@ -79,7 +79,7 @@ class SimpleTable extends React.Component {
   componentDidMount() {
 
     table.select({
-      filterByFormula: 'AND(class_id = "數學A班")',
+      filterByFormula: 'AND(class_id = "國文C班")',
       view: "Grid view"
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });
@@ -105,7 +105,7 @@ class SimpleTable extends React.Component {
       }
 
       //table
-      for (var index = 0; index < test_date.length; index++) {
+      for (var index = 0; index < 4; index++) {
         temp3.push(createData(test_date[index], test_name[index], test_score[index]));
       }
       this.setState({ rows: temp3 });

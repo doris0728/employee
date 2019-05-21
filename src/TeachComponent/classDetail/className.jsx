@@ -93,6 +93,7 @@ class classCard extends React.Component {
   componentDidMount() {
 
     table.select({
+      filterByFormula: 'AND(class_id = "國文C班")',
       view: "Grid view",
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });
@@ -133,7 +134,9 @@ class classCard extends React.Component {
           <div>
             <div className={classes.div1}>
               <div className={classes.divclass}>
-                <CardContent><Typography className={classes.text}>{this.state.class_id}</Typography></CardContent>
+                <CardContent><Typography className={classes.text}>
+                {this.state.class_id}
+                </Typography></CardContent>
               </div>
               <div>
                 <CardContent><div>
