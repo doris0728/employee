@@ -25,6 +25,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import ReactDOM from 'react-dom';
 import Airtable from 'airtable';
+import Button from '@material-ui/core/Button';
 
 const TABLE_NAME = 'TestScore';
 const STU_TABLE_NAME = 'Student';
@@ -197,6 +198,22 @@ const styles = theme => ({
   }
 });
 
+const style2 = {
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  borderRadius: 3,
+  border: '2px solid #FFFFFF',
+  color: 'white',
+  height: 48,
+  padding: '0 30px',
+  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+};
+
+const style3 = {
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  border: '2px solid #FFFFFF',
+};
+
+
 //const { classes } = this.props; //這是setlect的
 class EnhancedTable extends React.Component {
     state = {
@@ -323,7 +340,7 @@ class EnhancedTable extends React.Component {
       const { data, order, orderBy } = this.state;
   
       return (
-      <div style={{marginTop:100}}>
+      <div style={{ marginTop:100 }}>
   
       {/* 下面是select跟title */}
       <div className={classes.SelectRoot}>
@@ -333,6 +350,8 @@ class EnhancedTable extends React.Component {
               <a style={{color:'#FFBF5F',marginLeft:35}}>{this.state.name}</a><a>的成績</a>
               <a class={classes.textRight}>107學年</a>
             </Typography>
+
+            <Button style={style2}>inline</Button>
        
         
         <Divider variant="middle"/>
@@ -343,7 +362,7 @@ class EnhancedTable extends React.Component {
               this.InputLabelRef = ref;
             }}
             htmlFor="outlined-age-native-simple"
-            style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}
+            
           >
             選擇班級/科目
           </InputLabel>
@@ -356,6 +375,7 @@ class EnhancedTable extends React.Component {
                 name="Age"
                 labelWidth={this.state.labelWidth}
                 id="outlined-age-native-simple"
+                style={{borderColor: 'white'}}
               />
             }
           >
@@ -373,7 +393,9 @@ class EnhancedTable extends React.Component {
             <option value="2" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>數學B班</option>
             <option value="3" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>理化A班</option> */}
           </Select>
+          
         </FormControl>
+        <Select></Select>
         </div>
       </div>
       {/* select跟title結束 */}

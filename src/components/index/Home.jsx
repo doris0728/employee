@@ -143,8 +143,7 @@ class ImgMediaCard extends React.Component {
             <AlertCard UserId={this.props.UserId}/>
           </div>   
         </div>
-             
-      </div>
+ </div>
     );
 
   }
