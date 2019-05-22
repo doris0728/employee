@@ -125,6 +125,7 @@ class NativeSelects extends React.Component {
     });
 
     table.select({
+      filterByFormula: 'AND(subject_name = "國文")',
       view: "Grid view",
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });
@@ -178,7 +179,10 @@ class NativeSelects extends React.Component {
     const { classes } = this.props;
 
     const ClassCard = ({ class_id, class_day }) => (
-      <NavLink style={{ textDecoration: 'none', color: '#818181' }} activeClassName='active' to='/teach/classdetail'>
+      <NavLink style={{ textDecoration: 'none', color: '#818181' }} activeClassName='active' 
+      // to='/teach/classdetail'
+      to={{pathname:'/teach/classdetail', myClassProps:{name : class_id, class_day}}}> 
+      {/* className還沒接收到 */}
         <Card className={classes.card}>
           <div>
             <CardActionArea>
