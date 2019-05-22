@@ -21,7 +21,7 @@ const STU_TABLE_NAME = 'Student';
 const TABLE_NAME = 'ReserveStudent';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
-const studentTable = base(TABLE_NAME);
+const studentTable = base(STU_TABLE_NAME);
 
 function createData(name, region, date, time, reserve_class) {
 
@@ -116,8 +116,49 @@ class NativeSelects extends React.Component {
   };
 
   //airtable
-  componentDidUpdate(prevProps){
-    if (this.props.UserId !== prevProps.UserId) {
+  // componentDidUpdate(prevProps){
+  //   if (this.props.UserId !== prevProps.UserId) {
+  //   const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+
+  //   //for studnet name
+  //   studentTable.select({
+  //     filterByFormula: filterSentence,
+  //     view: "Grid view"
+  //     }).eachPage((records, fetchNextPage) => {
+  //       this.setState({records});
+  //       const student_name = this.state.records.map((record, index) => record.fields['student_name']);
+  //       this.setState({ name : student_name[0] });
+  //       fetchNextPage(); 
+  //     }
+  //     );
+
+  //     table.select({
+  //       filterByFormula: filterSentence,
+  //       view: "Grid view",
+  //     }).eachPage((records, fetchNextPage) => {
+  //       this.setState({ records });
+  //       var temp = [];
+  //       console.log(records);
+  //       const reserve_date = this.state.records.map((record, index) => record.fields['reserve_date']);
+  //       const reserve_address = this.state.records.map((record, index) => record.fields['reserve_address']);
+  //       const reserve_time = this.state.records.map((record, index) => record.fields['reserve_time']);
+  //       const reserve_class = this.state.records.map((record, index) => record.fields['reserve_class']);
+  //       const student_id = this.state.records.map((record, index) => record.fields['student_id']);
+  
+  //       for(var index = 0; index < reserve_address.length; index++) {
+  //         temp.push(createData(student_id[index],reserve_address[index],reserve_date[index],reserve_time[index],reserve_class[index]));
+  //       }
+  //       // this.setState({
+  //       //   date: reserve_date, region: reserve_address, time: reserve_time, class: reserve_class
+  //       // });
+  //       this.setState({ reserveData: temp });
+  //       fetchNextPage();
+  //     }
+  //     );
+  //   }
+  // }
+
+  componentDidMount(){
     const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
 
     //for studnet name
@@ -138,6 +179,7 @@ class NativeSelects extends React.Component {
       }).eachPage((records, fetchNextPage) => {
         this.setState({ records });
         var temp = [];
+        console.log(records);
         const reserve_date = this.state.records.map((record, index) => record.fields['reserve_date']);
         const reserve_address = this.state.records.map((record, index) => record.fields['reserve_address']);
         const reserve_time = this.state.records.map((record, index) => record.fields['reserve_time']);
@@ -154,7 +196,7 @@ class NativeSelects extends React.Component {
         fetchNextPage();
       }
       );
-    }
+    
   }
 
   handleChange = name => event => {
