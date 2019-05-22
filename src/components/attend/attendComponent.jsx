@@ -266,11 +266,13 @@ class EnhancedTable extends React.Component {
         view: "Grid view"
         }).eachPage((records, fetchNextPage) => {
           this.setState({records});
+          console.log(this.state.records);
           const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
           const attend_time = this.state.records.map((record, index) => record.fields['attend_time']);
           const attend_hw = this.state.records.map((record, index) => record.fields['attend_hw']);
+          const created_time = this.state.records.map((record, index) => record.fields['created_time']);
           const class_id = this.state.records.map((record, index) => record.fields['class_id']);
-          console.log(attend_date);
+          //console.log(attend_date);
   
           var count = attend_date.length;
           var temp=[];
@@ -376,7 +378,7 @@ class EnhancedTable extends React.Component {
           {(this.state.mounth)
                 .map((n,index) => {
                   return (
-                    <option value={n.rawDate} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>{n.Date}</option>
+                    <option  key={n.rawDate} value={n.rawDate} style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold"}}>{n.Date}</option>
                   );
                 })}
           {/* <option value="1" style={{color:'#969696',fontFamily: "Microsoft JhengHei",letterSpacing:4,fontWeight: "bold",}}>一月</option>
@@ -405,7 +407,7 @@ class EnhancedTable extends React.Component {
                 
                 .map(n => {
                   return (
-                    <TableRow>
+                    <TableRow key= {n.date}>
 
                       <TableCell component="th" scope="row" padding="none" align="center"
                       style={{color:'#969696',fontFamily: "Microsoft JhengHei",
