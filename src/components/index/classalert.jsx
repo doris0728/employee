@@ -130,6 +130,31 @@ class ClickCard extends React.Component{
     }
   }
 
+  componentDidMount(){
+      const filterSentence = 'AND(student_id =' + this.props.UserId + ')';
+      table.select({
+      filterByFormula: filterSentence,
+      view: "Grid view",
+      maxRecords: 3,
+      }).eachPage((records, fetchNextPage) => {
+
+        const reserve_date = records.map((record, index) => record.fields['reserve_date']);
+        const reserve_address = records.map((record, index) => record.fields['reserve_address']);
+        const reserve_time = records.map((record, index) => record.fields['reserve_time']);
+        const reserve_class = records.map((record, index) => record.fields['reserve_class']);
+
+        var temp=[];
+        for(var index = 0; index < reserve_class.length; index++) {
+          temp.push(createData(reserve_date[index].split("-")[1] + "/" + reserve_date[index].split("-")[2], 
+          reserve_time[index], reserve_address[index], reserve_class[index].split(" ")[0]));
+        }
+      
+        this.setState({ reserveData : temp });
+        fetchNextPage(); 
+      }
+      );
+  }
+
   render(){
     const { classes } = this.props;
 
