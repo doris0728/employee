@@ -24,6 +24,7 @@ const styles = {
     width: "28vw",
     height: 780,
     overflowX:'scroll',
+    overflowY:'scroll',
     
   },
   
