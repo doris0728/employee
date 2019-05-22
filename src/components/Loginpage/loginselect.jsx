@@ -10,6 +10,8 @@ import purple from '@material-ui/core/colors/purple';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Loginbutton from './loginbutton.jsx';
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import IndexComponent from '../Bar.jsx';
 
 const styles = theme => ({
   root: {
@@ -82,6 +84,7 @@ class OutlinedTextFields extends React.Component {
     const { classes } = this.props;
 
     return (
+      <Router>
       <div className={classes.root}> 
           
         <FormControl className={classes.margin}>
@@ -148,14 +151,20 @@ class OutlinedTextFields extends React.Component {
             }
             label="記住密碼"
           />  
+          {/* <NavLink activeClassName="active" to="/index">
           <Loginbutton className={classes.loginbuttoncss}/>
+          </NavLink> */}
         </FormControl>
+{/* 
+        <div>
+        <Route path="/index" component={IndexComponent}/>
+      </div> */}
 
         
         
         
     </div>
-
+    </Router>
     );
   }
 }

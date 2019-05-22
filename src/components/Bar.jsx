@@ -27,6 +27,7 @@ import FaceIcon from '@material-ui/icons/FaceRounded';
 import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Head from './head.jsx';
 import Logowhite from './image/goodmorningwhite.png';
+import Latestnews from './latestnews/news';
 
 import ScoreComponent from './score/score-app';
 //import ScoreComponent from './score/scoreComponent';
@@ -145,6 +146,7 @@ class MiniDrawer extends React.Component {
   constuctor() {
     this.indexbutton = this.indexbutton.bind(this);
   }
+
 
   componentDidMount(){
     //for student name
@@ -341,6 +343,7 @@ class MiniDrawer extends React.Component {
 
         {/* 插入components */}
         <div>
+
           {/* <Route exact path="/bar" component={IndexComponent}/> */}
           <Route exact path="/bar" render={(props) => <IndexComponent {...props} UserId={this.state.studentID} />}/>
           {/* <Route path="/bar/attend" component={AttendComponent} /> */}
@@ -355,6 +358,7 @@ class MiniDrawer extends React.Component {
           {/* <Route path="/bar/mypage" component={MyPage}/> */}
           <Route path="/bar/mypage" render={(props) => <MyPage {...props} UserId={this.state.studentID} />}/>
           <Route path="/bar/latestnews" component={LatestNews}/>
+
         </div>
         </MuiThemeProvider>
       </div>

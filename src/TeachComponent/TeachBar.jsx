@@ -29,8 +29,9 @@ import ExitIcon from '@material-ui/icons/ExitToAppRounded';
 import Logowhite from './image/goodmorningwhite.png';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import myclassComponent from './myclass/myclassAll'
-import ClassDetail from './classDetail/classDetailComponent'
+import ClassDetail from './classDetail/classDetailAll'
 import ClassScore from './classScore/scoreComponent'
+//import ClassScore from './classScore/scoreGimy'
 import TestAnalysis from './testAnalysis/testanalysisComponent'
 import TeachRecord from './teachRecord/recordComponent'
 import ChangePasswdIcon from '@material-ui/icons/LockRounded'
@@ -317,45 +318,9 @@ class MiniDrawer extends React.Component {
             letterSpacing:4,color:'#6C6C6C'}}>最新消息</a></ListItemText>
         </ListItem></NavLink>
 
-        <NavLink activeClassName='active' to='/teach/classdetail'>
-        <ListItem button>
-          <ListItemIcon>
-            <ScoreIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="班級頁面" />
-        </ListItem>
-        </NavLink>
-
-        <NavLink activeClassName='active' to='/teach/classscore'>
-        <ListItem button>
-          <ListItemIcon>
-            <AssignIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="班級成績" />
-        </ListItem>
-        </NavLink>
-
-        <NavLink activeClassName="active" to="/teach/teachrecord">
-        <ListItem button>
-          <ListItemIcon>
-            <EventIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="教學進度" />
-        </ListItem>
-        </NavLink>
-        
-        <NavLink activeClassName="active" to="/teach/analysis">
-        <ListItem button>
-          <ListItemIcon>
-            <EventIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="考試分析" />
-        </ListItem>
-        </NavLink>
-
         <br></br>
 
-          <Divider />
+          <Divider style={{marginTop:200}}/>
           {/* <List>
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
               <ListItem button key={text}>

@@ -13,8 +13,10 @@ import { Typography } from 'antd';
 import Divider from '@material-ui/core/Divider';
 import RangePicker from "react-range-picker"
 //import DateRangePicker from 'react-daterange-picker';
-import MultipleDatePicker from 'react-multiple-datepicker'
+import MultipleDatePicker from 'react-multiple-datepicker';
+import DatePicker from './DatePicker';
 import { Input } from 'semantic-ui-react';
+import { green } from '@material-ui/core/colors';
 //import DateRangePicker from 'react-daterange-picker';
 //import moment from 'moment-range';
 import DatePicker from './DatePicker'

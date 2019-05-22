@@ -28,84 +28,94 @@ import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import Airtable from 'airtable';
 
-const TABLE_NAME = 'Schedule';
+const TABLE_NAME = 'TestScore';
 const base = new Airtable({ apiKey: 'keyA7EKdngjou4Dgy' }).base('appcXtOTPnE4QWIIt');
 const table = base(TABLE_NAME);
 
 let id = 0;
-function createData(date, expectrecord, record) {
+function createData(date, range, averagescore, button) {
   id += 1;
-  return { id, date, expectrecord, record };
+  button=<NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
+  <Button variant="contained"
+  style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
+  backgroundColor:'#FFBF5F',color:'white'}}>
+  答題分析 ></Button>
+  </NavLink>
+  return { id, date, range, averagescore, button };
 }
-//const rows = [
-//   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
-//   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
-//   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
-//   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
-//   // createData('10月7日', '英文講義CH1', '英文講義CH1' ),
-//]; 
 
- let temp = [];
- function caculateMonth(rawDate) {
-   var Date = rawDate + "月";
-   
-   return {rawDate,Date};
- }
+const rows = [
+  // createData('10月7日', '英文講義CH1', 87, 
+  // <NavLink style={{textDecoration:'none'}} activeClassName='active' to='/teach/analysis'>
+  // <Button variant="contained"
+  // style={{fontFamily: "Microsoft JhengHei",etterSpacing:4,fontSize:13,fontWeight: "bold",height:30,
+  // backgroundColor:'#FFBF5F',color:'white'}}>
+  // 答題分析 ></Button>
+  // </NavLink>
+  // ),
+];
 
-// class EnhancedTableHead extends React.Component {
-//   createSortHandler = property => event => {
-//     this.props.onRequestSort(event, property);
-//   };
+let temp = [];
+function caculateMonth(rawDate) {
+  var Date = rawDate + "月";
 
-//   render() {
-//     const { order, orderBy } = this.props;
+  return { rawDate, Date };
+}
+
+class EnhancedTableHead extends React.Component {
+  createSortHandler = property => event => {
+    this.props.onRequestSort(event, property);
+  };
+
+  render() {
+    const { order, orderBy } = this.props;
 
 
-//     return (
-//       <TableHead>
-//         <TableRow>
-//           {rows.map(
-//             row => (
-//               <TableCell
-//                 key={row.id}
-//                 align={row.numeric ? 'center' : 'center'}
-//                 padding={row.disablePadding ? 'none' : 'default'}
-//                 sortDirection={orderBy === row.id ? order : false}
-//                 style={{
-//                   fontWeight: "bold", color: '#969696', fontFamily: "Microsoft JhengHei",
-//                   letterSpacing: 4, fontSize: 15
-//                 }}
-//               >
-//                 <Tooltip
-//                   title="Sort"
-//                   placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-//                   enterDelay={300}
-//                 >
-//                   <TableSortLabel
-//                     active={orderBy === row.id}
-//                     direction={order}
-//                     onClick={this.createSortHandler(row.id)}
-//                   >
-//                     {row.label}
-//                   </TableSortLabel>
-//                 </Tooltip>
-//               </TableCell>
-//             ),
-//             this,
-//           )}
-//         </TableRow>
-//       </TableHead>
-//     );
-//   }
-// }
+    return (
+      <TableHead>
+        <TableRow>
+          {rows.map(
+            row => (
+              <TableCell
+                key={row.id}
+                align={row.numeric ? 'center' : 'center'}
+                padding={row.disablePadding ? 'none' : 'default'}
+                sortDirection={orderBy === row.id ? order : false}
+                style={{
+                  fontWeight: "bold", color: '#969696', fontFamily: "Microsoft JhengHei",
+                  letterSpacing: 4, fontSize: 15
+                }}
+              >
+                <Tooltip
+                  title="Sort"
+                  placement={row.numeric ? 'bottom-end' : 'bottom-start'}
+                  enterDelay={300}
+                >
+                  <TableSortLabel
+                    active={orderBy === row.id}
+                    direction={order}
+                    onClick={this.createSortHandler(row.id)}
+                  >
+                    {row.label}
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+            ),
+            this,
+          )}
+        </TableRow>
+      </TableHead>
+    );
+  }
+}
 
 
 const styles = theme => ({
   root: {
-    width: 780,
+    width: 820,
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
-    marginLeft: 120,
+    marginLeft: 100,
     marginRight: 70,
     marginBottom: 20,
   },
@@ -123,8 +133,7 @@ const styles = theme => ({
     //marginLeft:34,
     //marginTop:20,
     //height:'50px',
-    width: 1020,
-    marginLeft: 10
+    width: 1020
   },
   SelectTable: {
     //marginTop:'3vh',
@@ -136,7 +145,7 @@ const styles = theme => ({
     minWidth: 200,
     maxHeight: 50,
     marginTop: 20,
-    marginLeft: 110,
+    marginLeft: 100,
   },
   selectEmpty: {
     // marginTop: theme.spacing.unit * 2,
@@ -153,7 +162,7 @@ const styles = theme => ({
   },
   textRight: {
     fontSize: 13,
-    paddingLeft: '65%',
+    paddingLeft: '71%',
     color: '#FFBF5F',
   }
 });
@@ -171,8 +180,7 @@ class EnhancedTable extends React.Component {
     classname: '國文C班',
     classData: [],
     dataInit: [],
-    rows:[],
-    month:[],
+    rows: [],
   };
 
   //   handleRequestSort = (event, property) => {
@@ -192,26 +200,6 @@ class EnhancedTable extends React.Component {
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     });
 
-    //for table
-    // fetch('https://api.airtable.com/v0/appcXtOTPnE4QWIIt/Schedule?api_key=keyA7EKdngjou4Dgy')
-    // .then((resp) => resp.json())
-    // .then(data => {
-    //    this.setState({ Schedule: data.records });
-
-    // const schedule_date = this.state.Schedule.map(item => Object.values(item)[1].schedule_date);
-    // const schedule_expect = this.state.Schedule.map(item => Object.values(item)[1].schedule_expect);
-    // const schedule_real = this.state.Schedule.map(item => Object.values(item)[1].schedule_real);
-    // var count = schedule_date.length;
-    // var temp=[];
-    // for(var index = 0; index < count; index++) {
-    //   temp.push(createData(schedule_date[index],schedule_expect[index],schedule_real[index]));
-    // }
-    // this.setState({ data : temp });
-    // this.setState({ dataInit : temp })
-    // }).catch(err => {
-    //   // Error 🙁
-    // });
-
     table.select({
       filterByFormula: 'AND(class_id = "國文C班")',
       view: "Grid view"
@@ -219,16 +207,17 @@ class EnhancedTable extends React.Component {
       this.setState({ records });
       console.log(records);
       const class_id = this.state.records.map((record, index) => record.fields['class_id']);
-      const schedule_date = this.state.records.map((record, index) => record.fields['schedule_date']);
-      const schedule_expect = this.state.records.map((record, index) => record.fields['schedule_expect']);
-      const schedule_real = this.state.records.map((record, index) => record.fields['schedule_real']);
-
+      const test_date = this.state.records.map((record, index) => record.fields['test_date']);
+      const test_name = this.state.records.map((record, index) => record.fields['test_name']);
+      const test_score = this.state.records.map((record, index) => record.fields['test_score'])
       var count = class_id.length;
       var temp = [];
       var temp2 = [];
-      var temp3=[];
+      var temp3 = [];
+      var temp4 = [];
+      var total = [];
       for (var index = 0; index < count; index++) {
-        temp.push( schedule_date[index].split("-")[1]);
+        temp.push(test_date[index].split("-")[1]);
       }
 
       var classResult = temp.filter(function (element, index, arr) {
@@ -240,8 +229,8 @@ class EnhancedTable extends React.Component {
       }
 
       //table
-      for (var index = 0; index < schedule_date.length; index++) {
-        temp3.push(createData(schedule_date[index], schedule_expect[index], schedule_real[index]));
+      for (var index = 0; index < test_date.length; index++) {
+        temp3.push(createData(test_date[index], test_name[index], test_score[index]));
       }
       this.setState({ rows: temp3 });
       this.setState({ dataInit: temp3 })
@@ -265,7 +254,7 @@ class EnhancedTable extends React.Component {
 
     for (var index = 0; index < count; index++) {
       var month = this.state.dataInit[index].date.split("-")[1];
-      if(month == event.target.value){
+      if (month == event.target.value) {
         temp.push(this.state.dataInit[index]);
       }
     }
@@ -273,13 +262,13 @@ class EnhancedTable extends React.Component {
     if (event.target.value == "1") {
       this.setState({ rows: this.state.dataInit });
     }
-
   };
   //select end
 
   render() {
     const { classes } = this.props;
     const { data, order, orderBy } = this.state;
+
     return (
       <div style={{ marginTop: 100 }}>
         {/* 下面是select跟title */}
@@ -287,7 +276,7 @@ class EnhancedTable extends React.Component {
 
           <div className={classes.SelectTable}>
             <Typography class={classes.text} nowrap={true}>
-              <a style={{ color: '#FFBF5F', marginLeft: 35 }}>{this.state.classname}</a><a>的教學紀錄</a>
+              <a style={{ color: '#FFBF5F', marginLeft: 35 }}>{this.state.classname}</a><a>的成績</a>
               <a class={classes.textRight}>107學年</a>
             </Typography>
 
@@ -344,11 +333,15 @@ class EnhancedTable extends React.Component {
                   <TableCell align="center" style={{
                     color: '#969696', fontFamily: "Microsoft JhengHei",
                     letterSpacing: 4, fontSize: 15, fontWeight: "bold"
-                  }}>預期進度</TableCell>
+                  }}>考試範圍</TableCell>
                   <TableCell align="center" style={{
                     color: '#969696', fontFamily: "Microsoft JhengHei",
                     letterSpacing: 4, fontSize: 15, fontWeight: "bold"
-                  }}>實際進度</TableCell>
+                  }}>平均分數</TableCell>
+                  <TableCell align="center" style={{
+                    color: '#969696', fontFamily: "Microsoft JhengHei",
+                    letterSpacing: 4, fontSize: 15, fontWeight: "bold"
+                  }}></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -361,11 +354,15 @@ class EnhancedTable extends React.Component {
                     <TableCell align="center" style={{
                       color: '#969696', fontFamily: "Microsoft JhengHei",
                       letterSpacing: 2, fontSize: 15
-                    }}>{row.expectrecord}</TableCell>
+                    }}>{row.range}</TableCell>
                     <TableCell align="center" style={{
                       color: '#969696', fontFamily: "Microsoft JhengHei",
                       letterSpacing: 2, fontSize: 15
-                    }}>{row.record}</TableCell>
+                    }}>{row.averagescore}</TableCell>
+                    <TableCell align="center" style={{
+                      color: '#969696', fontFamily: "Microsoft JhengHei",
+                      letterSpacing: 2, fontSize: 15
+                    }}>{row.button}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

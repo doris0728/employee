@@ -42,7 +42,7 @@ const analysisoption = {
 // ];
 const option = {
   colors: ['#5A3DAA', '#FFBF5F', '#ECECEC'],
-  chartArea: { width: '95%' },
+  chartArea: { width: '85%' },
   isStacked: true,
   height: 120,
   width: 950,
@@ -137,7 +137,7 @@ class EnhancedTable extends React.Component {
   state = {
     //下面是select跟title的
     age: '',
-    classname: '數學A卷',
+    classname: '國文第四課',
     analysisdata0 :[],
     analysisdata1 :[],
     analysisdata2 :[],
@@ -163,7 +163,7 @@ class EnhancedTable extends React.Component {
         
         var fail = 0;
         var good = 0;
-        var absent = 0;
+        var absent = 1;
         for(var index = 0; index < test_score.length; index++) {
           if(student_id !== "admin"){
             if(test_score[index] < 60){
@@ -290,7 +290,7 @@ class EnhancedTable extends React.Component {
             <Card className={classes.card}>
               <div className={classes.divflex}>
                 <div style={{marginTop:25,marginLeft:15}}><img src={Img} width="70"/></div>
-                <Chart chartType="BarChart" data={this.state.data} options={option} />
+                <div style={{}}><Chart chartType="BarChart" data={this.state.data} options={option} /></div>
 
               </div>
             </Card>
