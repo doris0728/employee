@@ -9,15 +9,33 @@ const styles = theme => ({
         background:'#FFF6E8',
     },
 });
+function isMobile(){
+    try { document.createEvent("TouchEvent") ; return true;}
+    catch(e) { return false; }
+}
+// if (isMobile()){
+//     return(
+//     <div>hi</div>
+//     )
+// )};
+
 export default class ReactApp extends React.Component {
     
     render() {
         const { classes } = this.props;
-        return (
+        if (isMobile()){
+            return(
+                <dive>hi</dive>
+            )
+        }
+        else{
+            return (
                 <div>
                     <Login/>
                 </div>
             
             )
+        }
+        
     }
 }
