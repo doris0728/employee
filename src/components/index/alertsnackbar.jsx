@@ -92,10 +92,10 @@ const styles2 = theme => ({
   margin: {
     margin: theme.spacing.unit,
     fontFamily: 'Microsoft JhengHei',
-    fontSize: 16,
+    fontSize: 14,
   },
   divider:{
-      marginTop:80,
+      marginTop:30,
       marginBottom: 0,
   }
 });

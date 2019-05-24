@@ -26,7 +26,7 @@ function createData(date, time, area, className) {
 const styles = {
   card: {
     //maxWidth: 345,
-    height: 75,
+    height: 70,
     marginBottom:10,
   },
 

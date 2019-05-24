@@ -12,6 +12,7 @@ const styles = theme => ({
 function isMobile(){
     try { document.createEvent("TouchEvent") ; return true;}
     catch(e) { return false; }
+    console.log("isMobile");
 }
 // if (isMobile()){
 //     return(
