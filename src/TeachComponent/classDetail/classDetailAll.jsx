@@ -260,7 +260,7 @@ class classCard extends React.Component {
                 return arr.indexOf(element) === index;
             });
             //
-            for (var index = 0 ; index < testName.length; index++){
+            for (var index = 0 ; index < 4; index++){
                 console.log(testName[index]);
                 var total = 0;
                 var average;

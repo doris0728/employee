@@ -48,21 +48,33 @@ const analysisoption = {
 // ];
 const option = {
   colors: ['#5A3DAA', '#FFBF5F', '#ECECEC'],
-  chartArea: { width: '80%' },
+  chartArea: { width: '86%',right:89 },
+  align:'left',
   isStacked: true,
   height: 120,
-  width: 950,
+  width: 840,
   hAxis: {
     baselineColor: 'none',
     ticks: []
   },
   vAxis: {
-    baselineColor: 'none',
+    //baselineColor: 'none',
     ticks: []
   },
   legend: {
-    position: 'none'
+    //marginTop:30
+    //position: 'bottom'
   },
+//   colors: ['#5A3DAA', '#FFBF5F', '#ECECEC'],
+//     chartArea: { width: '50%' },
+//     isStacked: true,
+//     hAxis: {
+//       title: 'Total Population',
+//       minValue: 0,
+//     },
+//     vAxis: {
+//       title: 'City',
+//     },
 };
 
 const styles = theme => ({
@@ -316,7 +328,7 @@ class EnhancedTable extends React.Component {
                 <div style={{ marginTop: 20, marginLeft: 15 }}>
                 <Button onClick={this.question}>
                 <img src={Img} width="60"/></Button></div>
-                <div style={{}}><Chart chartType="BarChart" data={this.state.data} options={option} /></div>
+                <div><Chart chartType="BarChart" data={this.state.data} options={option} /></div>
 
               </div>
               </Card>
@@ -333,17 +345,11 @@ class EnhancedTable extends React.Component {
                   }}>更改密碼</a>
                 </DialogTitle> */}
 
-                <DialogContent>
+                <DialogContent style={{width:200,heigthL:80}}>
                   <div style={{display:'flex',height:15}}>
-                  <div style={{width:25,height:15,backgroundColor:'#5A3DAA'}}/>
+                  <div style={{width:25,height:15,backgroundColor:'#5A3DAA',marginLeft:20}}/>
                   <a style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold",
-              fontSize:12,marginLeft:10}}>及格</a>
-                  <div style={{width:25,height:15,backgroundColor:'#FFBF5F',marginTop:10,marginLeft:15}}/>
-                  <a style={{color:'#FFBF5F',fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold",
-              fontSize:12,marginLeft:10}}>及格</a>
-                  <div style={{width:25,height:15,backgroundColor:'#ECECEC',marginTop:10,marginLeft:15}}/>
-                  <a style={{color:'#ECECEC',fontFamily: "Microsoft JhengHei",letterSpacing:2,fontWeight: "bold",
-              fontSize:12,marginLeft:10}}>及格</a></div>
+              fontSize:14,marginLeft:10}}>正確答案</a></div>
                   {/* <DialogContentText>
                     <a style={{ fontFamily: "Microsoft JhengHei", letterSpacing: 2, fontWeight: "bold" }}>舊密碼</a>
                   </DialogContentText>
@@ -365,7 +371,8 @@ class EnhancedTable extends React.Component {
 
                 <DialogActions>
                   <Button onClick={this.questionClose} color="primary">
-                    確定 </Button>
+                  <a style={{color:'#5A3DAA',fontFamily: "Microsoft JhengHei",letterSpacing:2,
+              fontSize:14,marginLeft:10}}> 確定</a> </Button>
                 </DialogActions>
               </Dialog>
 

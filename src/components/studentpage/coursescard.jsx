@@ -178,6 +178,7 @@ class ImgMediaCard extends React.Component {
                         </div>
                     </div>
                 </Card>
+                
                   );
                 })}
           {/* {this.state.stu_class_data.map(course => <ClassCard {...course} /> )} */}

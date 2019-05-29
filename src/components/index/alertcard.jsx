@@ -22,7 +22,7 @@ const styles = {
     marginTop: 100,
     //marginBottom: 100,
     width: "28vw",
-    height: 780,
+    height: 697,
     overflowX:'scroll',
     overflowY:'scroll',
     
