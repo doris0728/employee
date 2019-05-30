@@ -96,7 +96,7 @@ const styles = theme => ({
     margin: 'auto',
     width:'auto',
     height:'auto',
-    marginTop: 20,
+    marginTop: 76,
   },
   
   div1:{
