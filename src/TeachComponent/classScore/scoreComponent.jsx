@@ -209,7 +209,7 @@ class EnhancedTable extends React.Component {
       view: "Grid view"
     }).eachPage((records, fetchNextPage) => {
       this.setState({ records });
-      console.log(records);
+      //console.log(records);
       //const student_id = this.state.records.map((record, index) => record.fields['student_id'])
       const class_id = this.state.records.map((record, index) => record.fields['class_id']);
       const test_date = this.state.records.map((record, index) => record.fields['test_date']);
@@ -229,7 +229,7 @@ class EnhancedTable extends React.Component {
       var classResult = temp.filter(function (element, index, arr) {
         return arr.indexOf(element) === index;
       });
-      console.log(classResult);
+      //console.log(classResult);
       for (var index = 0; index < classResult.length; index++) {
         temp2.push(classResult[index]);
       }
@@ -248,30 +248,30 @@ class EnhancedTable extends React.Component {
       var testDate = temp5.filter(function (element, index, arr){
         return arr.indexOf(element) === index;
       });
-      console.log(testName);
+      //console.log(testName);
       for (var index = 0 ; index < testName.length; index++){
-        console.log(testName[index]);
+        //console.log(testName[index]);
         var total = 0;
         var average;
         var num = 0;
         for (var x = 0 ; x < class_id.length ; x++){
           if (testName[index] == test_name[x]){
             if(test_score[x]<=100){
-            console.log(test_name[x]);
-            console.log(test_score[x]);
-            console.log(x,"x");
+            // console.log(test_name[x]);
+            // console.log(test_score[x]);
+            // console.log(x,"x");
             total += test_score[x];
             num++;
           }
           }
         }
-          console.log(total+"total");
-          console.log(num);
+          // console.log(total+"total");
+          // console.log(num);
           average = total / num;
           //console.log(average);
         //console.log(total);
         temp4.push(createData(testDate[index],testName[index],average));
-        console.log(testName[index],total,average);
+        // console.log(testDate[index],testName[index],total,average);
       }
 
       //table
@@ -280,7 +280,6 @@ class EnhancedTable extends React.Component {
       //   // total += testscore[index]
       //   temp3.push(createData(test_date[index], test_name[index],test_score[index] ));
       // }
-      
       this.setState({ rows: temp4 }); //原本是temp3
       this.setState({ dataInit: temp4 }); //原本是temp3
       this.setState({ classData: temp2 });
