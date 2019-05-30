@@ -35,9 +35,9 @@ const studentTable = base(STU_TABLE_NAME);
 
 
 let counter = 0;
-function createData(classclass, date, score, rank) {
+function createData(classclass, date, testname,score, rank) {
   counter += 1;
-  return { id: counter, classclass, date, score, rank};
+  return { id: counter, classclass, testname,date, score, rank};
 }
 
 function desc(a, b, orderBy) {
@@ -67,6 +67,7 @@ function getSorting(order, orderBy) {
 const rows = [
   { id: 'classclass', numeric: false, disablePadding: true, label:'班級' },
   { id: 'date', numeric: true, disablePadding: false, label: '日期' },
+  { id: 'testname' , numeric: false, disablePadding: true, label:'考試範圍'},
   { id: 'score', numeric: true, disablePadding: false, label: '分數' },
   { id: 'rank', numeric: true, disablePadding: false, label: '排名' },
 ];
@@ -256,6 +257,7 @@ class EnhancedTable extends React.Component {
             this.setState({records});
             console.log(records);
             const class_id = this.state.records.map((record, index) => record.fields['class_id']);
+            const test_name = this.state.records.map((record, index) => record.fields['test_name']);
             const test_date = this.state.records.map((record, index) => record.fields['test_date']);
             const test_score = this.state.records.map((record, index) => record.fields['test_score']);
             const test_rank = this.state.records.map((record, index) => record.fields['test_rank']);
@@ -278,7 +280,7 @@ class EnhancedTable extends React.Component {
             //for table
             var tempT=[];
             for(var index = 0; index < class_id.length; index++) {
-              tempT.push(createData(class_id[index],test_date[index],test_score[index],test_rank[index]));
+              tempT.push(createData(class_id[index],test_name[index],test_date[index],test_score[index],test_rank[index]));
             }
             this.setState({ data : tempT });
             this.setState({ dataInit : tempT })
@@ -411,6 +413,10 @@ class EnhancedTable extends React.Component {
                           {n.classclass}
                         </TableCell>
   
+                        <TableCell align="center"
+                        style={{color:'#969696',fontFamily: "Microsoft JhengHei",
+                        letterSpacing:4,fontSize:15}}>{n.testname}</TableCell>
+                      
                         <TableCell align="center"
                         style={{color:'#969696',fontFamily: "Microsoft JhengHei",
                         letterSpacing:4,fontSize:15}}>{n.date}</TableCell>
