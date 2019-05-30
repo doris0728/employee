@@ -65,7 +65,7 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'classclass', numeric: false, disablePadding: true, label:'班級' },
+  { id: 'classclass', numeric: false, disablePadding: true, label:'班級'},
   { id: 'date', numeric: true, disablePadding: false, label: '日期' },
   { id: 'testname' , numeric: false, disablePadding: true, label:'考試範圍'},
   { id: 'score', numeric: true, disablePadding: false, label: '分數' },
@@ -190,7 +190,7 @@ const styles = theme => ({
     fontWeight: "bold",
     color:'#969696',
     fontFamily: "Microsoft JhengHei",
-    letterSpacing:4,
+    letterSpacing:3,
   },
   textRight:{
     fontSize:13,
@@ -407,7 +407,7 @@ class EnhancedTable extends React.Component {
                     return (
                       <TableRow>
   
-                        <TableCell component="th" scope="row" padding="none" align="center"
+                        <TableCell component="th" scope="row" padding="none" align="right"
                         style={{color:'#969696',fontFamily: "Microsoft JhengHei",
                         letterSpacing:4,fontSize:15}}>
                           {n.classclass}
@@ -419,7 +419,7 @@ class EnhancedTable extends React.Component {
                       
                         <TableCell align="center"
                         style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                        letterSpacing:4,fontSize:15}}>{n.date}</TableCell>
+                        letterSpacing:2,fontSize:15}}>{n.date}</TableCell>
   
                         <TableCell align="center"
                         style={{color:'#969696',fontFamily: "Microsoft JhengHei",

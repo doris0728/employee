@@ -254,6 +254,7 @@ class EnhancedTable extends React.Component {
         var total = 0;
         var average;
         var num = 0;
+        var newaverage;
         for (var x = 0 ; x < class_id.length ; x++){
           if (testName[index] == test_name[x]){
             if(test_score[x]<=100){
@@ -268,9 +269,10 @@ class EnhancedTable extends React.Component {
           // console.log(total+"total");
           // console.log(num);
           average = total / num;
-          //console.log(average);
+          newaverage = average.toFixed(1);
+          console.log(newaverage + "新平均");
         //console.log(total);
-        temp4.push(createData(testDate[index],testName[index],average));
+        temp4.push(createData(testDate[index],testName[index],newaverage));
         // console.log(testDate[index],testName[index],total,average);
       }
 

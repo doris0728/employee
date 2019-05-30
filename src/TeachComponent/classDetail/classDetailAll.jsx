@@ -265,6 +265,7 @@ class classCard extends React.Component {
                 var total = 0;
                 var average;
                 var num = 0;
+                var newaverage;
                 for (var x = 0 ; x < class_id.length ; x++){
                   if (testName[index] == test_name[x]){
                     if(test_score[x]<=100){
@@ -279,9 +280,10 @@ class classCard extends React.Component {
                   console.log(total+"total");
                   console.log(num);
                   average = total / num;
+                  newaverage = average.toFixed(1);
                   //console.log(average);
                 //console.log(total);
-                temp4.push( ScoreData(testDate[index],testName[index],average));
+                temp4.push( ScoreData(testDate[index],testName[index],newaverage));
                 console.log(testName[index],total,average);
               }
             //
