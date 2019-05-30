@@ -167,7 +167,7 @@ class CustomizedSnackbars extends React.Component {
             
             filterByFormula: filterSentence,
             view: "Grid view",
-            maxRecords: 3,
+            //maxRecords: 3,
             }).eachPage((records, fetchNextPage) => {  
               const class_id = records.map((record, index) => record.fields['class_id']);
               const attend_true = records.map((record, index) => record.fields['attend_true']);
