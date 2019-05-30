@@ -243,34 +243,64 @@ class EnhancedTable extends React.Component {
           }
           var people = student_id.length - 1;
           //set correct ans to purple
+          // if (student_id[index] == "admin") {
+          //   correct = tempQ[q][index];
+          //   if (correct == "A") {
+          //     temp.push(["", "", { role: "style" }],
+          //       ["A", (countA - 1) / people * 100, "#5A3DAA"],
+          //       ["B", countB / people * 100, "#FFC880"],
+          //       ["C", countC / people * 100, "#FFC880"],
+          //       ["D", countD / people * 100, "#FFC880"]);
+          //   } else if (correct == "B") {
+          //     temp.push(["", "", { role: "style" }],
+          //       ["A", countA / people * 100, "#FFC880"],
+          //       ["B", (countB - 1) / people * 100, "#5A3DAA"],
+          //       ["C", countC / people * 100, "#FFC880"],
+          //       ["D", countD / people * 100, "#FFC880"]);
+
+          //   } else if (correct == "C") {
+          //     temp.push(["", "", { role: "style" }],
+          //       ["A", countA / people * 100, "#FFC880"],
+          //       ["B", countB / people * 100, "#FFC880"],
+          //       ["C", countC / people * 100, "#5A3DAA"],
+          //       ["D", countD / people * 100, "#FFC880"]);
+
+          //   } else if (correct == "D") {
+          //     temp.push(["", "", { role: "style" }],
+          //       ["A", countA / people * 100, "#FFC880"],
+          //       ["B", countB / people * 100, "#FFC880"],
+          //       ["C", countC / people * 100, "#FFC880"],
+          //       ["D", (countD - 1) / people * 100, "#5A3DAA"]);
+          //   }
+          // }
           if (student_id[index] == "admin") {
             correct = tempQ[q][index];
             if (correct == "A") {
               temp.push(["", "", { role: "style" }],
-                ["A", (countA - 1) / people * 100, "#5A3DAA"],
-                ["B", countB / people * 100, "#FFC880"],
-                ["C", countC / people * 100, "#FFC880"],
-                ["D", countD / people * 100, "#FFC880"]);
+                ["A", (countA - 1) , "#5A3DAA"],
+                ["B", countB , "#FFC880"],
+                ["C", countC , "#FFC880"],
+                ["D", countD , "#FFC880"]);
             } else if (correct == "B") {
               temp.push(["", "", { role: "style" }],
-                ["A", countA / people * 100, "#FFC880"],
-                ["B", (countB - 1) / people * 100, "#5A3DAA"],
-                ["C", countC / people * 100, "#FFC880"],
-                ["D", countD / people * 100, "#FFC880"]);
+                ["A", countA, "#FFC880"],
+                ["B", (countB - 1) , "#5A3DAA"],
+                ["C", countC , "#FFC880"],
+                ["D", countD , "#FFC880"]);
 
             } else if (correct == "C") {
               temp.push(["", "", { role: "style" }],
-                ["A", countA / people * 100, "#FFC880"],
-                ["B", countB / people * 100, "#FFC880"],
-                ["C", countC / people * 100, "#5A3DAA"],
-                ["D", countD / people * 100, "#FFC880"]);
+                ["A", countA , "#FFC880"],
+                ["B", countB, "#FFC880"],
+                ["C", countC , "#5A3DAA"],
+                ["D", countD , "#FFC880"]);
 
             } else if (correct == "D") {
               temp.push(["", "", { role: "style" }],
-                ["A", countA / people * 100, "#FFC880"],
-                ["B", countB / people * 100, "#FFC880"],
-                ["C", countC / people * 100, "#FFC880"],
-                ["D", (countD - 1) / people * 100, "#5A3DAA"]);
+                ["A", countA , "#FFC880"],
+                ["B", countB , "#FFC880"],
+                ["C", countC , "#FFC880"],
+                ["D", (countD - 1) , "#5A3DAA"]);
             }
           }
         }

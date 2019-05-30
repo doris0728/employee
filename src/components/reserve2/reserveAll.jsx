@@ -185,12 +185,15 @@ class NativeSelects extends React.Component {
         this.setState({records});
         const class_id = this.state.records.map((record, index) => record.fields['class_id']);
         const attend_date = this.state.records.map((record, index) => record.fields['attend_date']);
+        const attend_true = this.state.records.map((record, index) => record.fields['attend_true']);
 
         var count = class_id.length;
         var temp=[];
         var temp2=[];
         for(var index = 0; index < count; index++) {
-          temp.push(createData(class_id[index] ,attend_date[index]));
+          if(attend_true[index] != true){
+            temp.push(createData(class_id[index] ,attend_date[index]));
+          }
         }
 
         var classResult = temp.filter(function(element, index, arr){
