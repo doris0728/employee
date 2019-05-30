@@ -160,6 +160,7 @@ class NativeSelects extends React.Component {
     fetchPostReserveStudent(data);
 
     this.setState({ open: true });
+    
   };
 
   componentDidMount() {
