@@ -308,9 +308,10 @@ class EnhancedTable extends React.Component {
      var temp=[];
    
      for(var index = 0; index < count; index++) {
-         temp.push(createData(reserve_date[index],reserve_address[index],reserve_time[index],reserve_people[index]));
-     
-    }
+       if(reserve_people[index] != 0){
+        temp.push(createData(reserve_date[index],reserve_address[index],reserve_time[index],reserve_people[index]));
+       }   
+     }
      this.setState({ rows : temp });
      this.setState({dataInit : temp});
      }).catch(err => {
