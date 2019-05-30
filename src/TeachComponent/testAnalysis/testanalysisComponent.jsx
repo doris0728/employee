@@ -182,7 +182,7 @@ class EnhancedTable extends React.Component {
   //
 
   componentDidMount() {
-    const filterSentence = 'AND(test_name ="數講第一冊第二章")';
+    const filterSentence = 'AND(test_name ="國文第三課")';
     table.select({
       filterByFormula: filterSentence,
       view: "Grid view",
@@ -205,7 +205,7 @@ class EnhancedTable extends React.Component {
         }
       }
       var tempF = [];
-      tempF.push(['', '及格', '不及格', '缺考'], ['', good, fail, absent]);
+      tempF.push(['', '及格', '不及格', '缺考'], ['', good -1, fail, absent]);
       this.setState({ data: tempF })
 
       const Q1 = records.map((record, index) => record.fields['Q1']);
@@ -273,6 +273,41 @@ class EnhancedTable extends React.Component {
           //       ["D", (countD - 1) / people * 100, "#5A3DAA"]);
           //   }
           // }
+          //////////////////////////
+          // if (student_id[index] == "admin") {
+          //   correct = tempQ[q][index];
+          //   if (correct == "A") {
+          //     temp.push(["", "", { role: "style" }],
+          //       ["A", (countA - 1) , "#5A3DAA"],
+          //       ["B", countB , "#FFC880"],
+          //       ["C", countC , "#FFC880"],
+          //       ["D", countD , "#FFC880"]);
+          //   } else if (correct == "B") {
+          //     temp.push(["", "", { role: "style" }],
+          //       ["A", countA, "#FFC880"],
+          //       ["B", (countB - 1) , "#5A3DAA"],
+          //       ["C", countC , "#FFC880"],
+          //       ["D", countD , "#FFC880"]);
+
+          //   } else if (correct == "C") {
+          //     temp.push(["", "", { role: "style" }],
+          //       ["A", countA , "#FFC880"],
+          //       ["B", countB, "#FFC880"],
+          //       ["C", countC -1 , "#5A3DAA"],
+          //       ["D", countD , "#FFC880"]);
+
+          //   } else if (correct == "D") {
+          //     temp.push(["", "", { role: "style" }],
+          //       ["A", countA , "#FFC880"],
+          //       ["B", countB , "#FFC880"],
+          //       ["C", countC , "#FFC880"],
+          //       ["D", (countD - 1) , "#5A3DAA"]);
+          //   }
+          // }
+        }
+
+
+        for(var index = 0; index < student_id.length; index++){
           if (student_id[index] == "admin") {
             correct = tempQ[q][index];
             if (correct == "A") {
@@ -292,7 +327,7 @@ class EnhancedTable extends React.Component {
               temp.push(["", "", { role: "style" }],
                 ["A", countA , "#FFC880"],
                 ["B", countB, "#FFC880"],
-                ["C", countC , "#5A3DAA"],
+                ["C", countC -1 , "#5A3DAA"],
                 ["D", countD , "#FFC880"]);
 
             } else if (correct == "D") {
