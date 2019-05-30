@@ -170,11 +170,11 @@ class CustomizedSnackbars extends React.Component {
             maxRecords: 3,
             }).eachPage((records, fetchNextPage) => {  
               const class_id = records.map((record, index) => record.fields['class_id']);
-              const attend_hw = records.map((record, index) => record.fields['attend_hw']);
+              const attend_true = records.map((record, index) => record.fields['attend_true']);
               const attend_date = records.map((record, index) => record.fields['attend_date']);
               var temp=[];
-              for(var index = 0; index < attend_hw.length; index++) {
-                if(attend_hw[index] != true){
+              for(var index = 0; index < attend_true.length; index++) {
+                if(attend_true[index] != true){
                   temp.push(createAttendData(class_id[index],attend_date[index]));
                 }
               }
@@ -217,11 +217,11 @@ class CustomizedSnackbars extends React.Component {
           maxRecords: 3,
           }).eachPage((records, fetchNextPage) => {  
             const class_id = records.map((record, index) => record.fields['class_id']);
-            const attend_hw = records.map((record, index) => record.fields['attend_hw']);
+            const attend_true = records.map((record, index) => record.fields['attend_true']);
             const attend_date = records.map((record, index) => record.fields['attend_date']);
             var temp=[];
-            for(var index = 0; index < attend_hw.length; index++) {
-              if(attend_hw[index] != true){
+            for(var index = 0; index < attend_true.length; index++) {
+              if(attend_true[index] != true){
                 temp.push(createAttendData(class_id[index],attend_date[index]));
               }
             }
