@@ -235,10 +235,10 @@ class EnhancedTable extends React.Component {
   
     handleRequestSort = (event, property) => {
       const orderBy = property;
-      let order = 'desc';
+      let order = 'asc';
   
-      if (this.state.orderBy === property && this.state.order === 'desc') {
-        order = 'asc';
+      if (this.state.orderBy === property && this.state.order === 'asc') {
+        order = 'dsc';
       }
   
       this.setState({ order, orderBy });
@@ -310,8 +310,7 @@ class EnhancedTable extends React.Component {
      for(var index = 0; index < count; index++) {
        if(reserve_people[index] != 0){
         temp.push(createData(reserve_date[index],reserve_address[index],reserve_time[index],reserve_people[index]));
-       }
-       
+       }   
      }
      this.setState({ rows : temp });
      this.setState({dataInit : temp});
@@ -410,7 +409,7 @@ class EnhancedTable extends React.Component {
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead
                 // numSelected={selected.length}
-                order={order}
+                order={order} order={order}
                 orderBy={orderBy}
                 onRequestSort={this.handleRequestSort}
                 //rowCount={data.length}
