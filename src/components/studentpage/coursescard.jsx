@@ -182,6 +182,29 @@ class ImgMediaCard extends React.Component {
                   );
                 })}
           {/* {this.state.stu_class_data.map(course => <ClassCard {...course} /> )} */}
+
+          <Card className={classes.cousecard}>
+             <div className={classes.div1}>
+                 <div>
+                     <Typography className={classes.classtypecss}>國文C班</Typography>
+                </div>
+                 <div>
+                     <Typography className={classes.timecss}>星期四 21:00 - 22:00</Typography>
+                     <Typography className={classes.regioncss}>台北校區 11樓</Typography>
+                 </div>
+             </div>
+          </Card>
+          <Card className={classes.cousecard}>
+             <div className={classes.div1}>
+                 <div>
+                     <Typography className={classes.classtypecss}>英文A班</Typography>
+                </div>
+                 <div>
+                     <Typography className={classes.timecss}>星期五 21:00 - 22:00</Typography>
+                     <Typography className={classes.regioncss}>台北校區 11樓</Typography>
+                 </div>
+             </div>
+          </Card>
       
       </Card>
       </div>
