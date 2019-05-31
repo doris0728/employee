@@ -169,7 +169,7 @@ class SimpleTable extends React.Component {
                 temp.push(createData(class_id[index], hw_name[index], hw_date[index]));
               }
               console.log(temp);
-              //this.setState({ rows : temp });
+              this.setState({ rows : temp });
               // fetchNextPage(); 
           
               }
@@ -178,7 +178,8 @@ class SimpleTable extends React.Component {
           })
 
           }
-          this.setState({ rows : temp });
+          // this.setState({ rows : temp });
+          // console.log(this.state.rows);
       }
       );
     }
