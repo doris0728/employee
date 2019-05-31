@@ -411,7 +411,7 @@ class EnhancedTable extends React.Component {
                     }}>{row.average}</TableCell>
                     <TableCell align="center" style={{
                       color: '#969696', fontFamily: "Microsoft JhengHei",
-                      letterSpacing: 2, fontSize: 15
+                      letterSpacing: 2, fontSize: 15,
                     }}>{row.button}</TableCell>
                   </TableRow>
                 ))}

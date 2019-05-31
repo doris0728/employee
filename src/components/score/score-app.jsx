@@ -407,9 +407,9 @@ class EnhancedTable extends React.Component {
                     return (
                       <TableRow>
   
-                        <TableCell component="th" scope="row" padding="none" align="right"
+                        <TableCell component="th" scope="row" padding="none" align="center"
                         style={{color:'#969696',fontFamily: "Microsoft JhengHei",
-                        letterSpacing:4,fontSize:15}}>
+                        letterSpacing:4,fontSize:15 , width:"18%"}}>
                           {n.classclass}
                         </TableCell>
   
