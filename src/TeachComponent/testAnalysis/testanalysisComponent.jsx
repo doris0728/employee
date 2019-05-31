@@ -156,7 +156,7 @@ class EnhancedTable extends React.Component {
   state = {
     //下面是select跟title的
     age: '',
-    classname: '國文第四課',
+    classname: '國文第六課',
     myclass: '國文C班',
     analysisdata0: [],
     analysisdata1: [],
